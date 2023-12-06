@@ -1,0 +1,6 @@
+Babel
+easygui
+owlready2
+Pillow
+setuptools
+tkcalendar
