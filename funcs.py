@@ -33,21 +33,6 @@ def show_concepts():
         c += 1
 
 
-def search_concepts(event):
-    concepts_list = split_concepts()
-    search_string = search_str.get()
-    listboxConcepts.delete(0, END)
-    if search_string == "":
-        show_concepts()
-    else:
-        filtered_data = list()
-        for item in concepts_list:
-            if item[1].find(search_string) != -1:
-                filtered_data.append(item[1])
-        for data in filtered_data:
-            listboxConcepts.insert(1, data)
-
-
 def show_vulnerabilities_from_concepts():
     onto = get_ontology(myOntoPath[0]).load()
     listFindVulnerabilities.delete(0, END)
@@ -370,15 +355,6 @@ def delete_ability():
         messagebox.showinfo("Unsuccessful!", "Ability was not Deleted!")
 
     show_user_ability()
-
-
-def update_entry(event):
-    try:
-        selected_item = listboxAbility.get(listboxAbility.curselection())
-        TxtDelAbility.delete(0, tk.END)
-        TxtDelAbility.insert(0, selected_item)
-    except:
-        pass
 
 
 def add_vul_to_txtbox():

@@ -194,13 +194,72 @@ class NetworkSecurityOntologyApp:
         btnVulnerabilityApply.place(x=185, y=440)
 
     # concepts tab initialized
-
     def create_concepts_tab(self, tab_control):
         concepts_tab = ttk.Frame(tab_control)
         tab_control.add(concepts_tab, text="Concepts")
 
-    # concepts++ tab initialized
+        # concepts tab bar design
+        # search
+        lblSearchInConcepts = ttk.Label(
+            concepts_tab, text="Search", anchor="e")
+        lblSearchInConcepts.place(x=10, y=20)
 
+        TxtSearchInConcepts = Entry(concepts_tab, textvariable=self.search_str)
+        TxtSearchInConcepts.bind('<Return>', self.search_concepts)
+        TxtSearchInConcepts.place(x=55, y=20, width=200)
+
+        # list box for concepts
+        listboxConcepts = Listbox(concepts_tab)
+        listboxConcepts.place(x=10, y=50, height=500, width=245)
+
+        # find Vulnerabilities
+        btnFindVulnerabilities = ttk.Button(
+            concepts_tab, text="Find Vulnerabilities", command=self.find_vulnerabilities_from_concept)
+        btnFindVulnerabilities.pack()
+        btnFindVulnerabilities.place(x=280, y=50, width=180)
+
+        listFindVulnerabilities = Listbox(concepts_tab)
+        listFindVulnerabilities.place(x=280, y=80, height=150, width=180)
+
+        # find super classes
+        btnFindSuperClasses = ttk.Button(
+            concepts_tab, text="Find super classes", command=self.find_superclass_from_concepts)
+        btnFindSuperClasses.pack()
+        btnFindSuperClasses.place(x=470, y=20, width=160)
+
+        listFindSuperClasses = Listbox(concepts_tab)
+        listFindSuperClasses.place(x=470, y=50, height=180, width=160)
+
+        # find Parts
+        btnFindParts = ttk.Button(concepts_tab, text="Find parts")
+        btnFindParts.pack()
+        btnFindParts.place(x=640, y=20, width=140)
+
+        listFindParts = Listbox(concepts_tab)
+        listFindParts.place(x=640, y=50, height=180, width=140)
+
+        # radio buttons for concepts
+        RSuperClasses = Radiobutton(
+            concepts_tab, text="base on SuperClasses", value=0)
+        RSuperClasses.place(x=280, y=230)
+
+        RSuperClasses = Radiobutton(
+            concepts_tab, text="base on Concepts parts", value=1)
+        RSuperClasses.place(x=280, y=250)
+
+        RSuperClasses = Radiobutton(
+            concepts_tab, text="base on SuperClass and concept`s parts", value=2)
+        RSuperClasses.place(x=280, y=270)
+
+        # inference button
+        btnInference = ttk.Button(concepts_tab, text="inference")
+        btnInference.pack()
+        btnInference.place(x=280, y=320, width=120, height=50)
+
+        listInference = Listbox(concepts_tab)
+        listInference.place(x=440, y=320, height=230, width=340)
+
+    # concepts++ tab initialized
     def create_concepts_plus_tab(self, tab_control):
         concepts_plus_tab = ttk.Frame(tab_control)
         tab_control.add(concepts_plus_tab, text="Concepts++")
@@ -403,6 +462,8 @@ class NetworkSecurityOntologyApp:
 
 
 # main loop
+
+
 def main():
     root = tk.Tk()
     app = NetworkSecurityOntologyApp(root)
