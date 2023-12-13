@@ -10,23 +10,6 @@ from os.path import dirname, abspath, join
 from tkcalendar import DateEntry
 
 
-def show_vulnerabilities_option():
-    selection = var.get()
-    if selection == 1:
-        selection1 = str((listboxVul.get(ACTIVE)))
-        name_vulnerability.set(selection1)
-        R2AddTxt.config(state="disabled")
-        set_concepts_combobox()
-    elif selection == 2:
-        R2AddTxt.config(state="normal")
-        set_concepts_combobox()
-    elif selection == 3:
-        selection2 = str((listboxVul.get(ACTIVE)))
-        name_vulnerability.set(selection2)
-        R2AddTxt.config(state="disabled")
-        show_remove_concepts()
-
-
 def add_vulnerability(vulnerability_name):
     onto = get_ontology(myOntoPath[0]).load()
     try:

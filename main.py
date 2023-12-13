@@ -139,7 +139,7 @@ class NetworkSecurityOntologyApp:
 
         # First radio button design
         R1Add = Radiobutton(vulnerabilitiesGroupBox, text="Add an existing vulnerability to concepts", value=1, variable=self.var,
-                            command=show_vulnerabilities_option)
+                            command=self.show_vulnerabilities_option)
         R1Add.place(x=10, y=10)
         R1AddGroupBox = LabelFrame(vulnerabilitiesGroupBox)
         R1AddGroupBox.place(x=10, y=40, width=410, height=50)
@@ -152,7 +152,7 @@ class NetworkSecurityOntologyApp:
 
         # Second radio button design
         R2Add = Radiobutton(vulnerabilitiesGroupBox, text="Add a new vulnerability to concepts", value=2, variable=self.var,
-                            command=show_vulnerabilities_option)
+                            command=self.show_vulnerabilities_option)
         R2Add.place(x=10, y=120)
         R2AddGroupBox = LabelFrame(vulnerabilitiesGroupBox)
         R2AddGroupBox.place(x=10, y=150, width=410, height=50)
@@ -164,7 +164,7 @@ class NetworkSecurityOntologyApp:
 
         # Third radio button design
         RRemove = Radiobutton(vulnerabilitiesGroupBox, text="Remove a vulnerability to concepts", value=3, variable=self.var,
-                              command=show_vulnerabilities_option)
+                              command=self.show_vulnerabilities_option)
         RRemove.place(x=10, y=230)
         RRemoveGroupBox = LabelFrame(vulnerabilitiesGroupBox)
         RRemoveGroupBox.place(x=10, y=260, width=410, height=50)
@@ -309,6 +309,24 @@ class NetworkSecurityOntologyApp:
         for i in concepts_list:
             new_concepts_list.append(i[1])
         self.conceptsCombo['values'] = new_concepts_list
+
+    # checking wich radio button is on
+    def show_vulnerabilities_option(self):
+        selection = self.var.get()
+        match selection:
+            case 1:
+                selection1 = str((self.listboxVul.get(ACTIVE)))
+                self.name_vulnerability.set(selection1)
+                self.R2AddTxt.config(state="disabled")
+                self.set_concepts_combobox()
+            case 2:
+                self.R2AddTxt.config(state="normal")
+                self.set_concepts_combobox()
+            case 3:
+                selection2 = str((self.listboxVul.get(ACTIVE)))
+                self.name_vulnerability.set(selection2)
+                self.R2AddTxt.config(state="disabled")
+                self.show_remove_concepts()
 
 
 # main loop
