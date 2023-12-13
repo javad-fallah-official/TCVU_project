@@ -25,6 +25,7 @@ class NetworkSecurityOntologyApp:
         # Create tabs
         self.create_tabs()
 
+    # variables initialized
     def initialize_variables(self):
         self.my_concept_var = StringVar(value="0")
         self.my_subclasses_var = StringVar(value="0")
@@ -44,7 +45,9 @@ class NetworkSecurityOntologyApp:
         self.txtAbility = StringVar()
         self.txtAbility = StringVar()
         self.myOntoPath = list()
+        self.var = IntVar()
 
+    # all tabs initialized
     def create_tabs(self):
         tab_control = ttk.Notebook(self.master)
         self.create_main_tab(tab_control)
@@ -55,11 +58,12 @@ class NetworkSecurityOntologyApp:
         self.create_user_tab(tab_control)
         tab_control.pack(expand=1, fill="both")
 
+    # main tab initialized
     def create_main_tab(self, tab_control):
         main_tab = ttk.Frame(tab_control)
         tab_control.add(main_tab, text="Main")
 
-        # Labels for show data in main tab menu
+        # Labels for showing data in main tab menu
         lblConcepts = ttk.Label(
             main_tab, text="Number of concepts we currently support: ", anchor="e")
         lblConcepts.place(x=10, y=440)
@@ -98,66 +102,64 @@ class NetworkSecurityOntologyApp:
         lblRelationShips = ttk.Label(main_tab, textvariable=self.relationships)
         lblRelationShips.place(x=90, y=540)
 
-        # main tab layout design
+        # open file button
         lblBrowse = ttk.Label(main_tab, text="select file : ", anchor="e")
         lblBrowse.place(x=10, y=20)
         btnBrowse = ttk.Button(main_tab, text="file", command=self.open_file)
         btnBrowse.pack()
         btnBrowse.place(x=70, y=20)
-        current_file_dir = dirname(abspath(__file__))
+        self.current_file_dir = dirname(abspath(__file__))
 
+    # vulnerabilities tab initialized
     def create_vulnerabilities_tab(self, tab_control):
         vulnerabilities_tab = ttk.Frame(tab_control)
         tab_control.add(vulnerabilities_tab, text="Vulnerabilities")
 
-        # Additional code for vulnerabilities tab
+        # vulnerabilities listbox
         lblVulnerabilitiesTitle = ttk.Label(
             vulnerabilities_tab, text="A list of security vulnerabilities:", anchor="e")
         lblVulnerabilitiesTitle.place(x=10, y=10)
-
         name_entry = Entry(vulnerabilities_tab,
                            textvariable=self.name_vulnerability)
         name_entry.place(x=450, y=10, width=320)
-
         self.listboxVul = Listbox(vulnerabilities_tab)
         self.listboxVul.bind('<<ListboxSelect>>', lambda evt: self.show_vulnerabilities_textbox(
             evt, name_entry, self.name_vulnerability))
         self.listboxVul.place(x=10, y=40, height=500, width=280)
 
+        # showing Vulnerability name
         lblVulnerabilitiesName = ttk.Label(
             vulnerabilities_tab, text="Vulnerability name:", anchor="e")
         lblVulnerabilitiesName.place(x=340, y=10)
 
+        # showing ?
         vulnerabilitiesGroupBox = LabelFrame(
             vulnerabilities_tab, text="This is a LabelFrame")
         vulnerabilitiesGroupBox.place(x=340, y=40, width=435, height=500)
 
-        var = IntVar()
+    # concepts tab initialized
 
     def create_concepts_tab(self, tab_control):
         concepts_tab = ttk.Frame(tab_control)
         tab_control.add(concepts_tab, text="Concepts")
 
-        # Rest of the concepts tab code here...
+    # concepts++ tab initialized
 
     def create_concepts_plus_tab(self, tab_control):
         concepts_plus_tab = ttk.Frame(tab_control)
         tab_control.add(concepts_plus_tab, text="Concepts++")
 
-        # Rest of the concepts++ tab code here...
-
+    # advanced check tab initialized
     def create_advanced_check_tab(self, tab_control):
         advanced_check_tab = ttk.Frame(tab_control)
         tab_control.add(advanced_check_tab, text="Advanced Check")
 
-        # Rest of the advanced check tab code here...
-
+    # user tab initialized
     def create_user_tab(self, tab_control):
         user_tab = ttk.Frame(tab_control)
         tab_control.add(user_tab, text="User")
 
-        # Rest of the user tab code here...
-
+    # loading file and datas
     def open_file(self):
         path = self.file_open_box()
         self.myOntoPath.append(path)
@@ -172,6 +174,7 @@ class NetworkSecurityOntologyApp:
         except TypeError:
             messagebox.showinfo("Warning!", "File not found!")
 
+    # file select window
     def file_open_box(self):
         root = tk.Tk()
         root.withdraw()  # Hide the main window
@@ -179,6 +182,7 @@ class NetworkSecurityOntologyApp:
         path = filedialog.askopenfilename()
         return path
 
+    # showing datas in main tab labels
     def show_data_main(self):
         onto = get_ontology(self.myOntoPath[0]).load()
         concepts_length = "1012"
@@ -211,6 +215,7 @@ class NetworkSecurityOntologyApp:
         self.my_has_vulnerability_var.set(str(len(has_vulnerabilities_length)))
         self.relationships.set("3")
 
+    # setting vulnerabilities items
     def set_vulnerabilities_item(self):
         onto = get_ontology(self.myOntoPath[0]).load()
         x = list(default_world.sparql("""
@@ -233,6 +238,7 @@ class NetworkSecurityOntologyApp:
         for i in vulnerability_items:
             self.listboxVul.insert(END, i)
 
+    # finding concepts
     def split_concepts(self):
         onto = get_ontology(self.myOntoPath[0]).load()
         concepts_list = list()
@@ -241,16 +247,16 @@ class NetworkSecurityOntologyApp:
             concepts_list.append(str(i).split("."))
         return concepts_list
 
+    # adding concepts to box
     def set_concepts_combobox(self):
         new_concepts_list = list()
         concepts_list = self.split_concepts()
-
         for i in concepts_list:
             new_concepts_list.append(i[1])
-
         self.conceptsCombo['values'] = new_concepts_list
 
 
+# main loop
 def main():
     root = tk.Tk()
     app = NetworkSecurityOntologyApp(root)
