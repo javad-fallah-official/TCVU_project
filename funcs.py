@@ -1,8 +1,8 @@
 from PIL import ImageTk, Image
-import easygui
+import tkinter as tk
+from tkinter import filedialog
 import types
 from tkinter import *
-import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 from owlready2 import *
@@ -16,7 +16,10 @@ myOntoPath = list()
 
 
 def file_open_box():
-    path = easygui.fileopenbox()
+    root = tk.Tk()
+    root.withdraw()  # Hide the main window
+
+    path = filedialog.askopenfilename()
     return path
 
 
