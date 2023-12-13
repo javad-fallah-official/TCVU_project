@@ -146,9 +146,9 @@ class NetworkSecurityOntologyApp:
         R1AddLbl = ttk.Label(
             R1AddGroupBox, text="Select vulnerability:", anchor="e")
         R1AddLbl.place(x=10, y=10)
-        R1AddTxt = Entry(R1AddGroupBox, state="disabled",
-                         textvariable=self.name_vulnerability)
-        R1AddTxt.place(x=120, y=10, width=270)
+        self.R1AddTxt = Entry(R1AddGroupBox, state="disabled",
+                              textvariable=self.name_vulnerability)
+        self.R1AddTxt.place(x=120, y=10, width=270)
 
         # Second radio button design
         R2Add = Radiobutton(vulnerabilitiesGroupBox, text="Add a new vulnerability to concepts", value=2, variable=self.var,
@@ -310,7 +310,7 @@ class NetworkSecurityOntologyApp:
             new_concepts_list.append(i[1])
         self.conceptsCombo['values'] = new_concepts_list
 
-    # checking wich radio button is on
+    # checking wich radio button and disable other ones
     def show_vulnerabilities_option(self):
         selection = self.var.get()
         match selection:
@@ -327,6 +327,59 @@ class NetworkSecurityOntologyApp:
                 self.name_vulnerability.set(selection2)
                 self.R2AddTxt.config(state="disabled")
                 self.show_remove_concepts()
+
+    # adding vulnerability to
+    def add_vulnerability(self, vulnerability_name):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        try:
+            concepts = self.conceptsCombo_value.get()
+            concepts_lists = list(onto.classes())
+            for i in concepts_lists:
+                if str(i).find(concepts) != -1:
+                    i.hasVulnerability = [vulnerability_name]
+            messagebox.showinfo("successful!", "Added vulnerability!")
+        except TypeError:
+            messagebox.showinfo(
+                "Unsuccessful!", "The vulnerability was not added!")
+        onto.save(file=self.myOntoPath[0])
+
+    # checking wich radio button to appply
+
+    def apply_vulnerability(self):
+        selection = self.var.get()
+        match selection:
+            case 1:
+                self.add_existing_vulnerability()
+            case 2:
+                self.add_new_vulnerability()
+            case 3:
+                self.remove_vulnerability_to_concepts()
+
+    def add_existing_vulnerability(self):
+        vulnerability_name = self.R1AddTxt.get()
+        self.add_vulnerability(vulnerability_name)
+
+    def add_new_vulnerability(self):
+        vulnerability_name = self.R2AddTxt.get()
+        self.add_vulnerability(vulnerability_name)
+        self.listboxVul.insert(END, vulnerability_name)
+
+    def remove_vulnerability_to_concepts(self):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        try:
+            concepts = self.conceptsCombo_value.get()
+            concepts_lists = list(onto.classes())
+            for i in concepts_lists:
+                if str(i).find(concepts) != -1:
+                    i.hasVulnerability = ""
+
+            messagebox.showinfo("successful!", "Removed vulnerability!")
+        except TypeError:
+            messagebox.showinfo(
+                "Unsuccessful!", "The vulnerability was not added!")
+
+        # onto.save(file="filename")
+        onto.save(file=self.myOntoPath[0])
 
 
 # main loop

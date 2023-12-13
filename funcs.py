@@ -10,34 +10,6 @@ from os.path import dirname, abspath, join
 from tkcalendar import DateEntry
 
 
-def add_vulnerability(vulnerability_name):
-    onto = get_ontology(myOntoPath[0]).load()
-    try:
-        concepts = conceptsCombo_value.get()
-        concepts_lists = list(onto.classes())
-        for i in concepts_lists:
-            if str(i).find(concepts) != -1:
-                i.hasVulnerability = [vulnerability_name]
-
-        messagebox.showinfo("successful!", "Added vulnerability!")
-    except TypeError:
-        messagebox.showinfo(
-            "Unsuccessful!", "The vulnerability was not added!")
-
-    onto.save(file=myOntoPath[0])
-
-
-def add_existing_vulnerability():
-    vulnerability_name = R1AddTxt.get()
-    add_vulnerability(vulnerability_name)
-
-
-def add_new_vulnerability():
-    vulnerability_name = R2AddTxt.get()
-    add_vulnerability(vulnerability_name)
-    listboxVul.insert(END, vulnerability_name)
-
-
 def show_remove_concepts():
     onto = get_ontology(myOntoPath[0]).load()
     vulnerabilities_items = list(onto.hasVulnerability.get_relations())
@@ -49,34 +21,6 @@ def show_remove_concepts():
             if concept == vulnerability[0] and vulnerability[1] == vulnerability_name:
                 sp_concepts = str(concept).split(".")
                 conceptsCombo['values'] = sp_concepts[1]
-
-
-def remove_vulnerability_to_concepts():
-    onto = get_ontology(myOntoPath[0]).load()
-    try:
-        concepts = conceptsCombo_value.get()
-        concepts_lists = list(onto.classes())
-        for i in concepts_lists:
-            if str(i).find(concepts) != -1:
-                i.hasVulnerability = ""
-
-        messagebox.showinfo("successful!", "Removed vulnerability!")
-    except TypeError:
-        messagebox.showinfo(
-            "Unsuccessful!", "The vulnerability was not added!")
-
-    # onto.save(file="filename")
-    onto.save(file=myOntoPath[0])
-
-
-def apply_vulnerability():
-    selection = var.get()
-    if selection == 1:
-        add_existing_vulnerability()
-    elif selection == 2:
-        add_new_vulnerability()
-    elif selection == 3:
-        remove_vulnerability_to_concepts()
 
 
 def show_concepts():
