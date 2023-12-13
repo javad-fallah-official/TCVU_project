@@ -46,6 +46,9 @@ class NetworkSecurityOntologyApp:
         self.txtAbility = StringVar()
         self.myOntoPath = list()
         self.var = IntVar()
+        self.listboxVul = Listbox()
+        self.R1AddTxt = StringVar()
+        self.R2AddTxt = StringVar()
 
     # all tabs initialized
     def create_tabs(self):
@@ -119,12 +122,12 @@ class NetworkSecurityOntologyApp:
         lblVulnerabilitiesTitle = ttk.Label(
             vulnerabilities_tab, text="A list of security vulnerabilities:", anchor="e")
         lblVulnerabilitiesTitle.place(x=10, y=10)
-        name_entry = Entry(vulnerabilities_tab,
-                           textvariable=self.name_vulnerability)
-        name_entry.place(x=450, y=10, width=320)
+        self.name_entry = Entry(vulnerabilities_tab,
+                                textvariable=self.name_vulnerability)
+        self.name_entry.place(x=450, y=10, width=320)
         self.listboxVul = Listbox(vulnerabilities_tab)
-        self.listboxVul.bind('<<ListboxSelect>>', lambda evt: self.show_vulnerabilities_textbox(
-            evt, name_entry, self.name_vulnerability))
+        self.listboxVul.bind('<<ListboxSelect>>',
+                             self.show_vulnerabilities_textbox)
         self.listboxVul.place(x=10, y=40, height=500, width=280)
 
         # showing Vulnerability name
@@ -159,8 +162,8 @@ class NetworkSecurityOntologyApp:
         R2AddLbl = ttk.Label(
             R2AddGroupBox, text="New vulnerability:", anchor="e")
         R2AddLbl.place(x=10, y=10)
-        R2AddTxt = Entry(R2AddGroupBox, state="disabled")
-        R2AddTxt.place(x=120, y=10, width=270)
+        self.R2AddTxt = Entry(R2AddGroupBox, state="disabled")
+        self.R2AddTxt.place(x=120, y=10, width=270)
 
         # Third radio button design
         RRemove = Radiobutton(vulnerabilitiesGroupBox, text="Remove a vulnerability to concepts", value=3, variable=self.var,
@@ -344,7 +347,6 @@ class NetworkSecurityOntologyApp:
         onto.save(file=self.myOntoPath[0])
 
     # checking wich radio button to appply
-
     def apply_vulnerability(self):
         selection = self.var.get()
         match selection:
@@ -353,18 +355,21 @@ class NetworkSecurityOntologyApp:
             case 2:
                 self.add_new_vulnerability()
             case 3:
-                self.remove_vulnerability_to_concepts()
+                self.remove_vulnerability_from_concept()
 
+    # add an existing vulnerability to a concept
     def add_existing_vulnerability(self):
         vulnerability_name = self.R1AddTxt.get()
         self.add_vulnerability(vulnerability_name)
 
+    # add a new vulnerability
     def add_new_vulnerability(self):
         vulnerability_name = self.R2AddTxt.get()
         self.add_vulnerability(vulnerability_name)
         self.listboxVul.insert(END, vulnerability_name)
 
-    def remove_vulnerability_to_concepts(self):
+    # remove a vulnerability from a concept
+    def remove_vulnerability_from_concept(self):
         onto = get_ontology(self.myOntoPath[0]).load()
         try:
             concepts = self.conceptsCombo_value.get()
@@ -380,6 +385,21 @@ class NetworkSecurityOntologyApp:
 
         # onto.save(file="filename")
         onto.save(file=self.myOntoPath[0])
+
+    # add selected vulnerabilitie to textbox
+    def show_vulnerabilities_textbox(self, evt):
+        self.name_entry.config(state="disabled")
+        selection = str((self.listboxVul.get(tk.ACTIVE)))
+        self.name_vulnerability.set(selection)
+
+    def update_entry(self, event):
+        try:
+            selected_item = self.listboxAbility.get(
+                self.listboxAbility.curselection())
+            self.TxtDelAbility.delete(0, tk.END)
+            self.TxtDelAbility.insert(0, selected_item)
+        except:
+            pass
 
 
 # main loop
