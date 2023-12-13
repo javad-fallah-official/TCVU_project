@@ -66,24 +66,6 @@ def find_vulnerabilities_from_concept():
         c += 1
 
 
-def show_supperclass_from_concepts():
-    onto = get_ontology(myOntoPath[0]).load()
-    concepts_lists = list(onto.classes())
-    concept_name = listboxConcepts.get(ACTIVE)
-    c_name = ''
-
-    if isinstance(concept_name, tuple):
-        c_name = concept_name[0]
-    else:
-        c_name = concept_name
-
-    for concept in concepts_lists:
-        sp_concept = str(concept).split(".")
-        if sp_concept[1] == c_name:
-            c = str(concept.is_a).split(".")
-            listFindSuperClasses.insert(1, c[1][:-1])
-
-
 def find_superclass_from_concepts():
     show_supperclass_from_concepts()
 

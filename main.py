@@ -460,10 +460,49 @@ class NetworkSecurityOntologyApp:
         except:
             pass
 
+    def search_concepts(self, event):
+        concepts_list = self.split_concepts()
+        search_string = self.search_str.get()
+        self.listboxConcepts.delete(0, tk.END)
+        if search_string == "":
+            self.show_concepts()
+        else:
+            filtered_data = list()
+            for item in concepts_list:
+                if item[1].find(search_string) != -1:
+                    filtered_data.append(item[1])
+            for data in filtered_data:
+                self.listboxConcepts.insert(tk.END, data)
+
+    def find_vulnerabilities_from_concept(self):
+        vul_list = self.show_vulnerabilities_from_concepts()
+        self.listboxVul.delete(0, tk.END)
+        c = 1
+
+        for item in vul_list:
+            self.listFindVulnerabilities.insert(c, item)
+            c += 1
+
+    # show_superclass_from_concepts method
+    def find_superclass_from_concepts(self):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        concepts_lists = list(onto.classes())
+        concept_name = self.listboxConcepts.get(tk.ACTIVE)
+        c_name = ''
+
+        if isinstance(concept_name, tuple):
+            c_name = concept_name[0]
+        else:
+            c_name = concept_name
+
+        for concept in concepts_lists:
+            sp_concept = str(concept).split(".")
+            if sp_concept[1] == c_name:
+                c = str(concept.is_a).split(".")
+                self.listFindSuperClasses.insert(1, c[1][:-1])
+
 
 # main loop
-
-
 def main():
     root = tk.Tk()
     app = NetworkSecurityOntologyApp(root)
