@@ -12,65 +12,8 @@ from tkcalendar import DateEntry
 
 myOntoPath = list()
 
+
 # open owl file reader
-
-
-def file_open_box():
-    root = tk.Tk()
-    root.withdraw()  # Hide the main window
-
-    path = filedialog.askopenfilename()
-    return path
-
-
-def open_file():
-    path = file_open_box()
-    myOntoPath.append(path)
-
-    try:
-        show_data_main()
-        set_vulnerabilities_item()
-        set_concepts_combobox()
-        show_concepts()
-        show_user()
-        get_vulnerabilities()
-    except TypeError:
-        messagebox.showinfo("warning!", "file not found!")
-
-# my_concept_var,my_Vulnerabilities_var,my_subclasses_var,my_is_part_of_var,my_has_vulnerability_var,relationships
-
-
-def show_data_main():
-    onto = get_ontology(myOntoPath[0]).load()
-    concepts_length = "1012"
-    vul_length = "78"
-    subclass_length = list(default_world.sparql("""
-               SELECT ?x ?y
-                    WHERE { ?x rdfs:subClassOf ?y.
-                    ?x rdf:type owl:Class.
-                }
-        """))
-    y = list(default_world.sparql("""
-        PREFIX my: <http://www.semanticweb.org/imana/ontologies/2022/10/Network#>
-            SELECT ?x
-                WHERE {?x owl:onProperty my:isPartOf.
-                }
-        """))
-    x = list(default_world.sparql("""
-        PREFIX my: <http://www.semanticweb.org/imana/ontologies/2022/10/Network#>
-        SELECT ?x
-                WHERE { ?x owl:onProperty my:hasVulnerability.
-                }
-        """))
-    has_vulnerabilities_length = list(
-        onto.hasVulnerability.get_relations()) + x
-    is_part_of_length = list(onto.isPartOf.get_relations()) + y
-    my_concept_var.set(str(concepts_length))
-    my_Vulnerabilities_var.set(str(vul_length))
-    my_subclasses_var.set(str(len(subclass_length)))
-    my_is_part_of_var.set(str(len(is_part_of_length)))
-    my_has_vulnerability_var.set(str(len(has_vulnerabilities_length)))
-    relationships.set("3")
 
 
 def set_vulnerabilities_item():
