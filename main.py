@@ -233,6 +233,23 @@ class NetworkSecurityOntologyApp:
         for i in vulnerability_items:
             self.listboxVul.insert(END, i)
 
+    def split_concepts(self):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        concepts_list = list()
+        concepts_lists = list(onto.classes())
+        for i in concepts_lists:
+            concepts_list.append(str(i).split("."))
+        return concepts_list
+
+    def set_concepts_combobox(self):
+        new_concepts_list = list()
+        concepts_list = self.split_concepts()
+
+        for i in concepts_list:
+            new_concepts_list.append(i[1])
+
+        self.conceptsCombo['values'] = new_concepts_list
+
 
 def main():
     root = tk.Tk()
