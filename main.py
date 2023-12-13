@@ -26,18 +26,12 @@ class NetworkSecurityOntologyApp:
         self.create_tabs()
 
     def initialize_variables(self):
-        self.my_concept_var = StringVar()
-        self.my_concept_var.set("0")
-        self.my_subclasses_var = StringVar()
-        self.my_subclasses_var.set("0")
-        self.my_Vulnerabilities_var = StringVar()
-        self.my_Vulnerabilities_var.set("0")
-        self.my_is_part_of_var = StringVar()
-        self.my_is_part_of_var.set("0")
-        self.my_has_vulnerability_var = StringVar()
-        self.my_has_vulnerability_var.set("0")
-        self.relationships = StringVar()
-        self.relationships.set("0")
+        self.my_concept_var = StringVar(value="0")
+        self.my_subclasses_var = StringVar(value="0")
+        self.my_Vulnerabilities_var = StringVar(value="0")
+        self.my_is_part_of_var = StringVar(value="0")
+        self.my_has_vulnerability_var = StringVar(value="0")
+        self.relationships = StringVar(value="0")
         self.name_vulnerability = StringVar()
         self.conceptsCombo_value = StringVar()
         self.txtSubClass = StringVar()
@@ -116,7 +110,29 @@ class NetworkSecurityOntologyApp:
         vulnerabilities_tab = ttk.Frame(tab_control)
         tab_control.add(vulnerabilities_tab, text="Vulnerabilities")
 
-        # Rest of the vulnerabilities tab code here...
+        # Additional code for vulnerabilities tab
+        lblVulnerabilitiesTitle = ttk.Label(
+            vulnerabilities_tab, text="A list of security vulnerabilities:", anchor="e")
+        lblVulnerabilitiesTitle.place(x=10, y=10)
+
+        name_entry = Entry(vulnerabilities_tab,
+                           textvariable=self.name_vulnerability)
+        name_entry.place(x=450, y=10, width=320)
+
+        self.listboxVul = Listbox(vulnerabilities_tab)
+        self.listboxVul.bind('<<ListboxSelect>>', lambda evt: self.show_vulnerabilities_textbox(
+            evt, name_entry, self.name_vulnerability))
+        self.listboxVul.place(x=10, y=40, height=500, width=280)
+
+        lblVulnerabilitiesName = ttk.Label(
+            vulnerabilities_tab, text="Vulnerability name:", anchor="e")
+        lblVulnerabilitiesName.place(x=340, y=10)
+
+        vulnerabilitiesGroupBox = LabelFrame(
+            vulnerabilities_tab, text="This is a LabelFrame")
+        vulnerabilitiesGroupBox.place(x=340, y=40, width=435, height=500)
+
+        var = IntVar()
 
     def create_concepts_tab(self, tab_control):
         concepts_tab = ttk.Frame(tab_control)
@@ -194,6 +210,28 @@ class NetworkSecurityOntologyApp:
         self.my_is_part_of_var.set(str(len(is_part_of_length)))
         self.my_has_vulnerability_var.set(str(len(has_vulnerabilities_length)))
         self.relationships.set("3")
+
+    def set_vulnerabilities_item(self):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        x = list(default_world.sparql("""
+                PREFIX my: <http://www.semanticweb.org/imana/ontologies/2022/10/Network#>
+                SELECT ?x
+                        WHERE { ?x owl:onProperty my:hasVulnerability.
+                        }
+                """))
+        new_vul = []
+        for i in x:
+            sp_x = str(i).split("'")
+            new_vul.append(sp_x[1])
+
+        vulnerability_list = list(onto.hasVulnerability.get_relations())
+        vulnerability_items = list()
+        for i in vulnerability_list:
+            vulnerability_items.append(i[1])
+
+        vulnerability_items.extend(new_vul)
+        for i in vulnerability_items:
+            self.listboxVul.insert(END, i)
 
 
 def main():

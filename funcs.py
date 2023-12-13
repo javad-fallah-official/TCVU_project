@@ -10,61 +10,6 @@ from os.path import dirname, abspath, join
 from tkcalendar import DateEntry
 
 
-myOntoPath = list()
-
-
-# open owl file reader
-
-
-def set_vulnerabilities_item():
-    onto = get_ontology(myOntoPath[0]).load()
-    x = list(default_world.sparql("""
-            PREFIX my: <http://www.semanticweb.org/imana/ontologies/2022/10/Network#>
-            SELECT ?x
-                    WHERE { ?x owl:onProperty my:hasVulnerability.
-                    }
-            """))
-    new_vul = []
-    for i in x:
-        sp_x = str(i).split("'")
-        new_vul.append(sp_x[1])
-
-    vulnerability_list = list(onto.hasVulnerability.get_relations())
-    vulnerability_items = list()
-    for i in vulnerability_list:
-        vulnerability_items.append(i[1])
-
-    vulnerability_items.extend(new_vul)
-    for i in vulnerability_items:
-        listboxVul.insert(END, i)
-
-
-def split_concepts():
-    onto = get_ontology(myOntoPath[0]).load()
-    concepts_list = list()
-    concepts_lists = list(onto.classes())
-    for i in concepts_lists:
-        concepts_list.append(str(i).split("."))
-
-    return concepts_list
-
-
-def set_concepts_combobox():
-    new_concepts_list = list()
-    concepts_list = split_concepts()
-
-    for i in concepts_list:
-        new_concepts_list.append(i[1])
-
-    conceptsCombo['values'] = new_concepts_list
-
-
-def show_vulnerabilities_textbox(evt):
-    name_entry.config(state="disabled")
-    selection = str((listboxVul.get(ACTIVE)))
-    name_vulnerability.set(selection)
-
-
 def show_vulnerabilities_option():
     selection = var.get()
     if selection == 1:
