@@ -1,7 +1,16 @@
-from funcs import *
 import tkinter as tk
 from tkinter import ttk
 from tkinter import StringVar
+from PIL import ImageTk, Image
+import tkinter as tk
+from tkinter import filedialog
+import types
+from tkinter import *
+from tkinter import messagebox
+from tkinter import ttk
+from owlready2 import *
+from os.path import dirname, abspath, join
+from tkcalendar import DateEntry
 
 
 class NetworkSecurityOntologyApp:
@@ -40,6 +49,7 @@ class NetworkSecurityOntologyApp:
         self.txtUser = StringVar()
         self.txtAbility = StringVar()
         self.txtAbility = StringVar()
+        self.myOntoPath = list()
 
     def create_tabs(self):
         tab_control = ttk.Notebook(self.master)
@@ -97,8 +107,7 @@ class NetworkSecurityOntologyApp:
         # main tab layout design
         lblBrowse = ttk.Label(main_tab, text="select file : ", anchor="e")
         lblBrowse.place(x=10, y=20)
-        btnBrowse = ttk.Button(main_tab, text="file", command=lambda: open_file(
-        ))
+        btnBrowse = ttk.Button(main_tab, text="file", command=self.open_file)
         btnBrowse.pack()
         btnBrowse.place(x=70, y=20)
         current_file_dir = dirname(abspath(__file__))
@@ -135,7 +144,7 @@ class NetworkSecurityOntologyApp:
 
     def open_file(self):
         path = self.file_open_box()
-        myOntoPath.append(path)
+        self.myOntoPath.append(path)
 
         try:
             self.show_data_main()
@@ -155,7 +164,7 @@ class NetworkSecurityOntologyApp:
         return path
 
     def show_data_main(self):
-        onto = get_ontology(myOntoPath[0]).load()
+        onto = get_ontology(self.myOntoPath[0]).load()
         concepts_length = "1012"
         vul_length = "78"
         subclass_length = list(default_world.sparql("""
