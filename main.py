@@ -137,6 +137,59 @@ class NetworkSecurityOntologyApp:
             vulnerabilities_tab, text="This is a LabelFrame")
         vulnerabilitiesGroupBox.place(x=340, y=40, width=435, height=500)
 
+        # First radio button design
+        R1Add = Radiobutton(vulnerabilitiesGroupBox, text="Add an existing vulnerability to concepts", value=1, variable=self.var,
+                            command=show_vulnerabilities_option)
+        R1Add.place(x=10, y=10)
+        R1AddGroupBox = LabelFrame(vulnerabilitiesGroupBox)
+        R1AddGroupBox.place(x=10, y=40, width=410, height=50)
+        R1AddLbl = ttk.Label(
+            R1AddGroupBox, text="Select vulnerability:", anchor="e")
+        R1AddLbl.place(x=10, y=10)
+        R1AddTxt = Entry(R1AddGroupBox, state="disabled",
+                         textvariable=self.name_vulnerability)
+        R1AddTxt.place(x=120, y=10, width=270)
+
+        # Second radio button design
+        R2Add = Radiobutton(vulnerabilitiesGroupBox, text="Add a new vulnerability to concepts", value=2, variable=self.var,
+                            command=show_vulnerabilities_option)
+        R2Add.place(x=10, y=120)
+        R2AddGroupBox = LabelFrame(vulnerabilitiesGroupBox)
+        R2AddGroupBox.place(x=10, y=150, width=410, height=50)
+        R2AddLbl = ttk.Label(
+            R2AddGroupBox, text="New vulnerability:", anchor="e")
+        R2AddLbl.place(x=10, y=10)
+        R2AddTxt = Entry(R2AddGroupBox, state="disabled")
+        R2AddTxt.place(x=120, y=10, width=270)
+
+        # Third radio button design
+        RRemove = Radiobutton(vulnerabilitiesGroupBox, text="Remove a vulnerability to concepts", value=3, variable=self.var,
+                              command=show_vulnerabilities_option)
+        RRemove.place(x=10, y=230)
+        RRemoveGroupBox = LabelFrame(vulnerabilitiesGroupBox)
+        RRemoveGroupBox.place(x=10, y=260, width=410, height=50)
+        RRemoveLbl = ttk.Label(
+            RRemoveGroupBox, text="Select vulnerability:", anchor="e")
+        RRemoveLbl.place(x=10, y=10)
+        RRemoveTxt = Entry(RRemoveGroupBox, state="disabled",
+                           textvariable=self.name_vulnerability)
+        RRemoveTxt.place(x=120, y=10, width=270)
+
+        # Select concepts
+        LblVulnerabilityConcepts = ttk.Label(
+            vulnerabilitiesGroupBox, text="Select Concepts:", anchor="e")
+        LblVulnerabilityConcepts.place(x=60, y=330)
+
+        conceptsCombo = ttk.Combobox(
+            vulnerabilitiesGroupBox, textvariable=self.conceptsCombo_value, state="readonly")
+        conceptsCombo.place(x=160, y=330, width=200)
+
+        # Button for applying changes in vulnerabilities tab
+        btnVulnerabilityApply = ttk.Button(
+            vulnerabilitiesGroupBox, text="Apply", command=self.apply_vulnerability)
+        btnVulnerabilityApply.pack()
+        btnVulnerabilityApply.place(x=185, y=440)
+
     # concepts tab initialized
 
     def create_concepts_tab(self, tab_control):

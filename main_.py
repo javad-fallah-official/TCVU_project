@@ -151,6 +151,8 @@ btnVulnerabilityApply = ttk.Button(
     vulnerabilitiesGroupBox, text="Apply", command=apply_vulnerability)
 btnVulnerabilityApply.pack()
 btnVulnerabilityApply.place(x=185, y=440)
+
+
 # concept++
 conceptsPlusTabBar = ttk.Notebook(conceptsPlusTab)
 subClass = ttk.Frame(conceptsPlusTabBar)
