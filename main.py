@@ -179,8 +179,10 @@ class NetworkSecurityOntologyApp:
         root = tk.Tk()
         root.withdraw()  # Hide the main window
 
-        path = filedialog.askopenfilename()
-        return path
+        file_path = filedialog.askopenfilename(
+            filetypes=[("OWL Files", "*.owl")], title="Select an OWL File"
+        )
+        return file_path
 
     # showing datas in main tab labels
     def show_data_main(self):
