@@ -183,9 +183,9 @@ class NetworkSecurityOntologyApp:
             vulnerabilitiesGroupBox, text="Select Concepts:", anchor="e")
         LblVulnerabilityConcepts.place(x=60, y=330)
 
-        conceptsCombo = ttk.Combobox(
+        self.conceptsCombo = ttk.Combobox(
             vulnerabilitiesGroupBox, textvariable=self.conceptsCombo_value, state="readonly")
-        conceptsCombo.place(x=160, y=330, width=200)
+        self.conceptsCombo.place(x=160, y=330, width=200)
 
         # Button for applying changes in vulnerabilities tab
         btnVulnerabilityApply = ttk.Button(
@@ -209,8 +209,8 @@ class NetworkSecurityOntologyApp:
         TxtSearchInConcepts.place(x=55, y=20, width=200)
 
         # list box for concepts
-        listboxConcepts = Listbox(concepts_tab)
-        listboxConcepts.place(x=10, y=50, height=500, width=245)
+        self.listboxConcepts = Listbox(concepts_tab)
+        self.listboxConcepts.place(x=10, y=50, height=500, width=245)
 
         # find Vulnerabilities
         btnFindVulnerabilities = ttk.Button(
@@ -501,8 +501,19 @@ class NetworkSecurityOntologyApp:
                 c = str(concept.is_a).split(".")
                 self.listFindSuperClasses.insert(1, c[1][:-1])
 
+    # show_concepts method
+
+    def show_concepts(self):
+        concepts_list = self.split_concepts()
+        c = 1
+        for i in concepts_list:
+            self.listboxConcepts.insert(c, i[1])
+            self.listboxConceptPlus.insert(c, i[1])
+            c += 1
 
 # main loop
+
+
 def main():
     root = tk.Tk()
     app = NetworkSecurityOntologyApp(root)

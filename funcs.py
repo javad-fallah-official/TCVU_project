@@ -23,53 +23,6 @@ def show_remove_concepts():
                 conceptsCombo['values'] = sp_concepts[1]
 
 
-def show_concepts():
-    concepts_list = split_concepts()
-    c = 1
-
-    for i in concepts_list:
-        listboxConcepts.insert(c, i[1])
-        listboxConceptPlus.insert(c, i[1])
-        c += 1
-
-
-def show_vulnerabilities_from_concepts():
-    onto = get_ontology(myOntoPath[0]).load()
-    listFindVulnerabilities.delete(0, END)
-    vulnerabilities_items = list(onto.hasVulnerability.get_relations())
-    concepts_lists = list(onto.classes())
-    concept_name = listboxConcepts.get(ACTIVE)
-    c_name = ''
-    concept_vulnerabilities_list = list()
-
-    if isinstance(concept_name, tuple):
-        c_name = concept_name[0]
-    else:
-        c_name = concept_name
-
-    for concept in concepts_lists:
-        for vulnerability in vulnerabilities_items:
-            sp_vulnerability = str(vulnerability[0]).split(".")
-            if vulnerability[0] == concept and sp_vulnerability[1] == c_name:
-                concept_vulnerabilities_list.append(vulnerability[1])
-
-    return concept_vulnerabilities_list
-
-
-def find_vulnerabilities_from_concept():
-    vul_list = show_vulnerabilities_from_concepts()
-    listboxVul.delete(0, END)
-    c = 1
-
-    for item in vul_list:
-        listFindVulnerabilities.insert(c, item)
-        c += 1
-
-
-def find_superclass_from_concepts():
-    show_supperclass_from_concepts()
-
-
 def get_subclass_of():
     onto = get_ontology(myOntoPath[0]).load()
     txt_subclass = str(txtSubClass.get())

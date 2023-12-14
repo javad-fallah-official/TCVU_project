@@ -84,6 +84,7 @@ btnPartOf = ttk.Button(jobVulGroupBox, text="Add", command=is_part_of)
 btnPartOf.pack()
 btnPartOf.place(x=350, y=40)
 
+
 # User tab
 UserTabBar = ttk.Notebook(UserTab)
 Users = ttk.Frame(UserTab)
