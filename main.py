@@ -54,6 +54,8 @@ class NetworkSecurityOntologyApp:
         self.vulnerability_items = list()
         self.concepts_items = list()
         self.concept_vulnerabilities_list = list()
+        self.checkVar1 = IntVar()
+        self.checkVar2 = IntVar()
         self.max_value = 24
 
     # all tabs initialized
@@ -136,7 +138,7 @@ class NetworkSecurityOntologyApp:
             vulnerabilities_tab, text="Vulnerability name:", anchor="e")
         lblVulnerabilitiesName.place(x=340, y=10)
 
-        # showing ?
+        # Create a LabelFrame widget with the title
         vulnerabilitiesGroupBox = LabelFrame(
             vulnerabilities_tab, text="This is a LabelFrame")
         vulnerabilitiesGroupBox.place(x=340, y=40, width=435, height=500)
@@ -274,6 +276,29 @@ class NetworkSecurityOntologyApp:
         SubClassGroupBox = LabelFrame(
             subClass, text="Add new concepts to be sub class of existing concepts")
         SubClassGroupBox.place(x=10, y=40, width=470, height=230)
+        # make group box for tab subClass in concepts++
+        SubClassGroupBox = LabelFrame(
+            subClass, text="Add new concepts to be sub class of existing concepts")
+        SubClassGroupBox.place(x=10, y=40, width=470, height=230)
+
+        Lbl1AddSubClass = ttk.Label(
+            SubClassGroupBox, text="Add : ", anchor="e")
+        Lbl1AddSubClass.place(x=10, y=50)
+
+        txtSubClass = StringVar()
+        TxtAddSubClass = Entry(SubClassGroupBox, textvariable=txtSubClass)
+        TxtAddSubClass.place(x=50, y=50, width=270)
+
+        Lbl2AddSubClass = ttk.Label(
+            SubClassGroupBox, text="to be sub class of", anchor="e")
+        Lbl2AddSubClass.place(x=330, y=50)
+
+        Lbl3AddSubClass = ttk.Label(SubClassGroupBox, text='Write a proper name for the new concept.just user alphaNumeric '
+                                    'Character and "-" "_"', anchor="e")
+        Lbl3AddSubClass.place(x=0, y=100)
+        Lbl4AddSubClass = ttk.Label(SubClassGroupBox, text="Select the SuperClass for your new Concept"
+                                    "from the right side list", anchor="e")
+        Lbl4AddSubClass.place(x=0, y=140)
 
         # btn add for subclass
         SubClassAddGroupBox = LabelFrame(subClass)
@@ -283,9 +308,51 @@ class NetworkSecurityOntologyApp:
         btnSubClass.pack()
         btnSubClass.place(x=350, y=40)
 
-        # partOfGroupBox
+        # btn add for subclass
+        SubClassAddGroupBox = LabelFrame(subClass)
+        SubClassAddGroupBox.place(x=10, y=290, width=470, height=100)
+        btnSubClass = ttk.Button(
+            SubClassAddGroupBox, text="Add", command=self.set_subclass_of)
+        btnSubClass.pack()
+        btnSubClass.place(x=350, y=40)
+
+        # make group box for tab partOf in concepts++
         partOfGroupBox = LabelFrame(partOf, text="Add new")
         partOfGroupBox.place(x=10, y=40, width=470, height=230)
+
+       # first add partOf
+        Txt1AddPartOf = Entry(partOfGroupBox, textvariable=self.txtPartOf1)
+        Txt1AddPartOf.place(x=10, y=50, width=270)
+
+        self.btn1PartOf = ttk.Button(partOfGroupBox, text="<<<",
+                                     state="disabled", command=self.set_first_concept_obj)
+        self.btn1PartOf.pack()
+        self.btn1PartOf.place(x=285, y=47, width=50)
+        checkBox1PartOf = Checkbutton(partOfGroupBox, variable=self.checkVar1,
+                                      onvalue=1, offvalue=0, command=self.get_first_concept_obj)
+        checkBox1PartOf.pack()
+        checkBox1PartOf.place(x=335, y=47)
+        lbl1PartOf = ttk.Label(
+            partOfGroupBox, text="Get from concept", anchor="e")
+        lbl1PartOf.place(x=355, y=50)
+
+        # second add partOf
+        Txt2AddPartOf = Entry(partOfGroupBox, textvariable=self.txtPartOf2)
+        Txt2AddPartOf.place(x=10, y=120, width=270)
+
+        self.btn2PartOf = ttk.Button(partOfGroupBox, text="<<<",
+                                     state="disabled", command=self.set_second_concept_obj)
+        self.btn2PartOf.pack()
+        self.btn2PartOf.place(x=285, y=117, width=50)
+
+        checkBox2PartOf = Checkbutton(partOfGroupBox, variable=self.checkVar2,
+                                      onvalue=1, offvalue=0, command=self.get_second_concept_obj)
+        checkBox2PartOf.pack()
+        checkBox2PartOf.place(x=335, y=120)
+
+        lbl2PartOf = ttk.Label(
+            partOfGroupBox, text="Get from concept", anchor="e")
+        lbl2PartOf.place(x=355, y=120)
 
         # btn add for PartOf
         jobVulGroupBox = LabelFrame(partOf)
@@ -350,7 +417,6 @@ class NetworkSecurityOntologyApp:
         lblVulRel.place(x=555, y=500)
 
     # user tab initialized
-
     def create_user_tab(self, tab_control):
         user_tab = ttk.Frame(tab_control)
         tab_control.add(user_tab, text="User")
@@ -820,7 +886,7 @@ class NetworkSecurityOntologyApp:
     def is_part_of(self):
         f = self.txtPartOf1.get()
         s = self.txtPartOf2.get()
-        onto = self.get_ontology(self.myOntoPath[0]).load()
+        onto = get_ontology(self.myOntoPath[0]).load()
         concepts_lists = list(onto.classes())
         first_concept = ''
         second_concept = ''
@@ -882,12 +948,10 @@ class NetworkSecurityOntologyApp:
         else:
             self.txtPartOf1.set("")
             self.btn1PartOf.config(state="disabled")
-
         return self.txtPartOf1.get()
 
     def get_second_concept_obj(self):
         second_concept = ""
-
         if self.checkVar2.get() == 1:
             second_concept = self.listboxConceptPlus.get(ACTIVE)
             self.txtPartOf2.set(second_concept)
@@ -1140,8 +1204,33 @@ class NetworkSecurityOntologyApp:
         for vul in self.concept_vulnerabilities_list:
             self.listFindVulnerabilities.insert(END, vul)
 
+    def set_first_concept_obj(self):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        concepts_lists = list(onto.classes())
+        new_concept = self.txtPartOf1.get()
+        first_concept = self.get_first_concept_obj()
+        concept = first_concept
+        for i in concepts_lists:
+            if str(i).find(concept) != -1:
+                sp_item = str(i).split(".")
+                if sp_item[1] == concept:
+                    return new_concept
+
+    def set_second_concept_obj(self):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        concepts_lists = list(onto.classes())
+        new_concept = self.txtPartOf2.get()
+        second_concept = self.get_second_concept_obj()
+        concept = second_concept
+        for i in concepts_lists:
+            if str(i).find(concept) != -1:
+                sp_item = str(i).split(".")
+                if sp_item[1] == concept:
+                    return new_concept
 
 # main loop
+
+
 def main():
     root = tk.Tk()
     app = NetworkSecurityOntologyApp(root)
