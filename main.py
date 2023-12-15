@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import StringVar
-from PIL import ImageTk, Image
 import tkinter as tk
 from tkinter import filedialog
 import types
@@ -256,7 +255,6 @@ class NetworkSecurityOntologyApp:
         listInference.place(x=440, y=320, height=230, width=340)
 
     # concepts++ tab initialized
-
     def create_concepts_plus_tab(self, tab_control):
         concepts_plus_tab = ttk.Frame(tab_control)
         tab_control.add(concepts_plus_tab, text="Concepts++")
@@ -704,6 +702,7 @@ class NetworkSecurityOntologyApp:
         selection = str((self.listboxVul.get(tk.ACTIVE)))
         self.name_vulnerability.set(selection)
 
+    # update an entry in the GUI based on the selected item from a listbox
     def update_entry(self, event):
         try:
             selected_item = self.listboxAbility.get(
@@ -739,7 +738,6 @@ class NetworkSecurityOntologyApp:
                 c += 1
 
     # show_superclass_from_concepts method
-
     def find_superclass_from_concepts(self):
         onto = get_ontology(self.myOntoPath[0]).load()
         concepts_lists = list(onto.classes())
@@ -753,7 +751,6 @@ class NetworkSecurityOntologyApp:
                 self.listFindSuperClasses.insert(1, c[1][:-1])
 
     # show_concepts method
-
     def show_concepts(self):
         concepts_list = self.split_concepts()
         c = 1
@@ -763,7 +760,6 @@ class NetworkSecurityOntologyApp:
             c += 1
 
     # set_subclass_of method
-
     def set_subclass_of(self):
         try:
             self.get_subclass_of()
@@ -773,7 +769,6 @@ class NetworkSecurityOntologyApp:
             messagebox.showinfo("Unsuccessful!", "The subclass was not added!")
 
     # is_part_of method
-
     def is_part_of(self):
         f = self.txtPartOf1.get()
         s = self.txtPartOf2.get()
@@ -1078,6 +1073,7 @@ class NetworkSecurityOntologyApp:
         for i in users_name:
             self.listboxUsers.insert(0, i.name)
 
+    # show vulnerabilities based on concepts
     def show_vulnerabilities_from_concepts(self):
         onto = get_ontology(self.myOntoPath[0]).load()
         self.listFindVulnerabilities.delete(0, END)
@@ -1087,7 +1083,6 @@ class NetworkSecurityOntologyApp:
         concept_name = self.listboxConcepts.get(ACTIVE)
         c_name = concept_name[0] if isinstance(
             concept_name, tuple) else concept_name
-
         for concept in concepts_lists:
             for vulnerability in self.vulnerabilities_items:
                 sp_vulnerability = str(vulnerability[0]).split(".")
