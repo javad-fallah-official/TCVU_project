@@ -975,6 +975,102 @@ class NetworkSecurityOntologyApp:
         else:
             return False
 
+    def show_advance_data(self):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        self.show_concept_not_vul()
+        self.show_concept_have_vul()
+        x = list(default_world.sparql("""
+                PREFIX my: <http://www.semanticweb.org/imana/ontologies/2022/10/Network#>
+                SELECT ?x
+                        WHERE { ?x owl:onProperty my:hasVulnerability.
+                        }
+                """))
+        has_vulnerabilities_length = list(
+            onto.hasVulnerability.get_relations()) + x
+        self.strResult.set(str(len(has_vulnerabilities_length)))
+
+    def add_user(self):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        user_name = self.TxtAddUser.get()
+        try:
+            with onto:
+                new_class = types.new_class(user_name, (onto.Users,))
+            onto.save(file=self.myOntoPath[0])
+            messagebox.showinfo("successful!", "User Added!")
+            self.show_user()
+        except:
+            messagebox.showinfo("Unsuccessful!", "User was not Added!")
+
+    def delete_user(self):
+        name = self.TxtDelUser.get()
+        onto = get_ontology(self.myOntoPath[0]).load()
+        try:
+            name_for_delete = onto[name]
+            destroy_entity(name_for_delete)
+            onto.save(file=self.myOntoPath[0], format="rdfxml")
+            self.TxtDelUser.delete(0, END)
+            messagebox.showinfo("successful!", "User Deleted!")
+        except:
+            messagebox.showinfo("Unsuccessful!", "User was not Deleted!")
+
+        self.show_user()
+
+    def get_name_listbox(self):
+        name = self.listboxUsers.get(ACTIVE)
+        self.TxtDelUser.delete(0, END)
+        self.TxtDelUser.insert(0, name)
+
+    def show_user_ability(self):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        self.listboxAbility.delete(0, END)
+        self.listboxAbilityJob.delete(0, END)
+        self.TxtDelAbility.delete(0, END)
+        selected_item = self.listboxUsers.get(self.listboxUsers.curselection())
+        class_name = onto[selected_item]
+        user_ability = list(class_name.subclasses())
+        for i in user_ability:
+            user_name = str(i).split('.')[1]
+            self.listboxAbility.insert(0, user_name)
+            self.listboxAbilityJob.insert(0, user_name)
+
+    def add_ability(self):
+        ability = self.TxtAddAbility.get()
+        onto = get_ontology(self.myOntoPath[0]).load()
+        user_to_add_ability = self.listboxUsers.get(ACTIVE)
+        parent_user_class = onto[user_to_add_ability]
+        try:
+            with onto:
+                new_class = types.new_class(ability, (parent_user_class,))
+                messagebox.showinfo(
+                    "successful!", f"Ability Added for {user_to_add_ability}!")
+                self.TxtAddAbility.delete(0, END)
+        except:
+            messagebox.showinfo(
+                "Unsuccessful!", f"Ability was not Added for {user_to_add_ability}!")
+        onto.save(self.myOntoPath[0])
+        self.show_user_ability()
+
+    def delete_ability(self):
+        ability_name = self.TxtDelAbility.get()
+        onto = get_ontology(self.myOntoPath[0]).load()
+        try:
+            name_for_delete = onto[ability_name]
+            destroy_entity(name_for_delete)
+            self.TxtDelAbility.delete(0, END)
+            onto.save(file=self.myOntoPath[0], format="rdfxml")
+            messagebox.showinfo("successful!", "Ability Deleted!")
+        except:
+            messagebox.showinfo("Unsuccessful!", "Ability was not Deleted!")
+
+        self.show_user_ability()
+
+    def add_vul_to_txtbox(self):
+        vul = self.listboxvuljob.get(ACTIVE)
+        textbox_text = self.textboxVul.get("1.0", "end-1c").split('\n')
+        text = f'{vul}\n'
+        if vul not in textbox_text:
+            self.textboxVul.insert('end', text)
+
 
 # main loop
 def main():
