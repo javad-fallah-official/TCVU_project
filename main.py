@@ -906,7 +906,7 @@ class NetworkSecurityOntologyApp:
 
         if selected == 1:
             text = self.textboxVul.get("1.0", "end-1c").split('\n')[:-1]
-            vul_list = [i[1] for i in vul_list2]
+            vul_list = [i[1] for i in self.vul_list2]
 
             if not set(text).issubset(vul_list):
                 messagebox.showwarning(
