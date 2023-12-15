@@ -940,6 +940,41 @@ class NetworkSecurityOntologyApp:
                 messagebox.showwarning(
                     'Warning', 'You should select a user to add a job from the user list box')
 
+    def by_vul(self):
+        self.btnAddVulTextBox.config(state=NORMAL)
+        self.textboxVul.config(state=NORMAL)
+
+    def by_class(self):
+        self.btnAddVulTextBox.config(state=DISABLED)
+        self.textboxVul.delete('1.0', END)
+        self.textboxVul.config(state=DISABLED)
+
+    def get_vulnerabilities(self):
+        global vul_list2
+        onto = get_ontology(self.myOntoPath[0]).load()
+        vul_list = list(onto.hasVulnerability.get_relations())
+        vul_list2 = [(i[0].name, i[1]) for i in vul_list]
+        concepts_items = []
+        for i in vul_list:
+            if i[0].name not in concepts_items:
+                concepts_items.append(i[0].name)
+        self.jobVulCombo['values'] = concepts_items
+
+    def update_listbox(self, event):
+        selected_option = self.jobVulCombo.get()
+        self.listboxvuljob.delete(0, tk.END)
+        for i in vul_list2:
+            if i[0] == selected_option:
+                self.listboxvuljob.insert(tk.END, i[1])
+
+    def validate_spinbox_input(self, input_value):
+        if input_value.isdigit() and int(input_value) <= max_value:
+            return True
+        elif input_value == '':
+            return True
+        else:
+            return False
+
 
 # main loop
 def main():
