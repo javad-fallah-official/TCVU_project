@@ -842,6 +842,19 @@ class NetworkSecurityOntologyApp:
 
         return self.txtPartOf1.get()
 
+    def get_second_concept_obj(self):
+        second_concept = ""
+
+        if self.checkVar2.get() == 1:
+            second_concept = self.listboxConceptPlus.get(ACTIVE)
+            self.txtPartOf2.set(second_concept)
+            self.btn2PartOf.config(state="normal")
+        else:
+            self.txtPartOf2.set("")
+            self.btn2PartOf.config(state="disabled")
+
+        return second_concept
+
 
 # main loop
 def main():
