@@ -10,19 +10,6 @@ from os.path import dirname, abspath, join
 from tkcalendar import DateEntry
 
 
-def get_first_concept_obj():
-    first_concept = ""
-    if checkVar1.get() == 1:
-        first_concept = listboxConceptPlus.get(ACTIVE)
-        txtPartOf1.set(first_concept)
-        btn1PartOf.config(state="normal")
-    else:
-        txtPartOf1.set("")
-        btn1PartOf.config(state="disabled")
-
-    return txtPartOf1.get()
-
-
 def set_first_concept_obj():
     onto = get_ontology(myOntoPath[0]).load()
     concepts_lists = list(onto.classes())

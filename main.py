@@ -830,6 +830,18 @@ class NetworkSecurityOntologyApp:
 
         onto.save(file=self.myOntoPath[0])
 
+    def get_first_concept_obj(self):
+        first_concept = ""
+        if self.checkVar1.get() == 1:
+            first_concept = self.listboxConceptPlus.get(ACTIVE)
+            self.txtPartOf1.set(first_concept)
+            self.btn1PartOf.config(state="normal")
+        else:
+            self.txtPartOf1.set("")
+            self.btn1PartOf.config(state="disabled")
+
+        return self.txtPartOf1.get()
+
 
 # main loop
 def main():
