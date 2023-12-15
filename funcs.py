@@ -42,15 +42,6 @@ def get_subclass_of():
     onto.save(file=myOntoPath[0])
 
 
-def set_subclass_of():
-    try:
-        get_subclass_of()
-        listboxConceptPlus.insert(0, txtSubClass.get())
-        messagebox.showinfo("successful!", "Added subclass!")
-    except TypeError:
-        messagebox.showinfo("Unsuccessful!", "The subclass was not added!")
-
-
 def get_first_concept_obj():
     first_concept = ""
     if checkVar1.get() == 1:
@@ -108,35 +99,6 @@ def set_second_concept_obj():
                 new_concept = concept
 
     return new_concept
-
-
-def is_part_of():
-    f = txtPartOf1.get()
-    s = txtPartOf2.get()
-    onto = get_ontology(myOntoPath[0]).load()
-    concepts_lists = list(onto.classes())
-    first_concept = ''
-    second_concept = ''
-    try:
-        for i in concepts_lists:
-            if str(i).find(f) != -1:
-                sp_i = str(i).split(".")
-                if sp_i[1] == f:
-                    first_concept = i
-
-        for j in concepts_lists:
-            if str(j).find(s) != -1:
-                sp_j = str(j).split(".")
-                if sp_j[1] == s:
-                    second_concept = j
-
-        first_concept.isPartOf = [second_concept]
-        # onto.save(file="filename")
-        onto.save(file=myOntoPath[0])
-        messagebox.showinfo("successful!", f"The {f} is_part_of {s}!")
-    except TypeError:
-        messagebox.showinfo(
-            "Unsuccessful!", f"The {f} was not made is_part_of the {s}!")
 
 
 def show_concept_have_vul():

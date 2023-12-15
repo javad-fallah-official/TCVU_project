@@ -41,14 +41,14 @@ class NetworkSecurityOntologyApp:
         self.search_str = StringVar()
         self.strResult = StringVar()
         self.txtDelUser = StringVar()
-        self.txtUser = StringVar()
         self.txtAbility = StringVar()
         self.txtAbility = StringVar()
-        self.myOntoPath = list()
-        self.var = IntVar()
-        self.listboxVul = Listbox()
         self.R1AddTxt = StringVar()
         self.R2AddTxt = StringVar()
+        self.txtUser = StringVar()
+        self.listboxVul = Listbox()
+        self.myOntoPath = list()
+        self.var = IntVar()
 
     # all tabs initialized
     def create_tabs(self):
@@ -73,32 +73,27 @@ class NetworkSecurityOntologyApp:
         lblConceptsValue = ttk.Label(
             main_tab, textvariable=self.my_concept_var)
         lblConceptsValue.place(x=240, y=440)
-
         lblVulnerabilities = ttk.Label(
             main_tab, text="Number of concepts we Vulnerabilities support: ", anchor="e")
         lblVulnerabilities.place(x=10, y=460)
         lblVul = ttk.Label(main_tab, textvariable=self.my_Vulnerabilities_var)
         lblVul.place(x=260, y=460)
-
         lblSubClassOf = ttk.Label(
             main_tab, text="Number of SubClassOf: ", anchor="e")
         lblSubClassOf.place(x=10, y=480)
         lblSubClass = ttk.Label(main_tab, textvariable=self.my_subclasses_var)
         lblSubClass.place(x=140, y=480)
-
         lblIsPartOf = ttk.Label(
             main_tab, text="Number of IsPartOf relationship: ", anchor="e")
         lblIsPartOf.place(x=10, y=500)
         lblIsPart = ttk.Label(main_tab, textvariable=self.my_is_part_of_var)
         lblIsPart.place(x=190, y=500)
-
         lblHasVulnerability = ttk.Label(
             main_tab, text="Number of hasVulnerability relationship: ", anchor="e")
         lblHasVulnerability.place(x=10, y=520)
         lblHasVulnerabilityValue = ttk.Label(
             main_tab, textvariable=self.my_has_vulnerability_var)
         lblHasVulnerabilityValue.place(x=230, y=520)
-
         lblRelationships = ttk.Label(
             main_tab, text="Relationships: ", anchor="e")
         lblRelationships.place(x=10, y=540)
@@ -182,7 +177,6 @@ class NetworkSecurityOntologyApp:
         LblVulnerabilityConcepts = ttk.Label(
             vulnerabilitiesGroupBox, text="Select Concepts:", anchor="e")
         LblVulnerabilityConcepts.place(x=60, y=330)
-
         self.conceptsCombo = ttk.Combobox(
             vulnerabilitiesGroupBox, textvariable=self.conceptsCombo_value, state="readonly")
         self.conceptsCombo.place(x=160, y=330, width=200)
@@ -203,7 +197,6 @@ class NetworkSecurityOntologyApp:
         lblSearchInConcepts = ttk.Label(
             concepts_tab, text="Search", anchor="e")
         lblSearchInConcepts.place(x=10, y=20)
-
         TxtSearchInConcepts = Entry(concepts_tab, textvariable=self.search_str)
         TxtSearchInConcepts.bind('<Return>', self.search_concepts)
         TxtSearchInConcepts.place(x=55, y=20, width=200)
@@ -217,7 +210,6 @@ class NetworkSecurityOntologyApp:
             concepts_tab, text="Find Vulnerabilities", command=self.find_vulnerabilities_from_concept)
         btnFindVulnerabilities.pack()
         btnFindVulnerabilities.place(x=280, y=50, width=180)
-
         listFindVulnerabilities = Listbox(concepts_tab)
         listFindVulnerabilities.place(x=280, y=80, height=150, width=180)
 
@@ -226,7 +218,6 @@ class NetworkSecurityOntologyApp:
             concepts_tab, text="Find super classes", command=self.find_superclass_from_concepts)
         btnFindSuperClasses.pack()
         btnFindSuperClasses.place(x=470, y=20, width=160)
-
         listFindSuperClasses = Listbox(concepts_tab)
         listFindSuperClasses.place(x=470, y=50, height=180, width=160)
 
@@ -234,7 +225,6 @@ class NetworkSecurityOntologyApp:
         btnFindParts = ttk.Button(concepts_tab, text="Find parts")
         btnFindParts.pack()
         btnFindParts.place(x=640, y=20, width=140)
-
         listFindParts = Listbox(concepts_tab)
         listFindParts.place(x=640, y=50, height=180, width=140)
 
@@ -242,11 +232,9 @@ class NetworkSecurityOntologyApp:
         RSuperClasses = Radiobutton(
             concepts_tab, text="base on SuperClasses", value=0)
         RSuperClasses.place(x=280, y=230)
-
         RSuperClasses = Radiobutton(
             concepts_tab, text="base on Concepts parts", value=1)
         RSuperClasses.place(x=280, y=250)
-
         RSuperClasses = Radiobutton(
             concepts_tab, text="base on SuperClass and concept`s parts", value=2)
         RSuperClasses.place(x=280, y=270)
@@ -255,14 +243,52 @@ class NetworkSecurityOntologyApp:
         btnInference = ttk.Button(concepts_tab, text="inference")
         btnInference.pack()
         btnInference.place(x=280, y=320, width=120, height=50)
-
         listInference = Listbox(concepts_tab)
         listInference.place(x=440, y=320, height=230, width=340)
 
     # concepts++ tab initialized
+
     def create_concepts_plus_tab(self, tab_control):
         concepts_plus_tab = ttk.Frame(tab_control)
         tab_control.add(concepts_plus_tab, text="Concepts++")
+
+        # concepts++ added code
+        conceptsPlusTabBar = ttk.Notebook(concepts_plus_tab)
+        subClass = ttk.Frame(conceptsPlusTabBar)
+        partOf = ttk.Frame(conceptsPlusTabBar)
+        conceptsPlusTabBar.add(subClass, text="Sub class")
+        conceptsPlusTabBar.add(partOf, text="Part of")
+        conceptsPlusTabBar.pack()
+        conceptsPlusTabBar.place(x=0, y=70, width=500, height=450)
+
+        # list box for concepts++
+        self.listboxConceptPlus = Listbox(concepts_plus_tab)
+        self.listboxConceptPlus.place(x=520, y=10, height=560, width=265)
+
+        # SubClassGroupBox
+        SubClassGroupBox = LabelFrame(
+            subClass, text="Add new concepts to be sub class of existing concepts")
+        SubClassGroupBox.place(x=10, y=40, width=470, height=230)
+
+        # btn add for subclass
+        SubClassAddGroupBox = LabelFrame(subClass)
+        SubClassAddGroupBox.place(x=10, y=290, width=470, height=100)
+        btnSubClass = ttk.Button(
+            SubClassAddGroupBox, text="Add", command=self.set_subclass_of)
+        btnSubClass.pack()
+        btnSubClass.place(x=350, y=40)
+
+        # partOfGroupBox
+        partOfGroupBox = LabelFrame(partOf, text="Add new")
+        partOfGroupBox.place(x=10, y=40, width=470, height=230)
+
+        # btn add for PartOf
+        jobVulGroupBox = LabelFrame(partOf)
+        jobVulGroupBox.place(x=10, y=290, width=470, height=100)
+        btnPartOf = ttk.Button(jobVulGroupBox, text="Add",
+                               command=self.is_part_of)
+        btnPartOf.pack()
+        btnPartOf.place(x=350, y=40)
 
     # advanced check tab initialized
     def create_advanced_check_tab(self, tab_control):
@@ -511,9 +537,47 @@ class NetworkSecurityOntologyApp:
             self.listboxConceptPlus.insert(c, i[1])
             c += 1
 
+    # set_subclass_of method
+
+    def set_subclass_of(self):
+        try:
+            self.get_subclass_of()
+            self.listboxConceptPlus.insert(0, self.txtSubClass.get())
+            messagebox.showinfo("Successful!", "Added subclass!")
+        except TypeError:
+            messagebox.showinfo("Unsuccessful!", "The subclass was not added!")
+
+    # is_part_of method
+
+    def is_part_of(self):
+        f = self.txtPartOf1.get()
+        s = self.txtPartOf2.get()
+        onto = self.get_ontology(self.myOntoPath[0]).load()
+        concepts_lists = list(onto.classes())
+        first_concept = ''
+        second_concept = ''
+        try:
+            for i in concepts_lists:
+                if str(i).find(f) != -1:
+                    sp_i = str(i).split(".")
+                    if sp_i[1] == f:
+                        first_concept = i
+
+            for j in concepts_lists:
+                if str(j).find(s) != -1:
+                    sp_j = str(j).split(".")
+                    if sp_j[1] == s:
+                        second_concept = j
+
+            first_concept.isPartOf = [second_concept]
+            onto.save(file=self.myOntoPath[0])
+            messagebox.showinfo("Successful!", f"The {f} is_part_of {s}!")
+        except TypeError:
+            messagebox.showinfo(
+                "Unsuccessful!", f"The {f} was not made is_part_of the {s}!")
+
+
 # main loop
-
-
 def main():
     root = tk.Tk()
     app = NetworkSecurityOntologyApp(root)
