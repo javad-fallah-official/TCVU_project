@@ -338,18 +338,18 @@ class NetworkSecurityOntologyApp:
         Lbl1DelUser.place(x=10, y=50)
 
         # entry Delete user
-        TxtDelUser = Entry(DelUsersGroupBox, textvariable=txtDelUser)
+        TxtDelUser = Entry(DelUsersGroupBox, textvariable=self.txtDelUser)
         TxtDelUser.place(x=80, y=50, width=270)
 
         # btn for add name from listbox to delete entry
         btnGetNameFromLbox = ttk.Button(
-            DelUsersGroupBox, text="<<<", command=get_name_listbox)
+            DelUsersGroupBox, text="<<<", command=self.get_name_listbox)
         btnGetNameFromLbox.pack()
         btnGetNameFromLbox.place(x=370, y=50, width=50)
 
         # btn Delete user
         btnDelUsers = ttk.Button(
-            DelUsersGroupBox, text="Delete", command=delete_user)
+            DelUsersGroupBox, text="Delete", command=self.delete_user)
         btnDelUsers.pack()
         btnDelUsers.place(x=350, y=120)
 
@@ -359,12 +359,12 @@ class NetworkSecurityOntologyApp:
         Lbl1AddUser.place(x=10, y=50)
 
         # entry add user
-        TxtAddUser = Entry(AddUsersGroupBox, textvariable=txtUser)
+        TxtAddUser = Entry(AddUsersGroupBox, textvariable=self.txtUser)
         TxtAddUser.place(x=70, y=50, width=270)
 
         # btn add user
         btnAddUsers = ttk.Button(
-            AddUsersGroupBox, text="Add", command=add_user)
+            AddUsersGroupBox, text="Add", command=self.add_user)
         btnAddUsers.pack()
         btnAddUsers.place(x=350, y=160)
 
@@ -381,12 +381,12 @@ class NetworkSecurityOntologyApp:
         Lbl2AddAbility.place(x=330, y=50)
 
         # entry to add ability
-        TxtAddAbility = Entry(AbilityGroupBox, textvariable=txtAbility)
+        TxtAddAbility = Entry(AbilityGroupBox, textvariable=self.txtAbility)
         TxtAddAbility.place(x=50, y=50, width=270)
 
         # btn to add ability in ability tab
         btnAddAbility = ttk.Button(
-            AbilityGroupBox, text="Add", command=add_ability)
+            AbilityGroupBox, text="Add", command=self.add_ability)
         btnAddAbility.pack()
         btnAddAbility.place(x=350, y=160)
 
@@ -404,25 +404,25 @@ class NetworkSecurityOntologyApp:
         Lbl4DelAbility.place(x=0, y=110)
 
         # Entry to delete ability
-        TxtDelAbility = Entry(AbilityDelGroupBox, textvariable=txtAbility)
+        TxtDelAbility = Entry(AbilityDelGroupBox, textvariable=self.txtAbility)
         TxtDelAbility.place(x=105, y=50, width=215)
 
         # btn del ability
         btnDelAbility = ttk.Button(
-            AbilityDelGroupBox, text="Delete", command=delete_ability)
+            AbilityDelGroupBox, text="Delete", command=self.delete_ability)
         btnDelAbility.pack()
         btnDelAbility.place(x=350, y=150)
 
         # btn for show user ability
         btnShowUserAbl = ttk.Button(
-            Ability, text='Show Selected User Ability', command=show_user_ability)
+            Ability, text='Show Selected User Ability', command=self.show_user_ability)
         btnShowUserAbl.pack()
         btnShowUserAbl.place(x=520, y=260, height=30, width=250)
 
         # list box2 for Ability
         listboxAbility = Listbox(Ability)
         listboxAbility.place(x=520, y=312, height=180, width=250)
-        listboxAbility.bind("<<ListboxSelect>>", update_entry)
+        listboxAbility.bind("<<ListboxSelect>>", self.update_entry)
 
         # label for list box user ability
         lbl_user_ability = Label(Ability, text='User Ability :')
@@ -434,7 +434,7 @@ class NetworkSecurityOntologyApp:
 
         # btn to add vulnerabilities to text box
         btnAddVulTextBox = ttk.Button(
-            jobVulGroupBox, text="Add", command=add_vul_to_txtbox, state=DISABLED)
+            jobVulGroupBox, text="Add", command=self.add_vul_to_txtbox, state=DISABLED)
         btnAddVulTextBox.place(x=230, y=160, width=225)
 
         # txt in job Vulnerabilities group box
@@ -451,7 +451,7 @@ class NetworkSecurityOntologyApp:
 
         # btn to show user ability job tab
         btnShowUserAblJob = ttk.Button(
-            job, text='Show Selected User Ability', command=show_user_ability)
+            job, text='Show Selected User Ability', command=self.show_user_ability)
         btnShowUserAblJob.pack()
         btnShowUserAblJob.place(x=520, y=260, height=30, width=250)
 
@@ -470,17 +470,17 @@ class NetworkSecurityOntologyApp:
         # radio buttons in job tab
         job_radio = tk.IntVar()
         class_radio = Radiobutton(jobVulGroupBox, text="Base on class",
-                                  value=0, variable=job_radio, command=by_class)
+                                  value=0, variable=job_radio, command=self.by_class)
         class_radio.place(x=10, y=10)
 
         vul_radio2 = Radiobutton(jobVulGroupBox, text="Base on vulnerabilities",
-                                 value=1, variable=job_radio, command=by_vul)
+                                 value=1, variable=job_radio, command=self.by_vul)
         vul_radio2.place(x=10, y=30)
 
         # vulnerabilities combo box in job tab
         jobVulCombo = ttk.Combobox(jobVulGroupBox, state='readonly')
         jobVulCombo.place(x=10, y=90, width=180)
-        jobVulCombo.bind("<<ComboboxSelected>>", update_listbox)
+        jobVulCombo.bind("<<ComboboxSelected>>", self.update_listbox)
 
         # make group box for tab Job in User
         jobTimeGroupBox = LabelFrame(job, text="Add new")
@@ -506,11 +506,11 @@ class NetworkSecurityOntologyApp:
 
         # spin boxes in job tab
         TxtFromTime = Spinbox(jobTimeGroupBox, from_=1, to=max_value, validate="key",
-                              validatecommand=(root.register(validate_spinbox_input), '%P'))
+                              validatecommand=(self.register(self.validate_spinbox_input), '%P'))
         TxtFromTime.place(x=100, y=20, width=40)
 
         TxtToTime = Spinbox(jobTimeGroupBox, from_=1, to=max_value, validate="key",
-                            validatecommand=(root.register(validate_spinbox_input), '%P'))
+                            validatecommand=(self.register(self.validate_spinbox_input), '%P'))
         TxtToTime.place(x=100, y=80, width=40)
 
         from_date_entry = DateEntry(jobTimeGroupBox, width=12, background='darkblue',
@@ -522,7 +522,7 @@ class NetworkSecurityOntologyApp:
         to_date_entry.place(x=220, y=80)
 
         btn_save_job = ttk.Button(
-            jobTimeGroupBox, text="Save", command=add_job)
+            jobTimeGroupBox, text="Save", command=self.add_job)
         btn_save_job.place(x=350, y=140)
 
     # loading file and datas
@@ -800,6 +800,35 @@ class NetworkSecurityOntologyApp:
         except TypeError:
             messagebox.showinfo(
                 "Unsuccessful!", f"The {f} was not made is_part_of the {s}!")
+
+    def show_remove_concepts(self):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        vulnerabilities_items = list(onto.hasVulnerability.get_relations())
+        concepts_lists = list(onto.classes())
+        vulnerability_name = self.RRemoveTxt.get()
+
+        for concept in concepts_lists:
+            for vulnerability in vulnerabilities_items:
+                if concept == vulnerability[0] and vulnerability[1] == vulnerability_name:
+                    sp_concepts = str(concept).split(".")
+                    self.conceptsCombo['values'] = sp_concepts[1]
+
+    def get_subclass_of(self):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        txt_subclass = str(self.txtSubClass.get())
+        concept = self.listboxConceptPlus.get(ACTIVE)
+        concepts_lists = list(onto.classes())
+        c = ''
+
+        for item in concepts_lists:
+            sp_concept = str(item).split(".")
+            if sp_concept[1] == concept:
+                c = item
+
+        with onto:
+            new_class = types.new_class(txt_subclass, (c,))
+
+        onto.save(file=self.myOntoPath[0])
 
 
 # main loop

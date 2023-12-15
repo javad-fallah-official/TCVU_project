@@ -10,38 +10,6 @@ from os.path import dirname, abspath, join
 from tkcalendar import DateEntry
 
 
-def show_remove_concepts():
-    onto = get_ontology(myOntoPath[0]).load()
-    vulnerabilities_items = list(onto.hasVulnerability.get_relations())
-    concepts_lists = list(onto.classes())
-    vulnerability_name = RRemoveTxt.get()
-
-    for concept in concepts_lists:
-        for vulnerability in vulnerabilities_items:
-            if concept == vulnerability[0] and vulnerability[1] == vulnerability_name:
-                sp_concepts = str(concept).split(".")
-                conceptsCombo['values'] = sp_concepts[1]
-
-
-def get_subclass_of():
-    onto = get_ontology(myOntoPath[0]).load()
-    txt_subclass = str(txtSubClass.get())
-    concept = listboxConceptPlus.get(ACTIVE)
-    concepts_lists = list(onto.classes())
-    c = ''
-
-    for item in concepts_lists:
-        sp_concept = str(item).split(".")
-        if sp_concept[1] == concept:
-            c = item
-
-    with onto:
-        new_class = types.new_class(txt_subclass, (c,))
-
-    # onto.save(file="filename")
-    onto.save(file=myOntoPath[0])
-
-
 def get_first_concept_obj():
     first_concept = ""
     if checkVar1.get() == 1:
