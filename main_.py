@@ -8,51 +8,6 @@ from os.path import dirname, abspath, join
 from tkcalendar import DateEntry
 
 
-# txt in ability
-Lbl1AddAbility = ttk.Label(AbilityGroupBox, text="Add : ", anchor="e")
-Lbl1AddAbility.place(x=10, y=50)
-Lbl2AddAbility = ttk.Label(
-    AbilityGroupBox, text="to be Ability of", anchor="e")
-Lbl2AddAbility.place(x=330, y=50)
-# entery to add ability
-
-TxtAddAbility = Entry(AbilityGroupBox, textvariable=txtAbility)
-TxtAddAbility.place(x=50, y=50, width=270)
-# bt to add ability in ability tab
-btnAddAbility = ttk.Button(AbilityGroupBox, text="Add", command=add_ability)
-btnAddAbility.pack()
-btnAddAbility.place(x=350, y=160)
-# ability delete group box
-AbilityDelGroupBox = LabelFrame(Ability, text='Delete Ability')
-AbilityDelGroupBox.place(x=10, y=260, width=470, height=232)
-# txt for delete ability Gbox
-Lbl1DelAbility = ttk.Label(
-    AbilityDelGroupBox, text="Delete Ability Of : ", anchor="e")
-Lbl1DelAbility.place(x=5, y=50)
-Lbl4DelAbility = ttk.Label(AbilityDelGroupBox, text="Select the Ability "
-                           "from the right side list", anchor="e")
-Lbl4DelAbility.place(x=0, y=110)
-# Entery to delete ability
-
-TxtDelAbility = Entry(AbilityDelGroupBox, textvariable=txtAbility)
-TxtDelAbility.place(x=105, y=50, width=215)
-# btn del ability
-btnDelAbility = ttk.Button(
-    AbilityDelGroupBox, text="Delete", command=delete_ability)
-btnDelAbility.pack()
-btnDelAbility.place(x=350, y=150)
-# btn for show user ability
-btnShowUserAbl = ttk.Button(
-    Ability, text='Show Selected User Ability', command=show_user_ability)
-btnShowUserAbl.pack()
-btnShowUserAbl.place(x=520, y=260, height=30, width=250)
-# list box2 for Ability
-listboxAbility = Listbox(Ability)
-listboxAbility.place(x=520, y=312, height=180, width=250)
-listboxAbility.bind("<<ListboxSelect>>", update_entry)
-# label for list box user ability
-lbl_user_ability = Label(Ability, text='User Ability :')
-lbl_user_ability.place(x=520, y=290)
 # job Tab vulnerabilities group box
 jobVulGroupBox = LabelFrame(job, text='Select vulnerabilities')
 jobVulGroupBox.place(x=10, y=20, width=470, height=300)

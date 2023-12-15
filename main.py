@@ -368,6 +368,66 @@ class NetworkSecurityOntologyApp:
         btnAddUsers.pack()
         btnAddUsers.place(x=350, y=160)
 
+        # make group box for tab Ability in User
+        AbilityGroupBox = LabelFrame(Ability, text="Add new Ability")
+        AbilityGroupBox.place(x=10, y=10, width=470, height=230)
+
+        # txt in ability
+        Lbl1AddAbility = ttk.Label(AbilityGroupBox, text="Add : ", anchor="e")
+        Lbl1AddAbility.place(x=10, y=50)
+
+        Lbl2AddAbility = ttk.Label(
+            AbilityGroupBox, text="to be Ability of", anchor="e")
+        Lbl2AddAbility.place(x=330, y=50)
+
+        # entry to add ability
+        TxtAddAbility = Entry(AbilityGroupBox, textvariable=txtAbility)
+        TxtAddAbility.place(x=50, y=50, width=270)
+
+        # btn to add ability in ability tab
+        btnAddAbility = ttk.Button(
+            AbilityGroupBox, text="Add", command=add_ability)
+        btnAddAbility.pack()
+        btnAddAbility.place(x=350, y=160)
+
+        # ability delete group box
+        AbilityDelGroupBox = LabelFrame(Ability, text='Delete Ability')
+        AbilityDelGroupBox.place(x=10, y=260, width=470, height=232)
+
+        # txt for delete ability Gbox
+        Lbl1DelAbility = ttk.Label(
+            AbilityDelGroupBox, text="Delete Ability Of : ", anchor="e")
+        Lbl1DelAbility.place(x=5, y=50)
+
+        Lbl4DelAbility = ttk.Label(AbilityDelGroupBox, text="Select the Ability "
+                                   "from the right side list", anchor="e")
+        Lbl4DelAbility.place(x=0, y=110)
+
+        # Entry to delete ability
+        TxtDelAbility = Entry(AbilityDelGroupBox, textvariable=txtAbility)
+        TxtDelAbility.place(x=105, y=50, width=215)
+
+        # btn del ability
+        btnDelAbility = ttk.Button(
+            AbilityDelGroupBox, text="Delete", command=delete_ability)
+        btnDelAbility.pack()
+        btnDelAbility.place(x=350, y=150)
+
+        # btn for show user ability
+        btnShowUserAbl = ttk.Button(
+            Ability, text='Show Selected User Ability', command=show_user_ability)
+        btnShowUserAbl.pack()
+        btnShowUserAbl.place(x=520, y=260, height=30, width=250)
+
+        # list box2 for Ability
+        listboxAbility = Listbox(Ability)
+        listboxAbility.place(x=520, y=312, height=180, width=250)
+        listboxAbility.bind("<<ListboxSelect>>", update_entry)
+
+        # label for list box user ability
+        lbl_user_ability = Label(Ability, text='User Ability :')
+        lbl_user_ability.place(x=520, y=290)
+
     # loading file and datas
     def open_file(self):
         path = self.file_open_box()
