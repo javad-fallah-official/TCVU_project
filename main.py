@@ -742,13 +742,8 @@ class NetworkSecurityOntologyApp:
         onto = get_ontology(self.myOntoPath[0]).load()
         concepts_lists = list(onto.classes())
         concept_name = self.listboxConcepts.get(tk.ACTIVE)
-        c_name = ''
-
-        if isinstance(concept_name, tuple):
-            c_name = concept_name[0]
-        else:
-            c_name = concept_name
-
+        c_name = concept_name[0] if isinstance(
+            concept_name, tuple) else concept_name
         for concept in concepts_lists:
             sp_concept = str(concept).split(".")
             if sp_concept[1] == c_name:
@@ -1088,12 +1083,8 @@ class NetworkSecurityOntologyApp:
             onto.hasVulnerability.get_relations())
         concepts_lists = list(onto.classes())
         concept_name = self.listboxConcepts.get(ACTIVE)
-        c_name = ''
-
-        if isinstance(concept_name, tuple):
-            c_name = concept_name[0]
-        else:
-            c_name = concept_name
+        c_name = concept_name[0] if isinstance(
+            concept_name, tuple) else concept_name
 
         for concept in concepts_lists:
             for vulnerability in self.vulnerabilities_items:
