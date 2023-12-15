@@ -715,15 +715,17 @@ class NetworkSecurityOntologyApp:
 
     def search_concepts(self, event):
         concepts_list = self.split_concepts()
-        search_string = self.search_str.get()
+        search_string = self.search_str.get().lower()
         self.listboxConcepts.delete(0, tk.END)
+
         if search_string == "":
             self.show_concepts()
         else:
             filtered_data = list()
             for item in concepts_list:
-                if item[1].find(search_string) != -1:
+                if item[1].lower().find(search_string) != -1:
                     filtered_data.append(item[1])
+
             for data in filtered_data:
                 self.listboxConcepts.insert(tk.END, data)
 
