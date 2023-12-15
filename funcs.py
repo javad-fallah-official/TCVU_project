@@ -10,22 +10,6 @@ from os.path import dirname, abspath, join
 from tkcalendar import DateEntry
 
 
-def set_first_concept_obj():
-    onto = get_ontology(myOntoPath[0]).load()
-    concepts_lists = list(onto.classes())
-    new_concept = txtPartOf1.get()
-    first_concept = get_first_concept_obj()
-    concept = first_concept
-
-    for i in concepts_lists:
-        if str(i).find(concept) != -1:
-            sp_item = str(i).split(".")
-            if sp_item[1] == concept:
-                new_concept = concept
-
-    return new_concept
-
-
 def get_second_concept_obj():
     second_concept = ""
 
