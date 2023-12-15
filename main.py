@@ -432,18 +432,6 @@ class NetworkSecurityOntologyApp:
         UserTabBar.add(job, text="Job")
         UserTabBar.pack()
         UserTabBar.place(x=0, y=20, width=800, height=600)
-        # User tab
-        UserTabBar = ttk.Notebook(user_tab)
-        Users = ttk.Frame(user_tab)
-        Ability = ttk.Frame(UserTabBar)
-        job = ttk.Frame(UserTabBar)
-
-        # make tab bar in concepts++
-        UserTabBar.add(Users, text='Users')
-        UserTabBar.add(Ability, text="Ability")
-        UserTabBar.add(job, text="Job")
-        UserTabBar.pack()
-        UserTabBar.place(x=0, y=20, width=800, height=600)
 
         # make group box for add Users in User
         AddUsersGroupBox = LabelFrame(Users, text="Add new User")
@@ -453,14 +441,22 @@ class NetworkSecurityOntologyApp:
         DelUsersGroupBox = LabelFrame(Users, text="Delete User")
         DelUsersGroupBox.place(x=10, y=250, width=470, height=180)
 
+        # label for user list box
+        usr_lb_label = Label(user_tab, text='User list :')
+        usr_lb_label.place(x=520, y=46, height=10)
+
+        # list box for User
+        self.listboxUsers = Listbox(user_tab)
+        self.listboxUsers.place(x=520, y=60, height=230, width=250)
+
         # text Delete user
         Lbl1DelUser = ttk.Label(
             DelUsersGroupBox, text="Delete User: ", anchor="e")
         Lbl1DelUser.place(x=10, y=50)
 
         # entry Delete user
-        TxtDelUser = Entry(DelUsersGroupBox, textvariable=self.txtDelUser)
-        TxtDelUser.place(x=80, y=50, width=270)
+        self.TxtDelUser = Entry(DelUsersGroupBox, textvariable=self.txtDelUser)
+        self.TxtDelUser.place(x=80, y=50, width=270)
 
         # btn for add name from listbox to delete entry
         btnGetNameFromLbox = ttk.Button(
@@ -480,8 +476,8 @@ class NetworkSecurityOntologyApp:
         Lbl1AddUser.place(x=10, y=50)
 
         # entry add user
-        TxtAddUser = Entry(AddUsersGroupBox, textvariable=self.txtUser)
-        TxtAddUser.place(x=70, y=50, width=270)
+        self.TxtAddUser = Entry(AddUsersGroupBox, textvariable=self.txtUser)
+        self.TxtAddUser.place(x=70, y=50, width=270)
 
         # btn add user
         btnAddUsers = ttk.Button(
@@ -502,8 +498,9 @@ class NetworkSecurityOntologyApp:
         Lbl2AddAbility.place(x=330, y=50)
 
         # entry to add ability
-        TxtAddAbility = Entry(AbilityGroupBox, textvariable=self.txtAbility)
-        TxtAddAbility.place(x=50, y=50, width=270)
+        self.TxtAddAbility = Entry(
+            AbilityGroupBox, textvariable=self.txtAbility)
+        self.TxtAddAbility.place(x=50, y=50, width=270)
 
         # btn to add ability in ability tab
         btnAddAbility = ttk.Button(
@@ -525,8 +522,9 @@ class NetworkSecurityOntologyApp:
         Lbl4DelAbility.place(x=0, y=110)
 
         # Entry to delete ability
-        TxtDelAbility = Entry(AbilityDelGroupBox, textvariable=self.txtAbility)
-        TxtDelAbility.place(x=105, y=50, width=215)
+        self.TxtDelAbility = Entry(
+            AbilityDelGroupBox, textvariable=self.txtAbility)
+        self.TxtDelAbility.place(x=105, y=50, width=215)
 
         # btn del ability
         btnDelAbility = ttk.Button(
@@ -541,9 +539,9 @@ class NetworkSecurityOntologyApp:
         btnShowUserAbl.place(x=520, y=260, height=30, width=250)
 
         # list box2 for Ability
-        listboxAbility = Listbox(Ability)
-        listboxAbility.place(x=520, y=312, height=180, width=250)
-        listboxAbility.bind("<<ListboxSelect>>", self.update_entry)
+        self.listboxAbility = Listbox(Ability)
+        self.listboxAbility.place(x=520, y=312, height=180, width=250)
+        self.listboxAbility.bind("<<ListboxSelect>>", self.update_entry)
 
         # label for list box user ability
         lbl_user_ability = Label(Ability, text='User Ability :')
@@ -554,9 +552,9 @@ class NetworkSecurityOntologyApp:
         jobVulGroupBox.place(x=10, y=20, width=470, height=300)
 
         # btn to add vulnerabilities to text box
-        btnAddVulTextBox = ttk.Button(
+        self.btnAddVulTextBox = ttk.Button(
             jobVulGroupBox, text="Add", command=self.add_vul_to_txtbox, state=DISABLED)
-        btnAddVulTextBox.place(x=230, y=160, width=225)
+        self.btnAddVulTextBox.place(x=230, y=160, width=225)
 
         # txt in job Vulnerabilities group box
         lbl1AddJob = ttk.Label(
@@ -567,8 +565,8 @@ class NetworkSecurityOntologyApp:
         lbl2AddJob.place(x=10, y=70)
 
         # list box for Vulnerabilities in job tab
-        listboxvuljob = Listbox(jobVulGroupBox)
-        listboxvuljob.place(x=230, y=30, height=120, width=225)
+        self.listboxvuljob = Listbox(jobVulGroupBox)
+        self.listboxvuljob.place(x=230, y=30, height=120, width=225)
 
         # btn to show user ability job tab
         btnShowUserAblJob = ttk.Button(
@@ -577,25 +575,25 @@ class NetworkSecurityOntologyApp:
         btnShowUserAblJob.place(x=520, y=260, height=30, width=250)
 
         # list box for user ability in job tab
-        listboxAbilityJob = Listbox(job)
-        listboxAbilityJob.place(x=520, y=312, height=180, width=250)
+        self.listboxAbilityJob = Listbox(job)
+        self.listboxAbilityJob.place(x=520, y=312, height=180, width=250)
 
         # label for list box user ability in job tab
         lbl_user_ability = Label(job, text='User Ability :')
         lbl_user_ability.place(x=520, y=290)
 
         # text box to add vulnerabilities job
-        textboxVul = Text(jobVulGroupBox, state=DISABLED)
-        textboxVul.place(x=230, y=195, height=80, width=225)
+        self.textboxVul = Text(jobVulGroupBox, state=DISABLED)
+        self.textboxVul.place(x=230, y=195, height=80, width=225)
 
         # radio buttons in job tab
-        job_radio = tk.IntVar()
+        self.job_radio = tk.IntVar()
         class_radio = Radiobutton(jobVulGroupBox, text="Base on class",
-                                  value=0, variable=job_radio, command=self.by_class)
+                                  value=0, variable=self.job_radio, command=self.by_class)
         class_radio.place(x=10, y=10)
 
         vul_radio2 = Radiobutton(jobVulGroupBox, text="Base on vulnerabilities",
-                                 value=1, variable=job_radio, command=self.by_vul)
+                                 value=1, variable=self.job_radio, command=self.by_vul)
         vul_radio2.place(x=10, y=30)
 
         # vulnerabilities combo box in job tab
@@ -624,18 +622,18 @@ class NetworkSecurityOntologyApp:
 
         # spin boxes in job tab
 
-        TxtFromTime = Spinbox(jobTimeGroupBox, from_=1, to=self.max_value, validate="key",
-                              validatecommand=(self.master.register(self.validate_spinbox_input), '%P'))
-        TxtToTime = Spinbox(jobTimeGroupBox, from_=1, to=self.max_value, validate="key",
-                            validatecommand=(self.master.register(self.validate_spinbox_input), '%P'))
+        self.TxtFromTime = Spinbox(jobTimeGroupBox, from_=1, to=self.max_value, validate="key",
+                                   validatecommand=(self.master.register(self.validate_spinbox_input), '%P'))
+        self.TxtToTime = Spinbox(jobTimeGroupBox, from_=1, to=self.max_value, validate="key",
+                                 validatecommand=(self.master.register(self.validate_spinbox_input), '%P'))
 
-        from_date_entry = DateEntry(jobTimeGroupBox, width=12, background='darkblue',
-                                    foreground='white', borderwidth=2, date_pattern='dd/MM/y', state='readonly')
-        from_date_entry.place(x=220, y=20)
+        self.from_date_entry = DateEntry(jobTimeGroupBox, width=12, background='darkblue',
+                                         foreground='white', borderwidth=2, date_pattern='dd/MM/y', state='readonly')
+        self.from_date_entry.place(x=220, y=20)
 
-        to_date_entry = DateEntry(jobTimeGroupBox, width=12, background='darkblue',
-                                  foreground='white', borderwidth=2, date_pattern='dd/MM/y', state='readonly')
-        to_date_entry.place(x=220, y=80)
+        self.to_date_entry = DateEntry(jobTimeGroupBox, width=12, background='darkblue',
+                                       foreground='white', borderwidth=2, date_pattern='dd/MM/y', state='readonly')
+        self.to_date_entry.place(x=220, y=80)
 
         btn_save_job = ttk.Button(
             jobTimeGroupBox, text="Save", command=self.add_job)
