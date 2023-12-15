@@ -48,7 +48,16 @@ class NetworkSecurityOntologyApp:
         self.txtUser = StringVar()
         self.listboxVul = Listbox()
         self.myOntoPath = list()
+        self.vul_list = list()
+        self.vul_list2 = list()
+        self.listboxUsers = Listbox()
         self.var = IntVar()
+        self.concepts_list = list()
+        self.new_concepts_list = list()
+        self.vulnerability_items = list()
+        self.concepts_items = list()
+        self.concept_vulnerabilities_list = list()
+        self.max_value = 24
 
     # all tabs initialized
     def create_tabs(self):
@@ -169,9 +178,9 @@ class NetworkSecurityOntologyApp:
         RRemoveLbl = ttk.Label(
             RRemoveGroupBox, text="Select vulnerability:", anchor="e")
         RRemoveLbl.place(x=10, y=10)
-        RRemoveTxt = Entry(RRemoveGroupBox, state="disabled",
-                           textvariable=self.name_vulnerability)
-        RRemoveTxt.place(x=120, y=10, width=270)
+        self.RRemoveTxt = Entry(RRemoveGroupBox, state="disabled",
+                                textvariable=self.name_vulnerability)
+        self.RRemoveTxt.place(x=120, y=10, width=270)
 
         # Select concepts
         LblVulnerabilityConcepts = ttk.Label(
@@ -210,16 +219,16 @@ class NetworkSecurityOntologyApp:
             concepts_tab, text="Find Vulnerabilities", command=self.find_vulnerabilities_from_concept)
         btnFindVulnerabilities.pack()
         btnFindVulnerabilities.place(x=280, y=50, width=180)
-        listFindVulnerabilities = Listbox(concepts_tab)
-        listFindVulnerabilities.place(x=280, y=80, height=150, width=180)
+        self.listFindVulnerabilities = Listbox(concepts_tab)
+        self.listFindVulnerabilities.place(x=280, y=80, height=150, width=180)
 
         # find super classes
         btnFindSuperClasses = ttk.Button(
             concepts_tab, text="Find super classes", command=self.find_superclass_from_concepts)
         btnFindSuperClasses.pack()
         btnFindSuperClasses.place(x=470, y=20, width=160)
-        listFindSuperClasses = Listbox(concepts_tab)
-        listFindSuperClasses.place(x=470, y=50, height=180, width=160)
+        self.listFindSuperClasses = Listbox(concepts_tab)
+        self.listFindSuperClasses.place(x=470, y=50, height=180, width=160)
 
         # find Parts
         btnFindParts = ttk.Button(concepts_tab, text="Find parts")
@@ -478,9 +487,9 @@ class NetworkSecurityOntologyApp:
         vul_radio2.place(x=10, y=30)
 
         # vulnerabilities combo box in job tab
-        jobVulCombo = ttk.Combobox(jobVulGroupBox, state='readonly')
-        jobVulCombo.place(x=10, y=90, width=180)
-        jobVulCombo.bind("<<ComboboxSelected>>", self.update_listbox)
+        self.jobVulCombo = ttk.Combobox(jobVulGroupBox, state='readonly')
+        self.jobVulCombo.place(x=10, y=90, width=180)
+        self.jobVulCombo.bind("<<ComboboxSelected>>", self.update_listbox)
 
         # make group box for tab Job in User
         jobTimeGroupBox = LabelFrame(job, text="Add new")
@@ -501,17 +510,12 @@ class NetworkSecurityOntologyApp:
         lbl2AddJob = ttk.Label(jobTimeGroupBox, text="Date:", anchor="e")
         lbl2AddJob.place(x=180, y=80)
 
-        # max value for time spinbox in job tab
-        max_value = 24
-
         # spin boxes in job tab
-        TxtFromTime = Spinbox(jobTimeGroupBox, from_=1, to=max_value, validate="key",
-                              validatecommand=(self.register(self.validate_spinbox_input), '%P'))
-        TxtFromTime.place(x=100, y=20, width=40)
 
-        TxtToTime = Spinbox(jobTimeGroupBox, from_=1, to=max_value, validate="key",
-                            validatecommand=(self.register(self.validate_spinbox_input), '%P'))
-        TxtToTime.place(x=100, y=80, width=40)
+        TxtFromTime = Spinbox(jobTimeGroupBox, from_=1, to=self.max_value, validate="key",
+                              validatecommand=(self.master.register(self.validate_spinbox_input), '%P'))
+        TxtToTime = Spinbox(jobTimeGroupBox, from_=1, to=self.max_value, validate="key",
+                            validatecommand=(self.master.register(self.validate_spinbox_input), '%P'))
 
         from_date_entry = DateEntry(jobTimeGroupBox, width=12, background='darkblue',
                                     foreground='white', borderwidth=2, date_pattern='dd/MM/y', state='readonly')
@@ -598,30 +602,28 @@ class NetworkSecurityOntologyApp:
             new_vul.append(sp_x[1])
 
         vulnerability_list = list(onto.hasVulnerability.get_relations())
-        vulnerability_items = list()
         for i in vulnerability_list:
-            vulnerability_items.append(i[1])
+            self.vulnerability_items.append(i[1])
 
-        vulnerability_items.extend(new_vul)
-        for i in vulnerability_items:
+        self.vulnerability_items.extend(new_vul)
+        for i in self.vulnerability_items:
             self.listboxVul.insert(END, i)
 
     # finding concepts
     def split_concepts(self):
         onto = get_ontology(self.myOntoPath[0]).load()
-        concepts_list = list()
         concepts_lists = list(onto.classes())
         for i in concepts_lists:
-            concepts_list.append(str(i).split("."))
-        return concepts_list
+            self.concepts_list.append(str(i).split("."))
+        return self.concepts_list
 
     # adding concepts to box
     def set_concepts_combobox(self):
-        new_concepts_list = list()
+
         concepts_list = self.split_concepts()
         for i in concepts_list:
-            new_concepts_list.append(i[1])
-        self.conceptsCombo['values'] = new_concepts_list
+            self.new_concepts_list.append(i[1])
+        self.conceptsCombo['values'] = self.new_concepts_list
 
     # checking wich radio button and disable other ones
     def show_vulnerabilities_option(self):
@@ -726,15 +728,16 @@ class NetworkSecurityOntologyApp:
                 self.listboxConcepts.insert(tk.END, data)
 
     def find_vulnerabilities_from_concept(self):
-        vul_list = self.show_vulnerabilities_from_concepts()
+        self.vul_list = self.show_vulnerabilities_from_concepts()
         self.listboxVul.delete(0, tk.END)
         c = 1
-
-        for item in vul_list:
-            self.listFindVulnerabilities.insert(c, item)
-            c += 1
+        if self.vul_list:
+            for item in self.vul_list:
+                self.listFindVulnerabilities.insert(c, item)
+                c += 1
 
     # show_superclass_from_concepts method
+
     def find_superclass_from_concepts(self):
         onto = get_ontology(self.myOntoPath[0]).load()
         concepts_lists = list(onto.classes())
@@ -858,7 +861,6 @@ class NetworkSecurityOntologyApp:
     def show_concept_have_vul(self):
         onto = get_ontology(self.myOntoPath[0]).load()
         concepts_list = list(onto.hasVulnerability.get_relations())
-        concepts_items = list()
 
         for i in concepts_list:
             concepts_items.append(i[0])
@@ -880,8 +882,8 @@ class NetworkSecurityOntologyApp:
 
     def show_concept_not_vul(self):
         onto = get_ontology(self.myOntoPath[0]).load()
-        vul_list = list(onto.hasVulnerability.get_relations())
-        vul_items = [str(i[0]).split(".")[1] for i in vul_list]
+        self.vul_list = list(onto.hasVulnerability.get_relations())
+        vul_items = [str(i[0]).split(".")[1] for i in self.vul_list]
 
         con_list = list(onto.classes())
         con_item = [str(i).split(".")[1] for i in con_list]
@@ -906,9 +908,9 @@ class NetworkSecurityOntologyApp:
 
         if selected == 1:
             text = self.textboxVul.get("1.0", "end-1c").split('\n')[:-1]
-            vul_list = [i[1] for i in self.vul_list2]
+            self.vul_list = [i[1] for i in self.vul_list2]
 
-            if not set(text).issubset(vul_list):
+            if not set(text).issubset(self.vul_list):
                 messagebox.showwarning(
                     'Warning', 'The selected vulnerability is not in the list')
             elif not text:
@@ -950,12 +952,12 @@ class NetworkSecurityOntologyApp:
         self.textboxVul.config(state=DISABLED)
 
     def get_vulnerabilities(self):
-        global vul_list2
+
         onto = get_ontology(self.myOntoPath[0]).load()
-        vul_list = list(onto.hasVulnerability.get_relations())
-        vul_list2 = [(i[0].name, i[1]) for i in vul_list]
+        self.vul_list = list(onto.hasVulnerability.get_relations())
+        self.vul_list2 = [(i[0].name, i[1]) for i in self.vul_list]
         concepts_items = []
-        for i in vul_list:
+        for i in self.vul_list:
             if i[0].name not in concepts_items:
                 concepts_items.append(i[0].name)
         self.jobVulCombo['values'] = concepts_items
@@ -963,12 +965,12 @@ class NetworkSecurityOntologyApp:
     def update_listbox(self, event):
         selected_option = self.jobVulCombo.get()
         self.listboxvuljob.delete(0, tk.END)
-        for i in vul_list2:
+        for i in self.vul_list2:
             if i[0] == selected_option:
                 self.listboxvuljob.insert(tk.END, i[1])
 
     def validate_spinbox_input(self, input_value):
-        if input_value.isdigit() and int(input_value) <= max_value:
+        if input_value.isdigit() and int(input_value) <= self.max_value:
             return True
         elif input_value == '':
             return True
@@ -1070,6 +1072,37 @@ class NetworkSecurityOntologyApp:
         text = f'{vul}\n'
         if vul not in textbox_text:
             self.textboxVul.insert('end', text)
+
+    def show_user(self):
+        self.listboxUsers.delete(0, END)
+        onto = get_ontology(self.myOntoPath[0]).load()
+        class_name = onto.Users
+        users_name = list(class_name.subclasses())
+        for i in users_name:
+            self.listboxUsers.insert(0, i.name)
+
+    def show_vulnerabilities_from_concepts(self):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        self.listFindVulnerabilities.delete(0, END)
+        self.vulnerabilities_items = list(
+            onto.hasVulnerability.get_relations())
+        concepts_lists = list(onto.classes())
+        concept_name = self.listboxConcepts.get(ACTIVE)
+        c_name = ''
+
+        if isinstance(concept_name, tuple):
+            c_name = concept_name[0]
+        else:
+            c_name = concept_name
+
+        for concept in concepts_lists:
+            for vulnerability in self.vulnerabilities_items:
+                sp_vulnerability = str(vulnerability[0]).split(".")
+                if vulnerability[0] == concept and sp_vulnerability[1] == c_name:
+                    self.concept_vulnerabilities_list.append(vulnerability[1])
+
+        for vul in self.concept_vulnerabilities_list:
+            self.listFindVulnerabilities.insert(END, vul)
 
 
 # main loop
