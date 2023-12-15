@@ -855,6 +855,29 @@ class NetworkSecurityOntologyApp:
 
         return second_concept
 
+    def show_concept_have_vul(self):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        concepts_list = list(onto.hasVulnerability.get_relations())
+        concepts_items = list()
+
+        for i in concepts_list:
+            concepts_items.append(i[0])
+
+        new_concepts_items = []
+        for i in concepts_items:
+            sp_item = str(i).split(".")
+            new_concepts_items.append(sp_item[1])
+
+        del concepts_list
+        concepts_items = []
+        for i in new_concepts_items:
+            if i not in concepts_items:
+                concepts_items.append(i)
+
+        del new_concepts_items
+        for i in concepts_items:
+            self.listBoxHaveVul.insert(END, i)
+
 
 # main loop
 def main():

@@ -10,45 +10,6 @@ from os.path import dirname, abspath, join
 from tkcalendar import DateEntry
 
 
-def set_second_concept_obj():
-    onto = get_ontology(myOntoPath[0]).load()
-    concepts_lists = list(onto.classes())
-    new_concept = txtPartOf2.get()
-    second_concept = get_second_concept_obj()
-    concept = second_concept
-
-    for i in concepts_lists:
-        if str(i).find(concept) != -1:
-            sp_item = str(i).split(".")
-            if sp_item[1] == concept:
-                new_concept = concept
-
-    return new_concept
-
-
-def show_concept_have_vul():
-    onto = get_ontology(myOntoPath[0]).load()
-    concepts_list = list(onto.hasVulnerability.get_relations())
-    concepts_items = list()
-    for i in concepts_list:
-        concepts_items.append(i[0])
-
-    new_concepts_items = []
-    for i in concepts_items:
-        sp_item = str(i).split(".")
-        new_concepts_items.append(sp_item[1])
-
-    del concepts_list
-    concepts_items = []
-    for i in new_concepts_items:
-        if i not in concepts_items:
-            concepts_items.append(i)
-
-    del new_concepts_items
-    for i in concepts_items:
-        listBoxHaveVul.insert(END, i)
-
-
 def show_concept_not_vul():
     onto = get_ontology(myOntoPath[0]).load()
     vul_list = list(onto.hasVulnerability.get_relations())
