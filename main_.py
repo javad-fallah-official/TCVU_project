@@ -8,60 +8,6 @@ from os.path import dirname, abspath, join
 from tkcalendar import DateEntry
 
 
-
-# User tab
-UserTabBar = ttk.Notebook(UserTab)
-Users = ttk.Frame(UserTab)
-Ability = ttk.Frame(UserTabBar)
-job = ttk.Frame(UserTabBar)
-# make tab bar in concepts++
-UserTabBar.add(Users, text='Users')
-UserTabBar.add(Ability, text="Ability")
-UserTabBar.add(job, text="Job")
-UserTabBar.pack()
-UserTabBar.place(x=0, y=20, width=800, height=600)
-# make group box for add Users in User
-AddUsersGroupBox = LabelFrame(Users, text="Add new User")
-AddUsersGroupBox.place(x=10, y=10, width=470, height=230)
-# make group box for delete Users in User
-DelUsersGroupBox = LabelFrame(Users, text="Delete User")
-DelUsersGroupBox.place(x=10, y=250, width=470, height=180)
-# text Delete user
-Lbl1DelUser = ttk.Label(DelUsersGroupBox, text="Delete User: ", anchor="e")
-Lbl1DelUser.place(x=10, y=50)
-# entry Delete user
-
-TxtDelUser = Entry(DelUsersGroupBox, textvariable=txtDelUser)
-TxtDelUser.place(x=80, y=50, width=270)
-# btn for add name from listbox to delete entery
-btnGetNameFromLbox = ttk.Button(
-    DelUsersGroupBox, text="<<<", command=get_name_listbox)
-btnGetNameFromLbox.pack()
-btnGetNameFromLbox.place(x=370, y=50, width=50)
-# btn Delete user
-btnDelUsers = ttk.Button(DelUsersGroupBox, text="Delete", command=delete_user)
-btnDelUsers.pack()
-btnDelUsers.place(x=350, y=120)
-# text add user
-Lbl1AddUser = ttk.Label(AddUsersGroupBox, text="Add User: ", anchor="e")
-Lbl1AddUser.place(x=10, y=50)
-# entry add user
-
-TxtAddUser = Entry(AddUsersGroupBox, textvariable=txtUser)
-TxtAddUser.place(x=70, y=50, width=270)
-# btn add user
-btnAddUsers = ttk.Button(AddUsersGroupBox, text="Add", command=add_user)
-btnAddUsers.pack()
-btnAddUsers.place(x=350, y=160)
-# make group box for tab Ability in User
-AbilityGroupBox = LabelFrame(Ability, text="Add new Ability")
-AbilityGroupBox.place(x=10, y=10, width=470, height=230)
-# list box for User
-listboxUsers = Listbox(UserTab)
-listboxUsers.place(x=520, y=60, height=230, width=250)
-# label for user list box
-usr_lb_label = Label(UserTab, text='User list :')
-usr_lb_label.place(x=520, y=46, height=10)
 # txt in ability
 Lbl1AddAbility = ttk.Label(AbilityGroupBox, text="Add : ", anchor="e")
 Lbl1AddAbility.place(x=10, y=50)

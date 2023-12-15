@@ -164,15 +164,6 @@ def show_advance_data():
     strResult.set(str(len(has_vulnerabilities_length)))
 
 
-def show_user():
-    listboxUsers.delete(0, END)
-    onto = get_ontology(myOntoPath[0]).load()
-    class_name = onto.Users
-    users_name = list(class_name.subclasses())
-    for i in users_name:
-        listboxUsers.insert(0, i.name)
-
-
 def add_user():
     onto = get_ontology(myOntoPath[0]).load()
     user_name = TxtAddUser.get()
