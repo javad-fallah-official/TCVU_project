@@ -299,8 +299,58 @@ class NetworkSecurityOntologyApp:
     def create_advanced_check_tab(self, tab_control):
         advanced_check_tab = ttk.Frame(tab_control)
         tab_control.add(advanced_check_tab, text="Advanced Check")
+        # Advance Checked Design
+        TxtHelpInAdvance = Text(
+            advanced_check_tab, wrap=WORD, width=40, height=4)
+        TxtHelpInAdvance.insert(INSERT, "Advanced check will create a complete log of all relationships and information. "
+                                        "Note: Advance Check will take some time to complete.")
+        TxtHelpInAdvance.config(state="disabled")
+        TxtHelpInAdvance.place(x=10, y=10)
+
+        # Group box for result
+        resultGroupBox = LabelFrame(advanced_check_tab, text="Result")
+        resultGroupBox.place(x=350, y=0, width=290, height=80)
+
+        lblResult = ttk.Label(
+            resultGroupBox, text="Number of new inferred vulnerabilities: ", anchor="e")
+        lblResult.place(x=10, y=15)
+        strResult = StringVar()
+        strResult.set("0")
+        lblShowResult = ttk.Label(
+            resultGroupBox, textvariable=strResult, anchor="e")
+        lblShowResult.place(x=245, y=15)
+
+        # btn Advance check
+        btnAdvanceCheck = ttk.Button(
+            advanced_check_tab, text="Advance Check", command=self.show_advance_data)
+        btnAdvanceCheck.pack()
+        btnAdvanceCheck.place(x=660, y=8, width=120, height=70)
+
+        # label for not vulnerabilities
+        lblNotVul = ttk.Label(
+            advanced_check_tab, text="Concepts that are not vulnerabilities: ", anchor="e")
+        lblNotVul.place(x=10, y=90)
+
+        # list box for not vulnerabilities
+        self.listBoxNotVul = Listbox(advanced_check_tab)
+        self.listBoxNotVul.place(x=10, y=110, height=460, width=230)
+
+        # label for vulnerabilities
+        lblVul = ttk.Label(
+            advanced_check_tab, text="Concepts that have some vulnerabilities at first: ", anchor="e")
+        lblVul.place(x=260, y=90)
+
+        # list box for vulnerabilities
+        self.listBoxHaveVul = Listbox(advanced_check_tab)
+        self.listBoxHaveVul.place(x=260, y=110, height=460, width=230)
+
+        # label for vulnerabilities
+        lblVulRel = ttk.Label(
+            advanced_check_tab, text="V-R = Vulnerabilities Relationships", anchor="e")
+        lblVulRel.place(x=555, y=500)
 
     # user tab initialized
+
     def create_user_tab(self, tab_control):
         user_tab = ttk.Frame(tab_control)
         tab_control.add(user_tab, text="User")
@@ -853,21 +903,21 @@ class NetworkSecurityOntologyApp:
         concepts_list = list(onto.hasVulnerability.get_relations())
 
         for i in concepts_list:
-            concepts_items.append(i[0])
+            self.concepts_items.append(i[0])
 
-        new_concepts_items = []
-        for i in concepts_items:
+        self.new_concepts_items = []
+        for i in self.concepts_items:
             sp_item = str(i).split(".")
-            new_concepts_items.append(sp_item[1])
+            self.new_concepts_items.append(sp_item[1])
 
         del concepts_list
-        concepts_items = []
-        for i in new_concepts_items:
-            if i not in concepts_items:
-                concepts_items.append(i)
+        self.concepts_items = []
+        for i in self.new_concepts_items:
+            if i not in self.concepts_items:
+                self.concepts_items.append(i)
 
-        del new_concepts_items
-        for i in concepts_items:
+        del self.new_concepts_items
+        for i in self.concepts_items:
             self.listBoxHaveVul.insert(END, i)
 
     def show_concept_not_vul(self):
