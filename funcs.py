@@ -145,55 +145,6 @@ def update_listbox(event):
             listboxvuljob.insert(tk.END, i[1])
 
 
-def add_job():
-    fill_data = False
-    selected = job_radio.get()
-    if selected == 0:
-        if jobVulCombo.current() != -1:
-            selected_concept = jobVulCombo.get()
-            fill_data = True
-        else:
-            messagebox.showwarning(
-                'Warning', 'You should select a concept from combo box')
-
-    if selected == 1:
-        text = textboxVul.get("1.0", "end-1c").split('\n')[:-1]
-        vul_list = [i[1] for i in vul_list2]
-        # for vul in text:
-        if not set(text).issubset(vul_list):
-            messagebox.showwarning(
-                'Warning', 'the slected vulnerability is not in the list')
-        elif text == []:
-            messagebox.showwarning(
-                'Warning', 'You should add at least one vulnerability from list')
-        else:
-            selected_concept = text
-            fill_data = True
-
-    if fill_data:
-        if listboxUsers.curselection():
-            user = listboxUsers.get(ACTIVE)
-            start_time = TxtFromTime.get()
-            end_time = TxtToTime.get()
-            start_day = from_date_entry.get()
-            end_day = to_date_entry.get()
-            current_file_dir = dirname(abspath(__file__))
-            new_file_path = join(current_file_dir, "job.txt")
-
-            try:
-                with open('job.txt', 'a', encoding='utf-8') as f:
-                    f.write(
-                        f"*{user}* should start From : *{start_day}* at *{start_time}* and end in *{end_day}* at *{end_time}* for vulnerabilities : *{selected_concept}* \n\n")
-                messagebox.showinfo('Successful', f'job added for {user}')
-            except Exception as e:
-                messagebox.showwarning(
-                    'Unsuccessful', 'job was not added for user')
-
-        else:
-            messagebox.showwarning(
-                'Warning', 'You should select user to add job from user list box')
-
-
 def validate_spinbox_input(input_value):
     if input_value.isdigit() and int(input_value) <= max_value:
         return True

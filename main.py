@@ -892,6 +892,54 @@ class NetworkSecurityOntologyApp:
         for i in concepts_items:
             self.listBoxNotVul.insert(END, i)
 
+    def add_job(self):
+        fill_data = False
+        selected = self.job_radio.get()
+
+        if selected == 0:
+            if self.jobVulCombo.current() != -1:
+                selected_concept = self.jobVulCombo.get()
+                fill_data = True
+            else:
+                messagebox.showwarning(
+                    'Warning', 'You should select a concept from the combo box')
+
+        if selected == 1:
+            text = self.textboxVul.get("1.0", "end-1c").split('\n')[:-1]
+            vul_list = [i[1] for i in vul_list2]
+
+            if not set(text).issubset(vul_list):
+                messagebox.showwarning(
+                    'Warning', 'The selected vulnerability is not in the list')
+            elif not text:
+                messagebox.showwarning(
+                    'Warning', 'You should add at least one vulnerability from the list')
+            else:
+                selected_concept = text
+                fill_data = True
+
+        if fill_data:
+            if self.listboxUsers.curselection():
+                user = self.listboxUsers.get(ACTIVE)
+                start_time = self.TxtFromTime.get()
+                end_time = self.TxtToTime.get()
+                start_day = self.from_date_entry.get()
+                end_day = self.to_date_entry.get()
+                current_file_dir = dirname(abspath(__file__))
+                new_file_path = join(current_file_dir, "job.txt")
+
+                try:
+                    with open('job.txt', 'a', encoding='utf-8') as f:
+                        f.write(
+                            f"*{user}* should start From : *{start_day}* at *{start_time}* and end in *{end_day}* at *{end_time}* for vulnerabilities : *{selected_concept}* \n\n")
+                    messagebox.showinfo('Successful', f'Job added for {user}')
+                except Exception as e:
+                    messagebox.showwarning(
+                        'Unsuccessful', 'Job was not added for the user')
+            else:
+                messagebox.showwarning(
+                    'Warning', 'You should select a user to add a job from the user list box')
+
 
 # main loop
 def main():
