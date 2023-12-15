@@ -1,15 +1,13 @@
-import tkinter as tk
-from tkinter import ttk
-from tkinter import StringVar
-import tkinter as tk
-from tkinter import filedialog
-import types
-from tkinter import *
-from tkinter import messagebox
-from tkinter import ttk
-from owlready2 import *
 from os.path import dirname, abspath, join
 from tkcalendar import DateEntry
+from tkinter import filedialog
+from tkinter import messagebox
+from tkinter import StringVar
+from tkinter import ttk
+from owlready2 import *
+from tkinter import *
+import tkinter as tk
+import types
 
 
 class NetworkSecurityOntologyApp:
