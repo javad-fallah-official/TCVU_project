@@ -10,31 +10,6 @@ from os.path import dirname, abspath, join
 from tkcalendar import DateEntry
 
 
-def show_concept_not_vul():
-    onto = get_ontology(myOntoPath[0]).load()
-    vul_list = list(onto.hasVulnerability.get_relations())
-    vul_items = list()
-    con_list = list(onto.classes())
-    con_item = list()
-    for i in vul_list:
-        sp_vul = str(i[0]).split(".")
-        vul_items.append(sp_vul[1])
-
-    for i in con_list:
-        sp_con = str(i).split(".")
-        con_item.append(sp_con[1])
-
-    all_list = vul_items + con_item
-    concepts_items = []
-
-    for i in all_list:
-        if i not in concepts_items and i not in vul_items:
-            concepts_items.append(i)
-
-    for i in concepts_items:
-        listBoxNotVul.insert(END, i)
-
-
 def show_advance_data():
     onto = get_ontology(myOntoPath[0]).load()
     show_concept_not_vul()

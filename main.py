@@ -878,6 +878,20 @@ class NetworkSecurityOntologyApp:
         for i in concepts_items:
             self.listBoxHaveVul.insert(END, i)
 
+    def show_concept_not_vul(self):
+        onto = get_ontology(self.myOntoPath[0]).load()
+        vul_list = list(onto.hasVulnerability.get_relations())
+        vul_items = [str(i[0]).split(".")[1] for i in vul_list]
+
+        con_list = list(onto.classes())
+        con_item = [str(i).split(".")[1] for i in con_list]
+
+        all_list = vul_items + con_item
+        concepts_items = [i for i in all_list if i not in vul_items]
+
+        for i in concepts_items:
+            self.listBoxNotVul.insert(END, i)
+
 
 # main loop
 def main():
