@@ -62,10 +62,10 @@ class NetworkSecurityOntologyApp:
     def create_tabs(self):
         tab_control = ttk.Notebook(self.master)
         self.create_main_tab(tab_control)
-        self.create_vulnerabilities_tab(tab_control)
-        self.create_concepts_tab(tab_control)
-        self.create_concepts_plus_tab(tab_control)
-        self.create_advanced_check_tab(tab_control)
+        # self.create_vulnerabilities_tab(tab_control)
+        # self.create_concepts_tab(tab_control)
+        # self.create_concepts_plus_tab(tab_control)
+        # self.create_advanced_check_tab(tab_control)
         self.create_user_tab(tab_control)
         tab_control.pack(expand=1, fill="both")
 
@@ -116,305 +116,305 @@ class NetworkSecurityOntologyApp:
         btnBrowse.place(x=70, y=20)
         self.current_file_dir = dirname(abspath(__file__))
 
-    # vulnerabilities tab initialized
-    def create_vulnerabilities_tab(self, tab_control):
-        vulnerabilities_tab = ttk.Frame(tab_control)
-        tab_control.add(vulnerabilities_tab, text="Vulnerabilities")
+    # # vulnerabilities tab initialized
+    # def create_vulnerabilities_tab(self, tab_control):
+    #     vulnerabilities_tab = ttk.Frame(tab_control)
+    #     tab_control.add(vulnerabilities_tab, text="Vulnerabilities")
 
-        # vulnerabilities listbox
-        lblVulnerabilitiesTitle = ttk.Label(
-            vulnerabilities_tab, text="A list of security vulnerabilities:", anchor="e")
-        lblVulnerabilitiesTitle.place(x=10, y=10)
-        self.name_entry = Entry(vulnerabilities_tab,
-                                textvariable=self.name_vulnerability)
-        self.name_entry.place(x=450, y=10, width=320)
-        self.listboxVul = Listbox(vulnerabilities_tab)
-        self.listboxVul.bind('<<ListboxSelect>>',
-                             self.show_vulnerabilities_textbox)
-        self.listboxVul.place(x=10, y=40, height=500, width=280)
+    #     # vulnerabilities listbox
+    #     lblVulnerabilitiesTitle = ttk.Label(
+    #         vulnerabilities_tab, text="A list of security vulnerabilities:", anchor="e")
+    #     lblVulnerabilitiesTitle.place(x=10, y=10)
+    #     self.name_entry = Entry(vulnerabilities_tab,
+    #                             textvariable=self.name_vulnerability)
+    #     self.name_entry.place(x=450, y=10, width=320)
+    #     self.listboxVul = Listbox(vulnerabilities_tab)
+    #     self.listboxVul.bind('<<ListboxSelect>>',
+    #                          self.show_vulnerabilities_textbox)
+    #     self.listboxVul.place(x=10, y=40, height=500, width=280)
 
-        # showing Vulnerability name
-        lblVulnerabilitiesName = ttk.Label(
-            vulnerabilities_tab, text="Vulnerability name:", anchor="e")
-        lblVulnerabilitiesName.place(x=340, y=10)
+    #     # showing Vulnerability name
+    #     lblVulnerabilitiesName = ttk.Label(
+    #         vulnerabilities_tab, text="Vulnerability name:", anchor="e")
+    #     lblVulnerabilitiesName.place(x=340, y=10)
 
-        # Create a LabelFrame widget with the title
-        vulnerabilitiesGroupBox = LabelFrame(
-            vulnerabilities_tab, text="This is a LabelFrame")
-        vulnerabilitiesGroupBox.place(x=340, y=40, width=435, height=500)
+    #     # Create a LabelFrame widget with the title
+    #     vulnerabilitiesGroupBox = LabelFrame(
+    #         vulnerabilities_tab, text="This is a LabelFrame")
+    #     vulnerabilitiesGroupBox.place(x=340, y=40, width=435, height=500)
 
-        # First radio button design
-        R1Add = Radiobutton(vulnerabilitiesGroupBox, text="Add an existing vulnerability to concepts", value=1, variable=self.var,
-                            command=self.show_vulnerabilities_option)
-        R1Add.place(x=10, y=10)
-        R1AddGroupBox = LabelFrame(vulnerabilitiesGroupBox)
-        R1AddGroupBox.place(x=10, y=40, width=410, height=50)
-        R1AddLbl = ttk.Label(
-            R1AddGroupBox, text="Select vulnerability:", anchor="e")
-        R1AddLbl.place(x=10, y=10)
-        self.R1AddTxt = Entry(R1AddGroupBox, state="disabled",
-                              textvariable=self.name_vulnerability)
-        self.R1AddTxt.place(x=120, y=10, width=270)
+    #     # First radio button design
+    #     R1Add = Radiobutton(vulnerabilitiesGroupBox, text="Add an existing vulnerability to concepts", value=1, variable=self.var,
+    #                         command=self.show_vulnerabilities_option)
+    #     R1Add.place(x=10, y=10)
+    #     R1AddGroupBox = LabelFrame(vulnerabilitiesGroupBox)
+    #     R1AddGroupBox.place(x=10, y=40, width=410, height=50)
+    #     R1AddLbl = ttk.Label(
+    #         R1AddGroupBox, text="Select vulnerability:", anchor="e")
+    #     R1AddLbl.place(x=10, y=10)
+    #     self.R1AddTxt = Entry(R1AddGroupBox, state="disabled",
+    #                           textvariable=self.name_vulnerability)
+    #     self.R1AddTxt.place(x=120, y=10, width=270)
 
-        # Second radio button design
-        R2Add = Radiobutton(vulnerabilitiesGroupBox, text="Add a new vulnerability to concepts", value=2, variable=self.var,
-                            command=self.show_vulnerabilities_option)
-        R2Add.place(x=10, y=120)
-        R2AddGroupBox = LabelFrame(vulnerabilitiesGroupBox)
-        R2AddGroupBox.place(x=10, y=150, width=410, height=50)
-        R2AddLbl = ttk.Label(
-            R2AddGroupBox, text="New vulnerability:", anchor="e")
-        R2AddLbl.place(x=10, y=10)
-        self.R2AddTxt = Entry(R2AddGroupBox, state="disabled")
-        self.R2AddTxt.place(x=120, y=10, width=270)
+    #     # Second radio button design
+    #     R2Add = Radiobutton(vulnerabilitiesGroupBox, text="Add a new vulnerability to concepts", value=2, variable=self.var,
+    #                         command=self.show_vulnerabilities_option)
+    #     R2Add.place(x=10, y=120)
+    #     R2AddGroupBox = LabelFrame(vulnerabilitiesGroupBox)
+    #     R2AddGroupBox.place(x=10, y=150, width=410, height=50)
+    #     R2AddLbl = ttk.Label(
+    #         R2AddGroupBox, text="New vulnerability:", anchor="e")
+    #     R2AddLbl.place(x=10, y=10)
+    #     self.R2AddTxt = Entry(R2AddGroupBox, state="disabled")
+    #     self.R2AddTxt.place(x=120, y=10, width=270)
 
-        # Third radio button design
-        RRemove = Radiobutton(vulnerabilitiesGroupBox, text="Remove a vulnerability to concepts", value=3, variable=self.var,
-                              command=self.show_vulnerabilities_option)
-        RRemove.place(x=10, y=230)
-        RRemoveGroupBox = LabelFrame(vulnerabilitiesGroupBox)
-        RRemoveGroupBox.place(x=10, y=260, width=410, height=50)
-        RRemoveLbl = ttk.Label(
-            RRemoveGroupBox, text="Select vulnerability:", anchor="e")
-        RRemoveLbl.place(x=10, y=10)
-        self.RRemoveTxt = Entry(RRemoveGroupBox, state="disabled",
-                                textvariable=self.name_vulnerability)
-        self.RRemoveTxt.place(x=120, y=10, width=270)
+    #     # Third radio button design
+    #     RRemove = Radiobutton(vulnerabilitiesGroupBox, text="Remove a vulnerability to concepts", value=3, variable=self.var,
+    #                           command=self.show_vulnerabilities_option)
+    #     RRemove.place(x=10, y=230)
+    #     RRemoveGroupBox = LabelFrame(vulnerabilitiesGroupBox)
+    #     RRemoveGroupBox.place(x=10, y=260, width=410, height=50)
+    #     RRemoveLbl = ttk.Label(
+    #         RRemoveGroupBox, text="Select vulnerability:", anchor="e")
+    #     RRemoveLbl.place(x=10, y=10)
+    #     self.RRemoveTxt = Entry(RRemoveGroupBox, state="disabled",
+    #                             textvariable=self.name_vulnerability)
+    #     self.RRemoveTxt.place(x=120, y=10, width=270)
 
-        # Select concepts
-        LblVulnerabilityConcepts = ttk.Label(
-            vulnerabilitiesGroupBox, text="Select Concepts:", anchor="e")
-        LblVulnerabilityConcepts.place(x=60, y=330)
-        self.conceptsCombo = ttk.Combobox(
-            vulnerabilitiesGroupBox, textvariable=self.conceptsCombo_value, state="readonly")
-        self.conceptsCombo.place(x=160, y=330, width=200)
+    #     # Select concepts
+    #     LblVulnerabilityConcepts = ttk.Label(
+    #         vulnerabilitiesGroupBox, text="Select Concepts:", anchor="e")
+    #     LblVulnerabilityConcepts.place(x=60, y=330)
+    #     self.conceptsCombo = ttk.Combobox(
+    #         vulnerabilitiesGroupBox, textvariable=self.conceptsCombo_value, state="readonly")
+    #     self.conceptsCombo.place(x=160, y=330, width=200)
 
-        # Button for applying changes in vulnerabilities tab
-        btnVulnerabilityApply = ttk.Button(
-            vulnerabilitiesGroupBox, text="Apply", command=self.apply_vulnerability)
-        btnVulnerabilityApply.pack()
-        btnVulnerabilityApply.place(x=185, y=440)
+    #     # Button for applying changes in vulnerabilities tab
+    #     btnVulnerabilityApply = ttk.Button(
+    #         vulnerabilitiesGroupBox, text="Apply", command=self.apply_vulnerability)
+    #     btnVulnerabilityApply.pack()
+    #     btnVulnerabilityApply.place(x=185, y=440)
 
-    # concepts tab initialized
-    def create_concepts_tab(self, tab_control):
-        concepts_tab = ttk.Frame(tab_control)
-        tab_control.add(concepts_tab, text="Concepts")
+    # # concepts tab initialized
+    # def create_concepts_tab(self, tab_control):
+    #     concepts_tab = ttk.Frame(tab_control)
+    #     tab_control.add(concepts_tab, text="Concepts")
 
-        # concepts tab bar design
-        # search
-        lblSearchInConcepts = ttk.Label(
-            concepts_tab, text="Search", anchor="e")
-        lblSearchInConcepts.place(x=10, y=20)
-        TxtSearchInConcepts = Entry(concepts_tab, textvariable=self.search_str)
-        TxtSearchInConcepts.bind('<Return>', self.search_concepts)
-        TxtSearchInConcepts.place(x=55, y=20, width=200)
+    #     # concepts tab bar design
+    #     # search
+    #     lblSearchInConcepts = ttk.Label(
+    #         concepts_tab, text="Search", anchor="e")
+    #     lblSearchInConcepts.place(x=10, y=20)
+    #     TxtSearchInConcepts = Entry(concepts_tab, textvariable=self.search_str)
+    #     TxtSearchInConcepts.bind('<Return>', self.search_concepts)
+    #     TxtSearchInConcepts.place(x=55, y=20, width=200)
 
-        # list box for concepts
-        self.listboxConcepts = Listbox(concepts_tab)
-        self.listboxConcepts.place(x=10, y=50, height=500, width=245)
+    #     # list box for concepts
+    #     self.listboxConcepts = Listbox(concepts_tab)
+    #     self.listboxConcepts.place(x=10, y=50, height=500, width=245)
 
-        # find Vulnerabilities
-        btnFindVulnerabilities = ttk.Button(
-            concepts_tab, text="Find Vulnerabilities", command=self.find_vulnerabilities_from_concept)
-        btnFindVulnerabilities.pack()
-        btnFindVulnerabilities.place(x=280, y=50, width=180)
-        self.listFindVulnerabilities = Listbox(concepts_tab)
-        self.listFindVulnerabilities.place(x=280, y=80, height=150, width=180)
+    #     # find Vulnerabilities
+    #     btnFindVulnerabilities = ttk.Button(
+    #         concepts_tab, text="Find Vulnerabilities", command=self.find_vulnerabilities_from_concept)
+    #     btnFindVulnerabilities.pack()
+    #     btnFindVulnerabilities.place(x=280, y=50, width=180)
+    #     self.listFindVulnerabilities = Listbox(concepts_tab)
+    #     self.listFindVulnerabilities.place(x=280, y=80, height=150, width=180)
 
-        # find super classes
-        btnFindSuperClasses = ttk.Button(
-            concepts_tab, text="Find super classes", command=self.find_superclass_from_concepts)
-        btnFindSuperClasses.pack()
-        btnFindSuperClasses.place(x=470, y=20, width=160)
-        self.listFindSuperClasses = Listbox(concepts_tab)
-        self.listFindSuperClasses.place(x=470, y=50, height=180, width=160)
+    #     # find super classes
+    #     btnFindSuperClasses = ttk.Button(
+    #         concepts_tab, text="Find super classes", command=self.find_superclass_from_concepts)
+    #     btnFindSuperClasses.pack()
+    #     btnFindSuperClasses.place(x=470, y=20, width=160)
+    #     self.listFindSuperClasses = Listbox(concepts_tab)
+    #     self.listFindSuperClasses.place(x=470, y=50, height=180, width=160)
 
-        # find Parts
-        btnFindParts = ttk.Button(concepts_tab, text="Find parts")
-        btnFindParts.pack()
-        btnFindParts.place(x=640, y=20, width=140)
-        listFindParts = Listbox(concepts_tab)
-        listFindParts.place(x=640, y=50, height=180, width=140)
+    #     # find Parts
+    #     btnFindParts = ttk.Button(concepts_tab, text="Find parts")
+    #     btnFindParts.pack()
+    #     btnFindParts.place(x=640, y=20, width=140)
+    #     listFindParts = Listbox(concepts_tab)
+    #     listFindParts.place(x=640, y=50, height=180, width=140)
 
-        # radio buttons for concepts
-        RSuperClasses = Radiobutton(
-            concepts_tab, text="base on SuperClasses", value=0)
-        RSuperClasses.place(x=280, y=230)
-        RSuperClasses = Radiobutton(
-            concepts_tab, text="base on Concepts parts", value=1)
-        RSuperClasses.place(x=280, y=250)
-        RSuperClasses = Radiobutton(
-            concepts_tab, text="base on SuperClass and concept`s parts", value=2)
-        RSuperClasses.place(x=280, y=270)
+    #     # radio buttons for concepts
+    #     RSuperClasses = Radiobutton(
+    #         concepts_tab, text="base on SuperClasses", value=0)
+    #     RSuperClasses.place(x=280, y=230)
+    #     RSuperClasses = Radiobutton(
+    #         concepts_tab, text="base on Concepts parts", value=1)
+    #     RSuperClasses.place(x=280, y=250)
+    #     RSuperClasses = Radiobutton(
+    #         concepts_tab, text="base on SuperClass and concept`s parts", value=2)
+    #     RSuperClasses.place(x=280, y=270)
 
-        # inference button
-        btnInference = ttk.Button(concepts_tab, text="inference")
-        btnInference.pack()
-        btnInference.place(x=280, y=320, width=120, height=50)
-        listInference = Listbox(concepts_tab)
-        listInference.place(x=440, y=320, height=230, width=340)
+    #     # inference button
+    #     btnInference = ttk.Button(concepts_tab, text="inference")
+    #     btnInference.pack()
+    #     btnInference.place(x=280, y=320, width=120, height=50)
+    #     listInference = Listbox(concepts_tab)
+    #     listInference.place(x=440, y=320, height=230, width=340)
 
-    # concepts++ tab initialized
-    def create_concepts_plus_tab(self, tab_control):
-        concepts_plus_tab = ttk.Frame(tab_control)
-        tab_control.add(concepts_plus_tab, text="Concepts++")
+    # # concepts++ tab initialized
+    # def create_concepts_plus_tab(self, tab_control):
+    #     concepts_plus_tab = ttk.Frame(tab_control)
+    #     tab_control.add(concepts_plus_tab, text="Concepts++")
 
-        # concepts++ added code
-        conceptsPlusTabBar = ttk.Notebook(concepts_plus_tab)
-        subClass = ttk.Frame(conceptsPlusTabBar)
-        partOf = ttk.Frame(conceptsPlusTabBar)
-        conceptsPlusTabBar.add(subClass, text="Sub class")
-        conceptsPlusTabBar.add(partOf, text="Part of")
-        conceptsPlusTabBar.pack()
-        conceptsPlusTabBar.place(x=0, y=70, width=500, height=450)
+    #     # concepts++ added code
+    #     conceptsPlusTabBar = ttk.Notebook(concepts_plus_tab)
+    #     subClass = ttk.Frame(conceptsPlusTabBar)
+    #     partOf = ttk.Frame(conceptsPlusTabBar)
+    #     conceptsPlusTabBar.add(subClass, text="Sub class")
+    #     conceptsPlusTabBar.add(partOf, text="Part of")
+    #     conceptsPlusTabBar.pack()
+    #     conceptsPlusTabBar.place(x=0, y=70, width=500, height=450)
 
-        # list box for concepts++
-        self.listboxConceptPlus = Listbox(concepts_plus_tab)
-        self.listboxConceptPlus.place(x=520, y=10, height=560, width=265)
+    #     # list box for concepts++
+    #     self.listboxConceptPlus = Listbox(concepts_plus_tab)
+    #     self.listboxConceptPlus.place(x=520, y=10, height=560, width=265)
 
-        # SubClassGroupBox
-        SubClassGroupBox = LabelFrame(
-            subClass, text="Add new concepts to be sub class of existing concepts")
-        SubClassGroupBox.place(x=10, y=40, width=470, height=230)
-        # make group box for tab subClass in concepts++
-        SubClassGroupBox = LabelFrame(
-            subClass, text="Add new concepts to be sub class of existing concepts")
-        SubClassGroupBox.place(x=10, y=40, width=470, height=230)
+    #     # SubClassGroupBox
+    #     SubClassGroupBox = LabelFrame(
+    #         subClass, text="Add new concepts to be sub class of existing concepts")
+    #     SubClassGroupBox.place(x=10, y=40, width=470, height=230)
+    #     # make group box for tab subClass in concepts++
+    #     SubClassGroupBox = LabelFrame(
+    #         subClass, text="Add new concepts to be sub class of existing concepts")
+    #     SubClassGroupBox.place(x=10, y=40, width=470, height=230)
 
-        Lbl1AddSubClass = ttk.Label(
-            SubClassGroupBox, text="Add : ", anchor="e")
-        Lbl1AddSubClass.place(x=10, y=50)
+    #     Lbl1AddSubClass = ttk.Label(
+    #         SubClassGroupBox, text="Add : ", anchor="e")
+    #     Lbl1AddSubClass.place(x=10, y=50)
 
-        txtSubClass = StringVar()
-        TxtAddSubClass = Entry(SubClassGroupBox, textvariable=txtSubClass)
-        TxtAddSubClass.place(x=50, y=50, width=270)
+    #     txtSubClass = StringVar()
+    #     TxtAddSubClass = Entry(SubClassGroupBox, textvariable=txtSubClass)
+    #     TxtAddSubClass.place(x=50, y=50, width=270)
 
-        Lbl2AddSubClass = ttk.Label(
-            SubClassGroupBox, text="to be sub class of", anchor="e")
-        Lbl2AddSubClass.place(x=330, y=50)
+    #     Lbl2AddSubClass = ttk.Label(
+    #         SubClassGroupBox, text="to be sub class of", anchor="e")
+    #     Lbl2AddSubClass.place(x=330, y=50)
 
-        Lbl3AddSubClass = ttk.Label(SubClassGroupBox, text='Write a proper name for the new concept.just user alphaNumeric '
-                                    'Character and "-" "_"', anchor="e")
-        Lbl3AddSubClass.place(x=0, y=100)
-        Lbl4AddSubClass = ttk.Label(SubClassGroupBox, text="Select the SuperClass for your new Concept"
-                                    "from the right side list", anchor="e")
-        Lbl4AddSubClass.place(x=0, y=140)
+    #     Lbl3AddSubClass = ttk.Label(SubClassGroupBox, text='Write a proper name for the new concept.just user alphaNumeric '
+    #                                 'Character and "-" "_"', anchor="e")
+    #     Lbl3AddSubClass.place(x=0, y=100)
+    #     Lbl4AddSubClass = ttk.Label(SubClassGroupBox, text="Select the SuperClass for your new Concept"
+    #                                 "from the right side list", anchor="e")
+    #     Lbl4AddSubClass.place(x=0, y=140)
 
-        # btn add for subclass
-        SubClassAddGroupBox = LabelFrame(subClass)
-        SubClassAddGroupBox.place(x=10, y=290, width=470, height=100)
-        btnSubClass = ttk.Button(
-            SubClassAddGroupBox, text="Add", command=self.set_subclass_of)
-        btnSubClass.pack()
-        btnSubClass.place(x=350, y=40)
+    #     # btn add for subclass
+    #     SubClassAddGroupBox = LabelFrame(subClass)
+    #     SubClassAddGroupBox.place(x=10, y=290, width=470, height=100)
+    #     btnSubClass = ttk.Button(
+    #         SubClassAddGroupBox, text="Add", command=self.set_subclass_of)
+    #     btnSubClass.pack()
+    #     btnSubClass.place(x=350, y=40)
 
-        # btn add for subclass
-        SubClassAddGroupBox = LabelFrame(subClass)
-        SubClassAddGroupBox.place(x=10, y=290, width=470, height=100)
-        btnSubClass = ttk.Button(
-            SubClassAddGroupBox, text="Add", command=self.set_subclass_of)
-        btnSubClass.pack()
-        btnSubClass.place(x=350, y=40)
+    #     # btn add for subclass
+    #     SubClassAddGroupBox = LabelFrame(subClass)
+    #     SubClassAddGroupBox.place(x=10, y=290, width=470, height=100)
+    #     btnSubClass = ttk.Button(
+    #         SubClassAddGroupBox, text="Add", command=self.set_subclass_of)
+    #     btnSubClass.pack()
+    #     btnSubClass.place(x=350, y=40)
 
-        # make group box for tab partOf in concepts++
-        partOfGroupBox = LabelFrame(partOf, text="Add new")
-        partOfGroupBox.place(x=10, y=40, width=470, height=230)
+    #     # make group box for tab partOf in concepts++
+    #     partOfGroupBox = LabelFrame(partOf, text="Add new")
+    #     partOfGroupBox.place(x=10, y=40, width=470, height=230)
 
-       # first add partOf
-        Txt1AddPartOf = Entry(partOfGroupBox, textvariable=self.txtPartOf1)
-        Txt1AddPartOf.place(x=10, y=50, width=270)
+    #    # first add partOf
+    #     Txt1AddPartOf = Entry(partOfGroupBox, textvariable=self.txtPartOf1)
+    #     Txt1AddPartOf.place(x=10, y=50, width=270)
 
-        self.btn1PartOf = ttk.Button(partOfGroupBox, text="<<<",
-                                     state="disabled", command=self.set_first_concept_obj)
-        self.btn1PartOf.pack()
-        self.btn1PartOf.place(x=285, y=47, width=50)
-        checkBox1PartOf = Checkbutton(partOfGroupBox, variable=self.checkVar1,
-                                      onvalue=1, offvalue=0, command=self.get_first_concept_obj)
-        checkBox1PartOf.pack()
-        checkBox1PartOf.place(x=335, y=47)
-        lbl1PartOf = ttk.Label(
-            partOfGroupBox, text="Get from concept", anchor="e")
-        lbl1PartOf.place(x=355, y=50)
+    #     self.btn1PartOf = ttk.Button(partOfGroupBox, text="<<<",
+    #                                  state="disabled", command=self.set_first_concept_obj)
+    #     self.btn1PartOf.pack()
+    #     self.btn1PartOf.place(x=285, y=47, width=50)
+    #     checkBox1PartOf = Checkbutton(partOfGroupBox, variable=self.checkVar1,
+    #                                   onvalue=1, offvalue=0, command=self.get_first_concept_obj)
+    #     checkBox1PartOf.pack()
+    #     checkBox1PartOf.place(x=335, y=47)
+    #     lbl1PartOf = ttk.Label(
+    #         partOfGroupBox, text="Get from concept", anchor="e")
+    #     lbl1PartOf.place(x=355, y=50)
 
-        # second add partOf
-        Txt2AddPartOf = Entry(partOfGroupBox, textvariable=self.txtPartOf2)
-        Txt2AddPartOf.place(x=10, y=120, width=270)
+    #     # second add partOf
+    #     Txt2AddPartOf = Entry(partOfGroupBox, textvariable=self.txtPartOf2)
+    #     Txt2AddPartOf.place(x=10, y=120, width=270)
 
-        self.btn2PartOf = ttk.Button(partOfGroupBox, text="<<<",
-                                     state="disabled", command=self.set_second_concept_obj)
-        self.btn2PartOf.pack()
-        self.btn2PartOf.place(x=285, y=117, width=50)
+    #     self.btn2PartOf = ttk.Button(partOfGroupBox, text="<<<",
+    #                                  state="disabled", command=self.set_second_concept_obj)
+    #     self.btn2PartOf.pack()
+    #     self.btn2PartOf.place(x=285, y=117, width=50)
 
-        checkBox2PartOf = Checkbutton(partOfGroupBox, variable=self.checkVar2,
-                                      onvalue=1, offvalue=0, command=self.get_second_concept_obj)
-        checkBox2PartOf.pack()
-        checkBox2PartOf.place(x=335, y=120)
+    #     checkBox2PartOf = Checkbutton(partOfGroupBox, variable=self.checkVar2,
+    #                                   onvalue=1, offvalue=0, command=self.get_second_concept_obj)
+    #     checkBox2PartOf.pack()
+    #     checkBox2PartOf.place(x=335, y=120)
 
-        lbl2PartOf = ttk.Label(
-            partOfGroupBox, text="Get from concept", anchor="e")
-        lbl2PartOf.place(x=355, y=120)
+    #     lbl2PartOf = ttk.Label(
+    #         partOfGroupBox, text="Get from concept", anchor="e")
+    #     lbl2PartOf.place(x=355, y=120)
 
-        # btn add for PartOf
-        jobVulGroupBox = LabelFrame(partOf)
-        jobVulGroupBox.place(x=10, y=290, width=470, height=100)
-        btnPartOf = ttk.Button(jobVulGroupBox, text="Add",
-                               command=self.is_part_of)
-        btnPartOf.pack()
-        btnPartOf.place(x=350, y=40)
+    #     # btn add for PartOf
+    #     jobVulGroupBox = LabelFrame(partOf)
+    #     jobVulGroupBox.place(x=10, y=290, width=470, height=100)
+    #     btnPartOf = ttk.Button(jobVulGroupBox, text="Add",
+    #                            command=self.is_part_of)
+    #     btnPartOf.pack()
+    #     btnPartOf.place(x=350, y=40)
 
-    # advanced check tab initialized
-    def create_advanced_check_tab(self, tab_control):
-        advanced_check_tab = ttk.Frame(tab_control)
-        tab_control.add(advanced_check_tab, text="Advanced Check")
-        # Advance Checked Design
-        TxtHelpInAdvance = Text(
-            advanced_check_tab, wrap=WORD, width=40, height=4)
-        TxtHelpInAdvance.insert(INSERT, "Advanced check will create a complete log of all relationships and information. "
-                                        "Note: Advance Check will take some time to complete.")
-        TxtHelpInAdvance.config(state="disabled")
-        TxtHelpInAdvance.place(x=10, y=10)
+    # # advanced check tab initialized
+    # def create_advanced_check_tab(self, tab_control):
+    #     advanced_check_tab = ttk.Frame(tab_control)
+    #     tab_control.add(advanced_check_tab, text="Advanced Check")
+    #     # Advance Checked Design
+    #     TxtHelpInAdvance = Text(
+    #         advanced_check_tab, wrap=WORD, width=40, height=4)
+    #     TxtHelpInAdvance.insert(INSERT, "Advanced check will create a complete log of all relationships and information. "
+    #                                     "Note: Advance Check will take some time to complete.")
+    #     TxtHelpInAdvance.config(state="disabled")
+    #     TxtHelpInAdvance.place(x=10, y=10)
 
-        # Group box for result
-        resultGroupBox = LabelFrame(advanced_check_tab, text="Result")
-        resultGroupBox.place(x=350, y=0, width=290, height=80)
+    #     # Group box for result
+    #     resultGroupBox = LabelFrame(advanced_check_tab, text="Result")
+    #     resultGroupBox.place(x=350, y=0, width=290, height=80)
 
-        lblResult = ttk.Label(
-            resultGroupBox, text="Number of new inferred vulnerabilities: ", anchor="e")
-        lblResult.place(x=10, y=15)
-        strResult = StringVar()
-        strResult.set("0")
-        lblShowResult = ttk.Label(
-            resultGroupBox, textvariable=strResult, anchor="e")
-        lblShowResult.place(x=245, y=15)
+    #     lblResult = ttk.Label(
+    #         resultGroupBox, text="Number of new inferred vulnerabilities: ", anchor="e")
+    #     lblResult.place(x=10, y=15)
+    #     strResult = StringVar()
+    #     strResult.set("0")
+    #     lblShowResult = ttk.Label(
+    #         resultGroupBox, textvariable=strResult, anchor="e")
+    #     lblShowResult.place(x=245, y=15)
 
-        # btn Advance check
-        btnAdvanceCheck = ttk.Button(
-            advanced_check_tab, text="Advance Check", command=self.show_advance_data)
-        btnAdvanceCheck.pack()
-        btnAdvanceCheck.place(x=660, y=8, width=120, height=70)
+    #     # btn Advance check
+    #     btnAdvanceCheck = ttk.Button(
+    #         advanced_check_tab, text="Advance Check", command=self.show_advance_data)
+    #     btnAdvanceCheck.pack()
+    #     btnAdvanceCheck.place(x=660, y=8, width=120, height=70)
 
-        # label for not vulnerabilities
-        lblNotVul = ttk.Label(
-            advanced_check_tab, text="Concepts that are not vulnerabilities: ", anchor="e")
-        lblNotVul.place(x=10, y=90)
+    #     # label for not vulnerabilities
+    #     lblNotVul = ttk.Label(
+    #         advanced_check_tab, text="Concepts that are not vulnerabilities: ", anchor="e")
+    #     lblNotVul.place(x=10, y=90)
 
-        # list box for not vulnerabilities
-        self.listBoxNotVul = Listbox(advanced_check_tab)
-        self.listBoxNotVul.place(x=10, y=110, height=460, width=230)
+    #     # list box for not vulnerabilities
+    #     self.listBoxNotVul = Listbox(advanced_check_tab)
+    #     self.listBoxNotVul.place(x=10, y=110, height=460, width=230)
 
-        # label for vulnerabilities
-        lblVul = ttk.Label(
-            advanced_check_tab, text="Concepts that have some vulnerabilities at first: ", anchor="e")
-        lblVul.place(x=260, y=90)
+    #     # label for vulnerabilities
+    #     lblVul = ttk.Label(
+    #         advanced_check_tab, text="Concepts that have some vulnerabilities at first: ", anchor="e")
+    #     lblVul.place(x=260, y=90)
 
-        # list box for vulnerabilities
-        self.listBoxHaveVul = Listbox(advanced_check_tab)
-        self.listBoxHaveVul.place(x=260, y=110, height=460, width=230)
+    #     # list box for vulnerabilities
+    #     self.listBoxHaveVul = Listbox(advanced_check_tab)
+    #     self.listBoxHaveVul.place(x=260, y=110, height=460, width=230)
 
-        # label for vulnerabilities
-        lblVulRel = ttk.Label(
-            advanced_check_tab, text="V-R = Vulnerabilities Relationships", anchor="e")
-        lblVulRel.place(x=555, y=500)
+    #     # label for vulnerabilities
+    #     lblVulRel = ttk.Label(
+    #         advanced_check_tab, text="V-R = Vulnerabilities Relationships", anchor="e")
+    #     lblVulRel.place(x=555, y=500)
 
     # user tab initialized
     def create_user_tab(self, tab_control):
