@@ -1,2 +1,0 @@
-*mohsen* should start From : *05/07/2023* at *1* and end in *05/07/2023* at *1* for vulnerabilities : *Firewall* 
-
