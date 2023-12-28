@@ -121,7 +121,7 @@ class NetworkSecurityOntologyApp:
         self.controllers_group_Lbox = Listbox(
             listboxes_frame, height=15, width=20)
         self.controllers_Lbox = Listbox(listboxes_frame, height=15, width=20)
-        listbox4 = Listbox(listboxes_frame, height=15, width=20)
+        self.subclass_Lbox = Listbox(listboxes_frame, height=15, width=20)
         listbox5 = Listbox(listboxes_frame, height=15, width=20)
         listbox6 = Listbox(listboxes_frame, height=15, width=20)
 
@@ -136,7 +136,7 @@ class NetworkSecurityOntologyApp:
         self.standards_Lbox.grid(row=1, column=0, padx=10, pady=5)
         self.controllers_group_Lbox.grid(row=1, column=1, padx=10, pady=5)
         self.controllers_Lbox.grid(row=1, column=2, padx=10, pady=5)
-        listbox4.grid(row=1, column=3, padx=10, pady=5)
+        self.subclass_Lbox.grid(row=1, column=3, padx=10, pady=5)
         listbox5.grid(row=3, column=2, padx=10, pady=5)
         listbox6.grid(row=3, column=3, padx=10, pady=5)
 
@@ -145,7 +145,7 @@ class NetworkSecurityOntologyApp:
                          command=lambda: self.show_controllers_group())
         button2 = Button(listboxes_frame, text="show controllers",
                          command=lambda: self.show_controllers())
-        button3 = Button(listboxes_frame, text="Get Selected",
+        button3 = Button(listboxes_frame, text="show subclass",
                          command=lambda: self.show_subclass())
         button4 = Button(listboxes_frame, text="Get Selected",
                          command=lambda: self.show_subclass())
@@ -177,6 +177,14 @@ class NetworkSecurityOntologyApp:
         self.controllers_Lbox.delete(0, 'end')
         for item in contollres:
             self.controllers_Lbox.insert("end", item.name)
+
+    def show_subclass(self):
+        selected_item = self.controllers_Lbox.get(
+            self.controllers_Lbox.curselection())
+        contollres = self.extract_Subclasses(selected_item)
+        self.subclass_Lbox.delete(0, 'end')
+        for item in contollres:
+            self.subclass_Lbox.insert("end", item.name)
 
     # user tab initialized
 
@@ -672,6 +680,7 @@ class NetworkSecurityOntologyApp:
                 "http://www.semantic.org/hamidzadeh/SOSM#")
         # Get the class from the namespace
         class_name = getattr(namespace, parent, None)
+
         subclasses = list(class_name.subclasses())
         return subclasses
 
