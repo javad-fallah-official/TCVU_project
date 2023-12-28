@@ -1,5 +1,5 @@
 from tkinter import StringVar, Listbox, IntVar
-from tkinter import filedialog, messagebox, ttk, Button
+from tkinter import filedialog, messagebox, ttk, Button, Label, LabelFrame, Spinbox
 from tkcalendar import DateEntry
 import tkinter as tk
 import owlready2
@@ -57,42 +57,42 @@ class NetworkSecurityOntologyApp:
         main_tab = ttk.Frame(tab_control)
         tab_control.add(main_tab, text="Main")
 
-        # tk.Labels for showing data in main tab menu
-        lblConcepts = ttk.Label(
+        # Labels for showing data in main tab menu
+        lblConcepts = Label(
             main_tab, text="Number of concepts we currently support: ", anchor="e")
         lblConcepts.place(x=10, y=440)
-        lblConceptsValue = ttk.Label(
+        lblConceptsValue = Label(
             main_tab, textvariable=self.my_concept_var)
         lblConceptsValue.place(x=240, y=440)
-        lblVulnerabilities = ttk.Label(
+        lblVulnerabilities = Label(
             main_tab, text="Number of concepts we Vulnerabilities support: ", anchor="e")
         lblVulnerabilities.place(x=10, y=460)
-        lblVul = ttk.Label(main_tab, textvariable=self.my_Vulnerabilities_var)
+        lblVul = Label(main_tab, textvariable=self.my_Vulnerabilities_var)
         lblVul.place(x=260, y=460)
-        lblSubClassOf = ttk.Label(
+        lblSubClassOf = Label(
             main_tab, text="Number of SubClassOf: ", anchor="e")
         lblSubClassOf.place(x=10, y=480)
-        lblSubClass = ttk.Label(main_tab, textvariable=self.my_subclasses_var)
+        lblSubClass = Label(main_tab, textvariable=self.my_subclasses_var)
         lblSubClass.place(x=140, y=480)
-        lblIsPartOf = ttk.Label(
+        lblIsPartOf = Label(
             main_tab, text="Number of IsPartOf relationship: ", anchor="e")
         lblIsPartOf.place(x=10, y=500)
-        lblIsPart = ttk.Label(main_tab, textvariable=self.my_is_part_of_var)
+        lblIsPart = Label(main_tab, textvariable=self.my_is_part_of_var)
         lblIsPart.place(x=190, y=500)
-        lblHasVulnerability = ttk.Label(
+        lblHasVulnerability = Label(
             main_tab, text="Number of hasVulnerability relationship: ", anchor="e")
         lblHasVulnerability.place(x=10, y=520)
-        lblHasVulnerabilityValue = ttk.Label(
+        lblHasVulnerabilityValue = Label(
             main_tab, textvariable=self.my_has_vulnerability_var)
         lblHasVulnerabilityValue.place(x=230, y=520)
-        lblRelationships = ttk.Label(
+        lblRelationships = Label(
             main_tab, text="Relationships: ", anchor="e")
         lblRelationships.place(x=10, y=540)
-        lblRelationShips = ttk.Label(main_tab, textvariable=self.relationships)
+        lblRelationShips = Label(main_tab, textvariable=self.relationships)
         lblRelationShips.place(x=90, y=540)
 
         # open file button
-        lblBrowse = ttk.Label(main_tab, text="select file : ", anchor="e")
+        lblBrowse = Label(main_tab, text="select file : ", anchor="e")
         lblBrowse.place(x=10, y=20)
         btnBrowse = Button(main_tab, text="file", command=self.open_file)
         btnBrowse.pack()
@@ -109,12 +109,12 @@ class NetworkSecurityOntologyApp:
         listboxes_frame.pack()
 
         # Create labels for each Listbox
-        label1 = ttk.Label(listboxes_frame, text="Standards")
-        label2 = ttk.Label(listboxes_frame, text="Controllers Group")
-        label3 = ttk.Label(listboxes_frame, text="Controllers")
-        label4 = ttk.Label(listboxes_frame, text="Sub Controls")
-        label5 = ttk.Label(listboxes_frame, text="Controllers Group Examples")
-        label6 = ttk.Label(listboxes_frame, text="Controllers examples")
+        label1 = Label(listboxes_frame, text="Standards")
+        label2 = Label(listboxes_frame, text="Controllers Group")
+        label3 = Label(listboxes_frame, text="Controllers")
+        label4 = Label(listboxes_frame, text="Sub Controls")
+        label5 = Label(listboxes_frame, text="Controllers Group Examples")
+        label6 = Label(listboxes_frame, text="Controllers examples")
 
         # Create six Listboxes in one row
         self.standards_Lbox = Listbox(listboxes_frame, height=15, width=20)
@@ -197,15 +197,15 @@ class NetworkSecurityOntologyApp:
         UserTabBar.place(x=0, y=20, width=800, height=600)
 
         # make group box for add Users in User
-        AddUsersGroupBox = tk.LabelFrame(Users, text="Add new User")
+        AddUsersGroupBox = LabelFrame(Users, text="Add new User")
         AddUsersGroupBox.place(x=10, y=10, width=470, height=230)
 
         # make group box for delete Users in User
-        DelUsersGroupBox = tk.LabelFrame(Users, text="Delete User")
+        DelUsersGroupBox = LabelFrame(Users, text="Delete User")
         DelUsersGroupBox.place(x=10, y=250, width=470, height=180)
 
         # label for user list box
-        usr_lb_label = tk.Label(user_tab, text='User list :')
+        usr_lb_label = Label(user_tab, text='User list :')
         usr_lb_label.place(x=520, y=46, height=10)
 
         # list box for User
@@ -213,7 +213,7 @@ class NetworkSecurityOntologyApp:
         self.listboxUsers.place(x=520, y=60, height=230, width=250)
 
         # text Delete user
-        Lbl1DelUser = ttk.Label(
+        Lbl1DelUser = Label(
             DelUsersGroupBox, text="Delete User: ", anchor="e")
         Lbl1DelUser.place(x=10, y=50)
 
@@ -235,7 +235,7 @@ class NetworkSecurityOntologyApp:
         btnDelUsers.place(x=350, y=120)
 
         # text add user
-        Lbl1AddUser = ttk.Label(
+        Lbl1AddUser = Label(
             AddUsersGroupBox, text="Add User: ", anchor="e")
         Lbl1AddUser.place(x=10, y=50)
 
@@ -250,14 +250,14 @@ class NetworkSecurityOntologyApp:
         btnAddUsers.place(x=350, y=160)
 
         # make group box for tab Ability in User
-        AbilityGroupBox = tk.LabelFrame(Ability, text="Add new Ability")
+        AbilityGroupBox = LabelFrame(Ability, text="Add new Ability")
         AbilityGroupBox.place(x=10, y=10, width=470, height=230)
 
         # txt in ability
-        Lbl1AddAbility = ttk.Label(AbilityGroupBox, text="Add : ", anchor="e")
+        Lbl1AddAbility = Label(AbilityGroupBox, text="Add : ", anchor="e")
         Lbl1AddAbility.place(x=10, y=50)
 
-        Lbl2AddAbility = ttk.Label(
+        Lbl2AddAbility = Label(
             AbilityGroupBox, text="to be Ability of", anchor="e")
         Lbl2AddAbility.place(x=330, y=50)
 
@@ -273,16 +273,16 @@ class NetworkSecurityOntologyApp:
         btnAddAbility.place(x=350, y=160)
 
         # ability delete group box
-        AbilityDelGroupBox = tk.LabelFrame(Ability, text='Delete Ability')
+        AbilityDelGroupBox = LabelFrame(Ability, text='Delete Ability')
         AbilityDelGroupBox.place(x=10, y=260, width=470, height=232)
 
         # txt for delete ability Gbox
-        Lbl1DelAbility = ttk.Label(
+        Lbl1DelAbility = Label(
             AbilityDelGroupBox, text="Delete Ability Of : ", anchor="e")
         Lbl1DelAbility.place(x=5, y=50)
 
-        Lbl4DelAbility = ttk.Label(AbilityDelGroupBox, text="Select the Ability "
-                                   "from the right side list", anchor="e")
+        Lbl4DelAbility = Label(AbilityDelGroupBox, text="Select the Ability "
+                               "from the right side list", anchor="e")
         Lbl4DelAbility.place(x=0, y=110)
 
         # tk.Entry to delete ability
@@ -308,11 +308,11 @@ class NetworkSecurityOntologyApp:
         self.listboxAbility.bind("<<ListboxSelect>>", self.update_entry)
 
         # label for list box user ability
-        lbl_user_ability = tk.Label(Ability, text='User Ability :')
+        lbl_user_ability = Label(Ability, text='User Ability :')
         lbl_user_ability.place(x=520, y=290)
 
         # job Tab vulnerabilities group box
-        jobVulGroupBox = tk.LabelFrame(job, text='Select vulnerabilities')
+        jobVulGroupBox = LabelFrame(job, text='Select vulnerabilities')
         jobVulGroupBox.place(x=10, y=20, width=470, height=300)
 
         # btn to add vulnerabilities to text box
@@ -321,11 +321,11 @@ class NetworkSecurityOntologyApp:
         self.btnAddVulTextBox.place(x=230, y=160, width=225)
 
         # txt in job Vulnerabilities group box
-        lbl1AddJob = ttk.Label(
+        lbl1AddJob = Label(
             jobVulGroupBox, text="Vulnerabilities:", anchor="e")
         lbl1AddJob.place(x=230, y=10)
 
-        lbl2AddJob = ttk.Label(jobVulGroupBox, text="concepts:", anchor="e")
+        lbl2AddJob = Label(jobVulGroupBox, text="concepts:", anchor="e")
         lbl2AddJob.place(x=10, y=70)
 
         # list box for Vulnerabilities in job tab
@@ -343,7 +343,7 @@ class NetworkSecurityOntologyApp:
         self.listboxAbilityJob.place(x=520, y=312, height=180, width=250)
 
         # label for list box user ability in job tab
-        lbl_user_ability = tk.Label(job, text='User Ability :')
+        lbl_user_ability = Label(job, text='User Ability :')
         lbl_user_ability.place(x=520, y=290)
 
         # text box to add vulnerabilities job
@@ -366,30 +366,30 @@ class NetworkSecurityOntologyApp:
         self.jobVulCombo.bind("<<ComboboxSelected>>", self.update_listbox)
 
         # make group box for tab Job in User
-        jobTimeGroupBox = tk.LabelFrame(job, text="Add new")
+        jobTimeGroupBox = LabelFrame(job, text="Add new")
         jobTimeGroupBox.place(x=10, y=330, width=470, height=200)
 
         # txt in time group box in job tab
-        lbl1Time = ttk.Label(
+        lbl1Time = Label(
             jobTimeGroupBox, text="From       Time", anchor="e")
         lbl1Time.place(x=10, y=20)
 
-        lbl2AddJob = ttk.Label(jobTimeGroupBox, text="Date:", anchor="e")
+        lbl2AddJob = Label(jobTimeGroupBox, text="Date:", anchor="e")
         lbl2AddJob.place(x=180, y=20)
 
-        lbl2Time = ttk.Label(
+        lbl2Time = Label(
             jobTimeGroupBox, text="To             Time", anchor="e")
         lbl2Time.place(x=10, y=80)
 
-        lbl2AddJob = ttk.Label(jobTimeGroupBox, text="Date:", anchor="e")
+        lbl2AddJob = Label(jobTimeGroupBox, text="Date:", anchor="e")
         lbl2AddJob.place(x=180, y=80)
 
         # spin boxes in job tab
 
-        self.TxtFromTime = tk.Spinbox(jobTimeGroupBox, from_=1, to=self.max_value, validate="key",
-                                      validatecommand=(self.master.register(self.validate_spinbox_input), '%P'))
-        self.TxtToTime = tk.Spinbox(jobTimeGroupBox, from_=1, to=self.max_value, validate="key",
-                                    validatecommand=(self.master.register(self.validate_spinbox_input), '%P'))
+        self.TxtFromTime = Spinbox(jobTimeGroupBox, from_=1, to=self.max_value, validate="key",
+                                   validatecommand=(self.master.register(self.validate_spinbox_input), '%P'))
+        self.TxtToTime = Spinbox(jobTimeGroupBox, from_=1, to=self.max_value, validate="key",
+                                 validatecommand=(self.master.register(self.validate_spinbox_input), '%P'))
 
         self.from_date_entry = DateEntry(jobTimeGroupBox, width=12, background='darkblue',
                                          foreground='white', borderwidth=2, date_pattern='dd/MM/y', state='readonly')
