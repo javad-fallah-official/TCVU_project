@@ -1,5 +1,5 @@
 from tkinter import StringVar, Listbox, IntVar
-from tkinter import filedialog, messagebox, ttk
+from tkinter import filedialog, messagebox, ttk, Button
 from tkcalendar import DateEntry
 import tkinter as tk
 import owlready2
@@ -94,7 +94,7 @@ class NetworkSecurityOntologyApp:
         # open file button
         lblBrowse = ttk.Label(main_tab, text="select file : ", anchor="e")
         lblBrowse.place(x=10, y=20)
-        btnBrowse = ttk.Button(main_tab, text="file", command=self.open_file)
+        btnBrowse = Button(main_tab, text="file", command=self.open_file)
         btnBrowse.pack()
         btnBrowse.place(x=70, y=20)
 
@@ -120,7 +120,7 @@ class NetworkSecurityOntologyApp:
         self.standards_Lbox = Listbox(listboxes_frame, height=15, width=20)
         self.controllers_group_Lbox = Listbox(
             listboxes_frame, height=15, width=20)
-        listbox3 = Listbox(listboxes_frame, height=15, width=20)
+        self.controllers_Lbox = Listbox(listboxes_frame, height=15, width=20)
         listbox4 = Listbox(listboxes_frame, height=15, width=20)
         listbox5 = Listbox(listboxes_frame, height=15, width=20)
         listbox6 = Listbox(listboxes_frame, height=15, width=20)
@@ -135,24 +135,24 @@ class NetworkSecurityOntologyApp:
 
         self.standards_Lbox.grid(row=1, column=0, padx=10, pady=5)
         self.controllers_group_Lbox.grid(row=1, column=1, padx=10, pady=5)
-        listbox3.grid(row=1, column=2, padx=10, pady=5)
+        self.controllers_Lbox.grid(row=1, column=2, padx=10, pady=5)
         listbox4.grid(row=1, column=3, padx=10, pady=5)
         listbox5.grid(row=3, column=2, padx=10, pady=5)
         listbox6.grid(row=3, column=3, padx=10, pady=5)
 
         # Create buttons and associate them with callback functions
-        button1 = tk.Button(listboxes_frame, text="show controllers",
-                            command=lambda: self.show_controllers_group())
-        button2 = tk.Button(listboxes_frame, text="Get Selected",
-                            command=lambda: self.show_subclass(self.controllers_group_Lbox))
-        button3 = tk.Button(listboxes_frame, text="Get Selected",
-                            command=lambda: self.show_subclass(listbox3))
-        button4 = tk.Button(listboxes_frame, text="Get Selected",
-                            command=lambda: self.show_subclass(listbox4))
-        button5 = tk.Button(listboxes_frame, text="Get Selected",
-                            command=lambda: self.show_subclass(listbox5))
-        button6 = tk.Button(listboxes_frame, text="Get Selected",
-                            command=lambda: self.show_subclass(listbox6))
+        button1 = Button(listboxes_frame, text="show controllers Group",
+                         command=lambda: self.show_controllers_group())
+        button2 = Button(listboxes_frame, text="show controllers",
+                         command=lambda: self.show_controllers())
+        button3 = Button(listboxes_frame, text="Get Selected",
+                         command=lambda: self.show_subclass())
+        button4 = Button(listboxes_frame, text="Get Selected",
+                         command=lambda: self.show_subclass())
+        button5 = Button(listboxes_frame, text="Get Selected",
+                         command=lambda: self.show_subclass())
+        button6 = Button(listboxes_frame, text="Get Selected",
+                         command=lambda: self.show_subclass())
 
         # Place buttons in the grid
         button1.grid(row=2, column=0, padx=10, pady=5)
@@ -162,13 +162,21 @@ class NetworkSecurityOntologyApp:
         button5.grid(row=4, column=2, padx=10, pady=5)
         button6.grid(row=4, column=3, padx=10, pady=5)
 
-    def show_controllers_group(self, ):
+    def show_controllers_group(self):
         selected_item = self.standards_Lbox.get(
             self.standards_Lbox.curselection())
         contollresgroup = self.extract_Subclasses(selected_item)
         self.controllers_group_Lbox.delete(0, 'end')
         for item in contollresgroup:
             self.controllers_group_Lbox.insert("end", item.name)
+
+    def show_controllers(self):
+        selected_item = self.controllers_group_Lbox.get(
+            self.controllers_group_Lbox.curselection())
+        contollres = self.extract_Subclasses(selected_item)
+        self.controllers_Lbox.delete(0, 'end')
+        for item in contollres:
+            self.controllers_Lbox.insert("end", item.name)
 
     # user tab initialized
 
@@ -215,13 +223,13 @@ class NetworkSecurityOntologyApp:
         self.TxtDelUser.place(x=80, y=50, width=270)
 
         # btn for add name from listbox to delete entry
-        btnGetNameFromLbox = ttk.Button(
+        btnGetNameFromLbox = Button(
             DelUsersGroupBox, text="<<<", command=self.get_name_listbox)
         btnGetNameFromLbox.pack()
         btnGetNameFromLbox.place(x=370, y=50, width=50)
 
         # btn Delete user
-        btnDelUsers = ttk.Button(
+        btnDelUsers = Button(
             DelUsersGroupBox, text="Delete", command=self.delete_user)
         btnDelUsers.pack()
         btnDelUsers.place(x=350, y=120)
@@ -236,7 +244,7 @@ class NetworkSecurityOntologyApp:
         self.TxtAddUser.place(x=70, y=50, width=270)
 
         # btn add user
-        btnAddUsers = ttk.Button(
+        btnAddUsers = Button(
             AddUsersGroupBox, text="Add", command=self.add_user)
         btnAddUsers.pack()
         btnAddUsers.place(x=350, y=160)
@@ -259,7 +267,7 @@ class NetworkSecurityOntologyApp:
         self.TxtAddAbility.place(x=50, y=50, width=270)
 
         # btn to add ability in ability tab
-        btnAddAbility = ttk.Button(
+        btnAddAbility = Button(
             AbilityGroupBox, text="Add", command=self.add_ability)
         btnAddAbility.pack()
         btnAddAbility.place(x=350, y=160)
@@ -283,13 +291,13 @@ class NetworkSecurityOntologyApp:
         self.TxtDelAbility.place(x=105, y=50, width=215)
 
         # btn del ability
-        btnDelAbility = ttk.Button(
+        btnDelAbility = Button(
             AbilityDelGroupBox, text="Delete", command=self.delete_ability)
         btnDelAbility.pack()
         btnDelAbility.place(x=350, y=150)
 
         # btn for show user ability
-        btnShowUserAbl = ttk.Button(
+        btnShowUserAbl = Button(
             Ability, text='Show Selected User Ability', command=self.show_user_ability)
         btnShowUserAbl.pack()
         btnShowUserAbl.place(x=520, y=260, height=30, width=250)
@@ -308,7 +316,7 @@ class NetworkSecurityOntologyApp:
         jobVulGroupBox.place(x=10, y=20, width=470, height=300)
 
         # btn to add vulnerabilities to text box
-        self.btnAddVulTextBox = ttk.Button(
+        self.btnAddVulTextBox = Button(
             jobVulGroupBox, text="Add", command=self.add_vul_to_txtbox, state=tk.DISABLED)
         self.btnAddVulTextBox.place(x=230, y=160, width=225)
 
@@ -325,7 +333,7 @@ class NetworkSecurityOntologyApp:
         self.listboxvuljob.place(x=230, y=30, height=120, width=225)
 
         # btn to show user ability job tab
-        btnShowUserAblJob = ttk.Button(
+        btnShowUserAblJob = Button(
             job, text='Show Selected User Ability', command=self.show_user_ability)
         btnShowUserAblJob.pack()
         btnShowUserAblJob.place(x=520, y=260, height=30, width=250)
@@ -391,7 +399,7 @@ class NetworkSecurityOntologyApp:
                                        foreground='white', borderwidth=2, date_pattern='dd/MM/y', state='readonly')
         self.to_date_entry.place(x=220, y=80)
 
-        btn_save_job = ttk.Button(
+        btn_save_job = Button(
             jobTimeGroupBox, text="Save", command=self.add_job)
         btn_save_job.place(x=350, y=140)
 
