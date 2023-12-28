@@ -20,6 +20,8 @@ class NetworkSecurityOntologyApp:
 
     # variables initialized
     def initialize_variables(self):
+        self.onto_path = StringVar()
+        self.onto = StringVar()
         self.my_concept_var = StringVar(value="0")
         self.my_subclasses_var = StringVar(value="0")
         self.my_Vulnerabilities_var = StringVar(value="0")
@@ -39,6 +41,7 @@ class NetworkSecurityOntologyApp:
         self.new_concepts_list = list()
         self.vulnerability_items = list()
         self.concepts_items = list()
+        self.standards = list()
         self.max_value = 24
 
     # all tabs initialized
@@ -95,9 +98,77 @@ class NetworkSecurityOntologyApp:
         btnBrowse.pack()
         btnBrowse.place(x=70, y=20)
 
+# Inside the NetworkSecurityOntologyApp class
+
     def create_standards_tab(self, tab_control):
         standards_tab = ttk.Frame(tab_control)
         tab_control.add(standards_tab, text="Standards")
+
+        # Create a frame to hold the Listboxes, labels, and buttons in one row
+        listboxes_frame = ttk.Frame(standards_tab, padding=(5, 5, 5, 5))
+        listboxes_frame.pack()
+
+        # Create labels for each Listbox
+        label1 = ttk.Label(listboxes_frame, text="Standards")
+        label2 = ttk.Label(listboxes_frame, text="Controllers Group")
+        label3 = ttk.Label(listboxes_frame, text="Controllers")
+        label4 = ttk.Label(listboxes_frame, text="Sub Controls")
+        label5 = ttk.Label(listboxes_frame, text="Controllers Group Examples")
+        label6 = ttk.Label(listboxes_frame, text="Controllers examples")
+
+        # Create six Listboxes in one row
+        self.standards_Lbox = Listbox(listboxes_frame, height=15, width=20)
+        self.controllers_group_Lbox = Listbox(
+            listboxes_frame, height=15, width=20)
+        listbox3 = Listbox(listboxes_frame, height=15, width=20)
+        listbox4 = Listbox(listboxes_frame, height=15, width=20)
+        listbox5 = Listbox(listboxes_frame, height=15, width=20)
+        listbox6 = Listbox(listboxes_frame, height=15, width=20)
+
+        # Place labels and Listboxes in the grid
+        label1.grid(row=0, column=0, padx=10, pady=3)
+        label2.grid(row=0, column=1, padx=10, pady=3)
+        label3.grid(row=0, column=2, padx=10, pady=3)
+        label4.grid(row=0, column=3, padx=10, pady=3)
+        label5.grid(row=2, column=2, padx=10, pady=3)
+        label6.grid(row=2, column=3, padx=10, pady=3)
+
+        self.standards_Lbox.grid(row=1, column=0, padx=10, pady=5)
+        self.controllers_group_Lbox.grid(row=1, column=1, padx=10, pady=5)
+        listbox3.grid(row=1, column=2, padx=10, pady=5)
+        listbox4.grid(row=1, column=3, padx=10, pady=5)
+        listbox5.grid(row=3, column=2, padx=10, pady=5)
+        listbox6.grid(row=3, column=3, padx=10, pady=5)
+
+        # Create buttons and associate them with callback functions
+        button1 = tk.Button(listboxes_frame, text="show controllers",
+                            command=lambda: self.show_controllers_group())
+        button2 = tk.Button(listboxes_frame, text="Get Selected",
+                            command=lambda: self.show_subclass(self.controllers_group_Lbox))
+        button3 = tk.Button(listboxes_frame, text="Get Selected",
+                            command=lambda: self.show_subclass(listbox3))
+        button4 = tk.Button(listboxes_frame, text="Get Selected",
+                            command=lambda: self.show_subclass(listbox4))
+        button5 = tk.Button(listboxes_frame, text="Get Selected",
+                            command=lambda: self.show_subclass(listbox5))
+        button6 = tk.Button(listboxes_frame, text="Get Selected",
+                            command=lambda: self.show_subclass(listbox6))
+
+        # Place buttons in the grid
+        button1.grid(row=2, column=0, padx=10, pady=5)
+        button2.grid(row=2, column=1, padx=10, pady=5)
+        button3.grid(row=2, column=2, padx=10, pady=5)
+        button4.grid(row=2, column=3, padx=10, pady=5)
+        button5.grid(row=4, column=2, padx=10, pady=5)
+        button6.grid(row=4, column=3, padx=10, pady=5)
+
+    def show_controllers_group(self, ):
+        selected_item = self.standards_Lbox.get(
+            self.standards_Lbox.curselection())
+        contollresgroup = self.extract_Subclasses(selected_item)
+        self.controllers_group_Lbox.delete(0, 'end')
+        for item in contollresgroup:
+            self.controllers_group_Lbox.insert("end", item.name)
 
     # user tab initialized
 
@@ -326,20 +397,20 @@ class NetworkSecurityOntologyApp:
 
     # loading file and datas
     def open_file(self):
-        path = self.file_open_box()
-        self.myOntoPath.append(path)
 
-        try:
-            self.show_data_main()
-            self.set_vulnerabilities_item()
-            self.set_concepts_combobox()
-            self.show_concepts()
-            self.show_user()
-            self.get_vulnerabilities()
-        except TypeError:
-            messagebox.showinfo("Warning!", "File not found!")
+        self.onto_path = self.file_open_box()
+        self.onto = owlready2.get_ontology(self.onto_path).load()
+
+        self.extract_standards()
+        # self.show_data_main()
+        # self.set_vulnerabilities_item()
+        # self.set_concepts_combobox()
+        # self.show_concepts()
+        # self.show_user()
+        # self.get_vulnerabilities()
 
     # file select window
+
     def file_open_box(self):
         root = tk.Tk()
         root.withdraw()  # Hide the main window
@@ -349,38 +420,8 @@ class NetworkSecurityOntologyApp:
         )
         return file_path
 
-    # showing datas in main tab labels
-    def show_data_main(self):
-        onto = owlready2.owlready2.get_ontology(self.myOntoPath[0]).load()
-        subclass_length = list(owlready2.owlready2.default_world.sparql("""
-            SELECT ?x ?y
-            WHERE { ?x rdfs:subClassOf ?y.
-            ?x rdf:type owl:Class.
-            }
-        """))
-        y = list(owlready2.default_world.sparql("""
-            PREFIX my: <http://www.semanticweb.org/imana/ontologies/2022/10/Network#>
-            SELECT ?x
-            WHERE {?x owl:onProperty my:isPartOf.
-            }
-        """))
-        x = list(owlready2.default_world.sparql("""
-            PREFIX my: <http://www.semanticweb.org/imana/ontologies/2022/10/Network#>
-            SELECT ?x
-            WHERE { ?x owl:onProperty my:hasVulnerability.
-            }
-        """))
-        has_vulnerabilities_length = list(
-            onto.hasVulnerability.get_relations()) + x
-        is_part_of_length = list(onto.isPartOf.get_relations()) + y
-        self.my_concept_var.set(str(concepts_length))
-        self.my_Vulnerabilities_var.set(str(vul_length))
-        self.my_subclasses_var.set(str(len(subclass_length)))
-        self.my_is_part_of_var.set(str(len(is_part_of_length)))
-        self.my_has_vulnerability_var.set(str(len(has_vulnerabilities_length)))
-        self.relationships.set("3")
-
     # setting vulnerabilities items
+
     def set_vulnerabilities_item(self):
         onto = owlready2.owlready2.get_ontology(self.myOntoPath[0]).load()
         x = list(owlready2.owlready2.default_world.sparql("""
@@ -600,13 +641,31 @@ class NetworkSecurityOntologyApp:
         if vul not in textbox_text:
             self.textboxVul.insert('end', text)
 
-    def show_user(self):
-        self.listboxUsers.delete(0, tk.END)
-        onto = owlready2.get_ontology(self.myOntoPath[0]).load()
-        class_name = onto.Users
-        users_name = list(class_name.subclasses())
-        for i in users_name:
-            self.listboxUsers.insert(0, i.name)
+    def extract_standards(self):
+       # Get the namespace from the base IRI
+        namespace = self.onto.get_namespace(
+            "http://www.semanticweb.org/imana/ontologies/2022/10/Network#")
+
+        # Get the class from the namespace
+        class_name = getattr(
+            namespace, 'Ontology_of_standards', None)
+        if class_name is not None:
+            subclasses = list(class_name.subclasses())
+            for subclass in subclasses:
+                self.standards_Lbox.insert("end", subclass.name)
+
+    def extract_Subclasses(self, parent):
+       # Get the namespace from the base IRI
+        if parent == "Standards_group":
+            namespace = self.onto.get_namespace(
+                "http://www.semanticweb.org/imana/ontologies/2022/10/SOSM")
+        else:
+            namespace = self.onto.get_namespace(
+                "http://www.semantic.org/hamidzadeh/SOSM#")
+        # Get the class from the namespace
+        class_name = getattr(namespace, parent, None)
+        subclasses = list(class_name.subclasses())
+        return subclasses
 
 
 def main():
