@@ -99,7 +99,6 @@ class NetworkSecurityOntologyApp:
         btnBrowse.place(x=70, y=20)
 
 # Inside the NetworkSecurityOntologyApp class
-
     def create_standards_tab(self, tab_control):
         standards_tab = ttk.Frame(tab_control)
         tab_control.add(standards_tab, text="Standards")
@@ -187,7 +186,6 @@ class NetworkSecurityOntologyApp:
             self.subclass_Lbox.insert("end", item.name)
 
     # user tab initialized
-
     def create_user_tab(self, tab_control):
         user_tab = ttk.Frame(tab_control)
         tab_control.add(user_tab, text="User")
@@ -413,20 +411,15 @@ class NetworkSecurityOntologyApp:
 
     # loading file and datas
     def open_file(self):
-
         self.onto_path = self.file_open_box()
         self.onto = owlready2.get_ontology(self.onto_path).load()
-
         self.extract_standards()
         # self.show_data_main()
         # self.set_vulnerabilities_item()
         # self.set_concepts_combobox()
         # self.show_concepts()
-        # self.show_user()
-        # self.get_vulnerabilities()
 
     # file select window
-
     def file_open_box(self):
         root = tk.Tk()
         root.withdraw()  # Hide the main window
@@ -435,45 +428,6 @@ class NetworkSecurityOntologyApp:
             filetypes=[("OWL Files", "*.owl")], title="Select an OWL File"
         )
         return file_path
-
-    # setting vulnerabilities items
-
-    def set_vulnerabilities_item(self):
-        onto = owlready2.owlready2.get_ontology(self.myOntoPath[0]).load()
-        x = list(owlready2.owlready2.default_world.sparql("""
-                PREFIX my: <http://www.semanticweb.org/imana/ontologies/2022/10/Network#>
-                SELECT ?x
-                        WHERE { ?x owl:onProperty my:hasVulnerability.
-                        }
-                """))
-        new_vul = []
-        for i in x:
-            sp_x = str(i).split("'")
-            new_vul.append(sp_x[1])
-
-        vulnerability_list = list(onto.hasVulnerability.get_relations())
-        for i in vulnerability_list:
-            self.vulnerability_items.append(i[1])
-
-        self.vulnerability_items.extend(new_vul)
-        for i in self.vulnerability_items:
-            self.listboxVul.insert(tk.END, i)
-
-    # finding concepts
-    def split_concepts(self):
-        onto = owlready2.owlready2.get_ontology(self.myOntoPath[0]).load()
-        concepts_lists = list(onto.classes())
-        for i in concepts_lists:
-            self.concepts_list.append(str(i).split("."))
-        return self.concepts_list
-
-    # adding concepts to box
-    def set_concepts_combobox(self):
-
-        concepts_list = self.split_concepts()
-        for i in concepts_list:
-            self.new_concepts_list.append(i[1])
-        self.conceptsCombo['values'] = self.new_concepts_list
 
     # update an entry in the GUI based on the selected item from a listbox
     def update_entry(self):
@@ -484,15 +438,6 @@ class NetworkSecurityOntologyApp:
             self.TxtDelAbility.insert(0, selected_item)
         except:
             pass
-
-    # show_concepts method
-    def show_concepts(self):
-        concepts_list = self.split_concepts()
-        c = 1
-        for i in concepts_list:
-            self.listboxConcepts.insert(c, i[1])
-            self.listboxConceptPlus.insert(c, i[1])
-            c += 1
 
     def add_job(self):
         fill_data = False
