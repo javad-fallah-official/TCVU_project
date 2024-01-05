@@ -20,7 +20,7 @@ class NetworkSecurityOntologyApp:
         # Create tabs
         self.create_tabs()
 
-    # variables initialized
+    # Initialize variables
     def initialize_variables(self):
         self.prefix = StringVar()
         self.onto_path = StringVar()
@@ -28,12 +28,13 @@ class NetworkSecurityOntologyApp:
         self.onto = StringVar()
         self.Listbox = []
 
-    # all tabs initialized
+    # Create tabs
     def create_tabs(self):
         tab_control = ttk.Notebook(self.master)
         self.create_view_tab(tab_control)
         tab_control.pack(expand=1, fill="both")
 
+    # Create view tab
     def create_view_tab(self, tab_control):
         view_tab = ttk.Frame(tab_control)
         tab_control.add(view_tab, text="Standards")
@@ -42,7 +43,7 @@ class NetworkSecurityOntologyApp:
         loadfileGroupBox = LabelFrame(view_tab, text="Load owl file")
         loadfileGroupBox.place(x=6, y=6, width=650, height=100)
 
-        # open file button
+        # Open file button
         lblBrowse = Label(view_tab, text="Select file : ", anchor="e")
         lblBrowse.place(x=12, y=60)
 
@@ -77,22 +78,23 @@ class NetworkSecurityOntologyApp:
             start_x += list_width + 300 if listnum != 0 else 0
             self.Listbox[listnum].place(x=start_x, y=start_y)
 
-    # loading file and datas
+    # Load file and datas
     def load_file(self):
-        # choosing file
+        # Choosing file
         self.onto_path.set(self.file_open_box())
-        # loading owl
+        # Loading owl
         self.onto = owlready2.get_ontology(self.onto_path.get()).load()
-        # set prefix
+        # Set prefix
         self.prefix.set(self.prefixBox.get())
         self.extract_classes()
 
-    # file select window
+    # File select window
     def file_open_box(self):
         file_path = filedialog.askopenfilename(
             filetypes=[("OWL Files", "*.owl")], title="Select an OWL File")
         return file_path
 
+    # Extract classes from ontology
     def extract_classes(self):
         namespace = self.onto.get_namespace("http://www.w3.org/2002/07/owl")
         class_name = getattr(namespace, 'Thing', None)
@@ -100,18 +102,23 @@ class NetworkSecurityOntologyApp:
         for subclass in subclasses:
             self.Listbox[0].insert("end", str(subclass.name).replace('_', ' '))
 
+    # Extract subclasses based on the parent
     def extract_Subclasses(self, parent):
         namespace = self.onto.get_namespace(self.prefix.get())
         class_name = getattr(namespace, parent, None)
         subclasses = list(class_name.subclasses())
         return subclasses
 
+    # Show subclasses when a Listbox item is selected
     def show_subclasses(self, event):
-        for i, list in enumerate(self.Listbox):
-            if list.curselection() != ():
+        num = -1  # Initialize num to an invalid value
+        for i, listbox in enumerate(self.Listbox):
+            if listbox.curselection() != ():
                 num = i
+
         if num != 4:
-            self.Listbox[num + 1].delete(0, tk.END)
+            for list in range(num+1, 5):
+                self.Listbox[list].delete(0, tk.END)
             selected_index = self.Listbox[num].curselection()
             if selected_index:
                 selected_item = self.Listbox[num].get(selected_index[0])
