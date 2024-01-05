@@ -10,7 +10,7 @@ class NetworkSecurityOntologyApp:
     def __init__(self, master):
         self.master = master
         self.master.title("Network Security Ontology")
-        self.master.geometry("800x600")
+        self.master.geometry("1920x1080")
 
         # Variables
         self.initialize_variables()
@@ -22,12 +22,6 @@ class NetworkSecurityOntologyApp:
     def initialize_variables(self):
         self.onto_path = StringVar()
         self.onto = StringVar()
-        self.my_concept_var = StringVar(value="0")
-        self.my_subclasses_var = StringVar(value="0")
-        self.my_Vulnerabilities_var = StringVar(value="0")
-        self.my_is_part_of_var = StringVar(value="0")
-        self.my_has_vulnerability_var = StringVar(value="0")
-        self.relationships = StringVar(value="0")
         self.txtDelUser = StringVar()
         self.txtAbility = StringVar()
         self.txtAbility = StringVar()
@@ -36,9 +30,6 @@ class NetworkSecurityOntologyApp:
         self.myOntoPath = list()
         self.vul_list = list()
         self.vul_list2 = list()
-        self.listboxUsers = Listbox()
-        self.concepts_list = list()
-        self.new_concepts_list = list()
         self.vulnerability_items = list()
         self.concepts_items = list()
         self.standards = list()
@@ -47,64 +38,16 @@ class NetworkSecurityOntologyApp:
     # all tabs initialized
     def create_tabs(self):
         tab_control = ttk.Notebook(self.master)
-        self.create_main_tab(tab_control)
-        self.create_standards_tab(tab_control)
+        self.create_view_tab(tab_control)
         self.create_user_tab(tab_control)
         tab_control.pack(expand=1, fill="both")
 
-    # main tab initialized
-    def create_main_tab(self, tab_control):
-        main_tab = ttk.Frame(tab_control)
-        tab_control.add(main_tab, text="Main")
-
-        # Labels for showing data in main tab menu
-        lblConcepts = Label(
-            main_tab, text="Number of concepts we currently support: ", anchor="e")
-        lblConcepts.place(x=10, y=440)
-        lblConceptsValue = Label(
-            main_tab, textvariable=self.my_concept_var)
-        lblConceptsValue.place(x=240, y=440)
-        lblVulnerabilities = Label(
-            main_tab, text="Number of concepts we Vulnerabilities support: ", anchor="e")
-        lblVulnerabilities.place(x=10, y=460)
-        lblVul = Label(main_tab, textvariable=self.my_Vulnerabilities_var)
-        lblVul.place(x=260, y=460)
-        lblSubClassOf = Label(
-            main_tab, text="Number of SubClassOf: ", anchor="e")
-        lblSubClassOf.place(x=10, y=480)
-        lblSubClass = Label(main_tab, textvariable=self.my_subclasses_var)
-        lblSubClass.place(x=140, y=480)
-        lblIsPartOf = Label(
-            main_tab, text="Number of IsPartOf relationship: ", anchor="e")
-        lblIsPartOf.place(x=10, y=500)
-        lblIsPart = Label(main_tab, textvariable=self.my_is_part_of_var)
-        lblIsPart.place(x=190, y=500)
-        lblHasVulnerability = Label(
-            main_tab, text="Number of hasVulnerability relationship: ", anchor="e")
-        lblHasVulnerability.place(x=10, y=520)
-        lblHasVulnerabilityValue = Label(
-            main_tab, textvariable=self.my_has_vulnerability_var)
-        lblHasVulnerabilityValue.place(x=230, y=520)
-        lblRelationships = Label(
-            main_tab, text="Relationships: ", anchor="e")
-        lblRelationships.place(x=10, y=540)
-        lblRelationShips = Label(main_tab, textvariable=self.relationships)
-        lblRelationShips.place(x=90, y=540)
-
-        # open file button
-        lblBrowse = Label(main_tab, text="select file : ", anchor="e")
-        lblBrowse.place(x=10, y=20)
-        btnBrowse = Button(main_tab, text="file", command=self.open_file)
-        btnBrowse.pack()
-        btnBrowse.place(x=70, y=20)
-
-# Inside the NetworkSecurityOntologyApp class
-    def create_standards_tab(self, tab_control):
-        standards_tab = ttk.Frame(tab_control)
-        tab_control.add(standards_tab, text="Standards")
+    def create_view_tab(self, tab_control):
+        view_tab = ttk.Frame(tab_control)
+        tab_control.add(view_tab, text="Standards")
 
         # Create a frame to hold the Listboxes, labels, and buttons in one row
-        listboxes_frame = ttk.Frame(standards_tab, padding=(5, 5, 5, 5))
+        listboxes_frame = ttk.Frame(view_tab, padding=(5, 5, 5, 5))
         listboxes_frame.pack()
 
         # Create labels for each Listbox
