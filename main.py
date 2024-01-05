@@ -20,12 +20,12 @@ class NetworkSecurityOntologyApp:
 
     # variables initialized
     def initialize_variables(self):
-        self.prefix = "http://www.semantic.org/hamidzadeh/SOSM"
-        self.onto_path = StringVar()
         self.txtDelUser = StringVar()
         self.txtAbility = StringVar()
         self.txtAbility = StringVar()
+        self.onto_path = StringVar()
         self.txtUser = StringVar()
+        self.prefix = StringVar()
         self.onto = StringVar()
         self.myOntoPath = list()
         self.vul_list2 = list()
@@ -104,7 +104,7 @@ class NetworkSecurityOntologyApp:
         # open file button
         lblBrowse = Label(view_tab, text="select file : ", anchor="e")
         lblBrowse.place(x=10, y=50)
-        btnBrowse = Button(view_tab, text="file", command=self.open_file)
+        btnBrowse = Button(view_tab, text="file", command=self.load_file)
         btnBrowse.pack()
         btnBrowse.place(x=70, y=50)
 
@@ -365,9 +365,14 @@ class NetworkSecurityOntologyApp:
         btn_save_job.place(x=350, y=140)
 
     # loading file and datas
-    def open_file(self):
+    def load_file(self):
+        # choosing file
         self.onto_path = self.file_open_box()
+        # loading owl
         self.onto = owlready2.get_ontology(self.onto_path).load()
+        # set prefix
+        self.prefix = self.prefix.get()
+
         self.extract_standards()
         # self.show_data_main()
         # self.set_vulnerabilities_item()
