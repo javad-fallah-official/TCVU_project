@@ -104,6 +104,13 @@ class NetworkSecurityOntologyApp:
         button5.grid(row=4, column=2, padx=10, pady=5)
         button6.grid(row=4, column=3, padx=10, pady=5)
 
+        # open file button
+        lblBrowse = Label(view_tab, text="select file : ", anchor="e")
+        lblBrowse.place(x=10, y=20)
+        btnBrowse = Button(view_tab, text="file", command=self.open_file)
+        btnBrowse.pack()
+        btnBrowse.place(x=70, y=20)
+
     def show_controllers_group(self):
         selected_item = self.standards_Lbox.get(
             self.standards_Lbox.curselection())
