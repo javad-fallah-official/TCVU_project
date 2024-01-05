@@ -1,5 +1,5 @@
-from tkinter import StringVar, Listbox, IntVar
-from tkinter import filedialog, messagebox, ttk, Button, Label, LabelFrame, Spinbox
+from tkinter import StringVar, Listbox
+from tkinter import filedialog, messagebox, ttk, Button, Label, LabelFrame, Spinbox, Entry
 from tkcalendar import DateEntry
 import tkinter as tk
 import owlready2
@@ -20,15 +20,16 @@ class NetworkSecurityOntologyApp:
 
     # variables initialized
     def initialize_variables(self):
+        self.prefix = "http://www.semantic.org/hamidzadeh/SOSM"
         self.onto_path = StringVar()
-        self.onto = StringVar()
         self.txtDelUser = StringVar()
         self.txtAbility = StringVar()
         self.txtAbility = StringVar()
         self.txtUser = StringVar()
+        self.onto = StringVar()
         self.myOntoPath = list()
-        self.vul_list = list()
         self.vul_list2 = list()
+        self.vul_list = list()
         self.max_value = 24
 
     # all tabs initialized
@@ -102,10 +103,18 @@ class NetworkSecurityOntologyApp:
 
         # open file button
         lblBrowse = Label(view_tab, text="select file : ", anchor="e")
-        lblBrowse.place(x=10, y=20)
+        lblBrowse.place(x=10, y=50)
         btnBrowse = Button(view_tab, text="file", command=self.open_file)
         btnBrowse.pack()
-        btnBrowse.place(x=70, y=20)
+        btnBrowse.place(x=70, y=50)
+
+        # Prefix input
+        lblBrowse2 = Label(view_tab, text="Prefix : ", anchor="e")
+        lblBrowse2.place(x=10, y=20)
+        self.prefixBox = Entry(view_tab, textvariable=self.prefix, width=90)
+        # default value
+        self.prefixBox.insert(0, "http://www.semantic.org/hamidzadeh/SOSM")
+        self.prefixBox.place(x=70, y=20)
 
     def show_controllers_group(self):
         selected_item = self.standards_Lbox.get(
@@ -170,7 +179,7 @@ class NetworkSecurityOntologyApp:
         Lbl1DelUser.place(x=10, y=50)
 
         # entry Delete user
-        self.TxtDelUser = tk.Entry(
+        self.TxtDelUser = Entry(
             DelUsersGroupBox, textvariable=self.txtDelUser)
         self.TxtDelUser.place(x=80, y=50, width=270)
 
@@ -192,7 +201,7 @@ class NetworkSecurityOntologyApp:
         Lbl1AddUser.place(x=10, y=50)
 
         # entry add user
-        self.TxtAddUser = tk.Entry(AddUsersGroupBox, textvariable=self.txtUser)
+        self.TxtAddUser = Entry(AddUsersGroupBox, textvariable=self.txtUser)
         self.TxtAddUser.place(x=70, y=50, width=270)
 
         # btn add user
@@ -214,7 +223,7 @@ class NetworkSecurityOntologyApp:
         Lbl2AddAbility.place(x=330, y=50)
 
         # entry to add ability
-        self.TxtAddAbility = tk.Entry(
+        self.TxtAddAbility = Entry(
             AbilityGroupBox, textvariable=self.txtAbility)
         self.TxtAddAbility.place(x=50, y=50, width=270)
 
@@ -237,8 +246,8 @@ class NetworkSecurityOntologyApp:
                                "from the right side list", anchor="e")
         Lbl4DelAbility.place(x=0, y=110)
 
-        # tk.Entry to delete ability
-        self.TxtDelAbility = tk.Entry(
+        # Entry to delete ability
+        self.TxtDelAbility = Entry(
             AbilityDelGroupBox, textvariable=self.txtAbility)
         self.TxtDelAbility.place(x=105, y=50, width=215)
 
@@ -540,7 +549,7 @@ class NetworkSecurityOntologyApp:
     def extract_standards(self):
        # Get the namespace from the base IRI
         namespace = self.onto.get_namespace(
-            "http://www.semanticweb.org/imana/ontologies/2022/10/Network#")
+            self.prefix)
 
         # Get the class from the namespace
         class_name = getattr(
@@ -552,12 +561,8 @@ class NetworkSecurityOntologyApp:
 
     def extract_Subclasses(self, parent):
        # Get the namespace from the base IRI
-        if parent == "Standards_group":
-            namespace = self.onto.get_namespace(
-                "http://www.semanticweb.org/imana/ontologies/2022/10/SOSM")
-        else:
-            namespace = self.onto.get_namespace(
-                "http://www.semantic.org/hamidzadeh/SOSM#")
+        namespace = self.onto.get_namespace(
+            self.prefix)
         # Get the class from the namespace
         class_name = getattr(namespace, parent, None)
 
