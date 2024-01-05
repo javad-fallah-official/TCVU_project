@@ -26,13 +26,9 @@ class NetworkSecurityOntologyApp:
         self.txtAbility = StringVar()
         self.txtAbility = StringVar()
         self.txtUser = StringVar()
-        self.listboxVul = Listbox()
         self.myOntoPath = list()
         self.vul_list = list()
         self.vul_list2 = list()
-        self.vulnerability_items = list()
-        self.concepts_items = list()
-        self.standards = list()
         self.max_value = 24
 
     # all tabs initialized
@@ -443,17 +439,6 @@ class NetworkSecurityOntologyApp:
         self.btnAddVultk.TextBox.config(state=tk.DISABLED)
         self.textboxVul.delete('1.0', tk.END)
         self.textboxVul.config(state=tk.DISABLED)
-
-    def get_vulnerabilities(self):
-
-        onto = owlready2.get_ontology(self.myOntoPath[0]).load()
-        self.vul_list = list(onto.hasVulnerability.get_relations())
-        self.vul_list2 = [(i[0].name, i[1]) for i in self.vul_list]
-        concepts_items = []
-        for i in self.vul_list:
-            if i[0].name not in concepts_items:
-                concepts_items.append(i[0].name)
-        self.jobVulCombo['values'] = concepts_items
 
     def update_listbox(self):
         selected_option = self.jobVulCombo.get()
