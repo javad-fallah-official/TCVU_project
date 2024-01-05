@@ -30,6 +30,7 @@ class NetworkSecurityOntologyApp:
         self.myOntoPath = list()
         self.vul_list2 = list()
         self.vul_list = list()
+        self.Listbox = []
         self.max_value = 24
 
     # all tabs initialized
@@ -44,12 +45,6 @@ class NetworkSecurityOntologyApp:
         tab_control.add(view_tab, text="Standards")
 
         # # Create labels for each Listbox
-        # label1 = Label(listboxes_frame, text="Standards")
-        # label2 = Label(listboxes_frame, text="Controllers Group")
-        # label3 = Label(listboxes_frame, text="Controllers")
-        # label4 = Label(listboxes_frame, text="Sub Controls")
-        # label5 = Label(listboxes_frame, text="Controllers Group Examples")
-        # label6 = Label(listboxes_frame, text="Controllers examples")
 
         # # Create six Listboxes in one row
         # self.standards_Lbox = Listbox(listboxes_frame, height=15, width=20)
@@ -59,14 +54,6 @@ class NetworkSecurityOntologyApp:
         # self.subclass_Lbox = Listbox(listboxes_frame, height=15, width=20)
         # listbox5 = Listbox(listboxes_frame, height=15, width=20)
         # listbox6 = Listbox(listboxes_frame, height=15, width=20)
-
-        # # Place labels and Listboxes in the grid
-        # label1.grid(row=0, column=0, padx=10, pady=3)
-        # label2.grid(row=0, column=1, padx=10, pady=3)
-        # label3.grid(row=0, column=2, padx=10, pady=3)
-        # label4.grid(row=0, column=3, padx=10, pady=3)
-        # label5.grid(row=2, column=2, padx=10, pady=3)
-        # label6.grid(row=2, column=3, padx=10, pady=3)
 
         # self.standards_Lbox.grid(row=1, column=0, padx=10, pady=5)
         # self.controllers_group_Lbox.grid(row=1, column=1, padx=10, pady=5)
@@ -120,9 +107,32 @@ class NetworkSecurityOntologyApp:
         # ListBox and view UI
         # View GroupBox
         viewGroupBox = LabelFrame(view_tab, text="View")
-        viewGroupBox.place(x=6, y=120, width=650, height=810)
-        self.classess_Lbox = Listbox(view_tab, height=30, width=60)
-        self.classess_Lbox.place(x=12, y=170)
+        viewGroupBox.place(x=6, y=120, width=1890, height=810)
+
+        label_list = []
+        label_list.insert(0, Label(view_tab, text="Classes:"))
+        label_list.insert(1, Label(view_tab, text="Subclass:"))
+        label_list.insert(2, Label(view_tab, text="Controllers"))
+        label_list.insert(3, Label(view_tab, text="Sub Controls"))
+
+        start_x = 54
+        start_y = 210
+        list_width = 54
+        for listnum in range(0, 5):
+            self.Listbox.insert(listnum, Listbox(
+                view_tab, height=30, width=list_width))
+            start_x += list_width + 300 if listnum != 0 else 0
+            self.Listbox[listnum].place(
+                x=start_x, y=start_y)
+
+    # def show_sub_class(event):
+    #     # Get selected line index
+    #     index = listbox.curselection()[0]
+
+    #     # Get the text
+    #     selected_text = listbox.get(index)
+
+    # print(f'Selected text: {selected_text}')
 
     def show_controllers_group(self):
         selected_item = self.standards_Lbox.get(
