@@ -43,78 +43,86 @@ class NetworkSecurityOntologyApp:
         view_tab = ttk.Frame(tab_control)
         tab_control.add(view_tab, text="Standards")
 
-        # Create a frame to hold the Listboxes, labels, and buttons in one row
-        listboxes_frame = ttk.Frame(view_tab, padding=(5, 5, 5, 5))
-        listboxes_frame.pack()
+        # # Create labels for each Listbox
+        # label1 = Label(listboxes_frame, text="Standards")
+        # label2 = Label(listboxes_frame, text="Controllers Group")
+        # label3 = Label(listboxes_frame, text="Controllers")
+        # label4 = Label(listboxes_frame, text="Sub Controls")
+        # label5 = Label(listboxes_frame, text="Controllers Group Examples")
+        # label6 = Label(listboxes_frame, text="Controllers examples")
 
-        # Create labels for each Listbox
-        label1 = Label(listboxes_frame, text="Standards")
-        label2 = Label(listboxes_frame, text="Controllers Group")
-        label3 = Label(listboxes_frame, text="Controllers")
-        label4 = Label(listboxes_frame, text="Sub Controls")
-        label5 = Label(listboxes_frame, text="Controllers Group Examples")
-        label6 = Label(listboxes_frame, text="Controllers examples")
+        # # Create six Listboxes in one row
+        # self.standards_Lbox = Listbox(listboxes_frame, height=15, width=20)
+        # self.controllers_group_Lbox = Listbox(
+        #     listboxes_frame, height=15, width=20)
+        # self.controllers_Lbox = Listbox(listboxes_frame, height=15, width=20)
+        # self.subclass_Lbox = Listbox(listboxes_frame, height=15, width=20)
+        # listbox5 = Listbox(listboxes_frame, height=15, width=20)
+        # listbox6 = Listbox(listboxes_frame, height=15, width=20)
 
-        # Create six Listboxes in one row
-        self.standards_Lbox = Listbox(listboxes_frame, height=15, width=20)
-        self.controllers_group_Lbox = Listbox(
-            listboxes_frame, height=15, width=20)
-        self.controllers_Lbox = Listbox(listboxes_frame, height=15, width=20)
-        self.subclass_Lbox = Listbox(listboxes_frame, height=15, width=20)
-        listbox5 = Listbox(listboxes_frame, height=15, width=20)
-        listbox6 = Listbox(listboxes_frame, height=15, width=20)
+        # # Place labels and Listboxes in the grid
+        # label1.grid(row=0, column=0, padx=10, pady=3)
+        # label2.grid(row=0, column=1, padx=10, pady=3)
+        # label3.grid(row=0, column=2, padx=10, pady=3)
+        # label4.grid(row=0, column=3, padx=10, pady=3)
+        # label5.grid(row=2, column=2, padx=10, pady=3)
+        # label6.grid(row=2, column=3, padx=10, pady=3)
 
-        # Place labels and Listboxes in the grid
-        label1.grid(row=0, column=0, padx=10, pady=3)
-        label2.grid(row=0, column=1, padx=10, pady=3)
-        label3.grid(row=0, column=2, padx=10, pady=3)
-        label4.grid(row=0, column=3, padx=10, pady=3)
-        label5.grid(row=2, column=2, padx=10, pady=3)
-        label6.grid(row=2, column=3, padx=10, pady=3)
+        # self.standards_Lbox.grid(row=1, column=0, padx=10, pady=5)
+        # self.controllers_group_Lbox.grid(row=1, column=1, padx=10, pady=5)
+        # self.controllers_Lbox.grid(row=1, column=2, padx=10, pady=5)
+        # self.subclass_Lbox.grid(row=1, column=3, padx=10, pady=5)
+        # listbox5.grid(row=3, column=2, padx=10, pady=5)
+        # listbox6.grid(row=3, column=3, padx=10, pady=5)
 
-        self.standards_Lbox.grid(row=1, column=0, padx=10, pady=5)
-        self.controllers_group_Lbox.grid(row=1, column=1, padx=10, pady=5)
-        self.controllers_Lbox.grid(row=1, column=2, padx=10, pady=5)
-        self.subclass_Lbox.grid(row=1, column=3, padx=10, pady=5)
-        listbox5.grid(row=3, column=2, padx=10, pady=5)
-        listbox6.grid(row=3, column=3, padx=10, pady=5)
+        # # Create buttons and associate them with callback functions
+        # button1 = Button(listboxes_frame, text="show controllers Group",
+        #                  command=lambda: self.show_controllers_group())
+        # button2 = Button(listboxes_frame, text="show controllers",
+        #                  command=lambda: self.show_controllers())
+        # button3 = Button(listboxes_frame, text="show subclass",
+        #                  command=lambda: self.show_subclass())
+        # button4 = Button(listboxes_frame, text="Get Selected",
+        #                  command=lambda: self.show_subclass())
+        # button5 = Button(listboxes_frame, text="Get Selected",
+        #                  command=lambda: self.show_subclass())
+        # button6 = Button(listboxes_frame, text="Get Selected",
+        #                  command=lambda: self.show_subclass())
 
-        # Create buttons and associate them with callback functions
-        button1 = Button(listboxes_frame, text="show controllers Group",
-                         command=lambda: self.show_controllers_group())
-        button2 = Button(listboxes_frame, text="show controllers",
-                         command=lambda: self.show_controllers())
-        button3 = Button(listboxes_frame, text="show subclass",
-                         command=lambda: self.show_subclass())
-        button4 = Button(listboxes_frame, text="Get Selected",
-                         command=lambda: self.show_subclass())
-        button5 = Button(listboxes_frame, text="Get Selected",
-                         command=lambda: self.show_subclass())
-        button6 = Button(listboxes_frame, text="Get Selected",
-                         command=lambda: self.show_subclass())
+        # # Place buttons in the grid
+        # button1.grid(row=2, column=0, padx=10, pady=5)
+        # button2.grid(row=2, column=1, padx=10, pady=5)
+        # button3.grid(row=2, column=2, padx=10, pady=5)
+        # button4.grid(row=2, column=3, padx=10, pady=5)
+        # button5.grid(row=4, column=2, padx=10, pady=5)
+        # button6.grid(row=4, column=3, padx=10, pady=5)
 
-        # Place buttons in the grid
-        button1.grid(row=2, column=0, padx=10, pady=5)
-        button2.grid(row=2, column=1, padx=10, pady=5)
-        button3.grid(row=2, column=2, padx=10, pady=5)
-        button4.grid(row=2, column=3, padx=10, pady=5)
-        button5.grid(row=4, column=2, padx=10, pady=5)
-        button6.grid(row=4, column=3, padx=10, pady=5)
-
+        # Load File UI
+        # load file GroupBox
+        loadfileGroupBox = LabelFrame(view_tab, text="Load owl file")
+        loadfileGroupBox.place(x=6, y=6, width=650, height=100)
         # open file button
         lblBrowse = Label(view_tab, text="select file : ", anchor="e")
-        lblBrowse.place(x=10, y=50)
+        lblBrowse.place(x=12, y=60)
         btnBrowse = Button(view_tab, text="file", command=self.load_file)
-        btnBrowse.pack()
-        btnBrowse.place(x=70, y=50)
-
+        btnBrowse.place(x=90, y=60, width=90)
+        tiplbl = Label(
+            view_tab, text="Please make sure to enter Prefix correctly!!!")
+        tiplbl.place(x=210, y=60)
         # Prefix input
         lblBrowse2 = Label(view_tab, text="Prefix : ", anchor="e")
-        lblBrowse2.place(x=10, y=20)
+        lblBrowse2.place(x=12, y=27)
         self.prefixBox = Entry(view_tab, textvariable=self.prefix, width=90)
         # default value
         self.prefixBox.insert(0, "http://www.semantic.org/hamidzadeh/SOSM")
-        self.prefixBox.place(x=70, y=20)
+        self.prefixBox.place(x=72, y=27)
+
+        # ListBox and view UI
+        # View GroupBox
+        viewGroupBox = LabelFrame(view_tab, text="View")
+        viewGroupBox.place(x=6, y=120, width=650, height=810)
+        self.classess_Lbox = Listbox(view_tab, height=30, width=60)
+        self.classess_Lbox.place(x=12, y=170)
 
     def show_controllers_group(self):
         selected_item = self.standards_Lbox.get(
@@ -150,7 +158,6 @@ class NetworkSecurityOntologyApp:
         Ability = ttk.Frame(UserTabBar)
         job = ttk.Frame(UserTabBar)
 
-        # make tab bar in concepts++
         UserTabBar.add(Users, text='Users')
         UserTabBar.add(Ability, text="Ability")
         UserTabBar.add(job, text="Job")
