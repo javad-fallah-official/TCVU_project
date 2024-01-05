@@ -1,7 +1,7 @@
 from tkinter import StringVar, Listbox
 from tkinter import filedialog, ttk, Button, Label, LabelFrame, Entry
 import tkinter as tk
-from owlready2 import *
+import owlready2
 
 
 class NetworkSecurityOntologyApp:
@@ -17,8 +17,7 @@ class NetworkSecurityOntologyApp:
         self.onto = StringVar()
         self.Listbox = []
 
-        # Create tabs
-        self.create_tabs()
+        self.create_tabs()  # Create tabs
 
     # Initialize variables
     def initialize_variables(self):
@@ -111,7 +110,8 @@ class NetworkSecurityOntologyApp:
 
     # Show subclasses when a Listbox item is selected
     def show_subclasses(self, event):
-        num = -1  # Initialize num to an invalid value
+        # Initialize num to an invalid value (its The last Box as well)
+        num = 4
         for i, listbox in enumerate(self.Listbox):
             if listbox.curselection() != ():
                 num = i
